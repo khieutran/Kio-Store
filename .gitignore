@@ -20,3 +20,6 @@ backups/
 .idea/
 .vscode/
 *.log
+
+# Kế hoạch cá nhân (chỉ giữ ở máy)
+docs/
