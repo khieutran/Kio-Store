@@ -1,0 +1,999 @@
+/**
+ * Kio Child — main.css
+ * Toàn bộ layout và style cho giao diện Kio Mobile, viết trên nền Storefront.
+ * Token màu/font/bo góc nằm ở style.css (biến CSS trong :root).
+ */
+
+/* ==========================================================================
+   1. Nền tảng
+   ========================================================================== */
+
+body {
+	font-family: var(--kio-font);
+	color: var(--kio-text);
+	background-color: var(--kio-bg);
+	font-size: 15px;
+	line-height: 1.55;
+}
+
+/* Mở rộng container của Storefront từ ~66em lên 1280px để đồng bộ với header/footer */
+.col-full {
+	max-width: var(--kio-max);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.kio-container {
+	max-width: var(--kio-max);
+	margin: 0 auto;
+	padding-left: var(--kio-gutter);
+	padding-right: var(--kio-gutter);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+a {
+	color: var(--kio-brand);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--kio-brand-dark);
+}
+
+/* ==========================================================================
+   2. Thanh tiện ích trên cùng
+   ========================================================================== */
+
+.kio-utility {
+	background: var(--kio-brand-dark);
+	color: #cfe0ff;
+	font-size: 13px;
+}
+
+.kio-utility .kio-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 36px;
+	gap: 16px;
+}
+
+.kio-utility__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 24px;
+}
+
+.kio-utility__item {
+	position: relative;
+}
+
+.kio-utility__item + .kio-utility__item::before {
+	content: "·";
+	position: absolute;
+	left: -14px;
+	color: #6b8fd0;
+}
+
+.kio-utility__tagline {
+	color: #8faddf;
+	white-space: nowrap;
+}
+
+/* ==========================================================================
+   3. Header chính
+   ========================================================================== */
+
+.site-header {
+	background: #fff;
+	border-bottom: 1px solid var(--kio-border);
+	padding: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+.kio-header__main {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.kio-header__logo {
+	display: inline-flex;
+	align-items: center;
+	flex: 0 0 auto;
+}
+
+.kio-logo {
+	display: block;
+	height: 40px;
+	width: auto;
+}
+
+.kio-header__search {
+	flex: 1 1 auto;
+}
+
+.kio-header__search .woocommerce-product-search {
+	display: flex;
+	border: 2px solid var(--kio-brand);
+	border-radius: var(--kio-radius);
+	overflow: hidden;
+	background: #fff;
+}
+
+.kio-header__search .woocommerce-product-search input[type="search"] {
+	flex: 1;
+	border: 0;
+	padding: 12px 16px;
+	font-size: 14px;
+	min-width: 0;
+	outline: none;
+}
+
+.kio-header__search .woocommerce-product-search button {
+	background: var(--kio-brand);
+	color: #fff;
+	border: 0;
+	padding: 0 24px;
+	font-weight: 700;
+	cursor: pointer;
+	min-height: 44px;
+}
+
+.kio-header__search .woocommerce-product-search button:hover {
+	background: var(--kio-brand-dark);
+}
+
+.kio-header__actions {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	flex: 0 0 auto;
+}
+
+.kio-action {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	color: var(--kio-text);
+	font-size: 12px;
+	position: relative;
+	min-width: 56px;
+}
+
+.kio-action:hover {
+	color: var(--kio-brand);
+}
+
+.kio-action svg {
+	width: 26px;
+	height: 26px;
+}
+
+.kio-action--cart {
+	flex-direction: row;
+	gap: 6px;
+}
+
+.kio-action__icon {
+	position: relative;
+	display: inline-flex;
+}
+
+.kio-action--cart svg {
+	width: 30px;
+	height: 30px;
+}
+
+.kio-cart-count {
+	position: absolute;
+	top: -6px;
+	right: -8px;
+	background: var(--kio-accent);
+	color: #fff;
+	border-radius: 999px;
+	min-width: 18px;
+	height: 18px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-style: normal;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 0 4px;
+	line-height: 1;
+}
+
+/* ==========================================================================
+   4. Mega menu danh mục
+   ========================================================================== */
+
+.kio-nav {
+	background: var(--kio-brand);
+}
+
+.kio-nav .kio-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.kio-nav__toggle {
+	display: none;
+	align-items: center;
+	gap: 8px;
+	background: transparent;
+	color: #fff;
+	border: 0;
+	font-size: 14px;
+	font-weight: 700;
+	cursor: pointer;
+	padding: 12px 0;
+	min-height: 44px;
+	font-family: var(--kio-font);
+}
+
+.kio-nav__toggle svg {
+	width: 22px;
+	height: 22px;
+}
+
+.kio-mega {
+	flex: 1;
+}
+
+.kio-mega__list {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	flex-wrap: wrap;
+}
+
+.kio-mega__item {
+	position: relative;
+}
+
+.kio-mega__link {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #fff;
+	padding: 12px 16px;
+	font-size: 14px;
+	font-weight: 700;
+	min-height: 44px;
+	box-sizing: border-box;
+}
+
+.kio-mega__link svg {
+	width: 20px;
+	height: 20px;
+}
+
+.kio-mega__item:hover > .kio-mega__link,
+.kio-mega__item:focus-within > .kio-mega__link {
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.kio-mega__sub {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 220px;
+	list-style: none;
+	margin: 0;
+	padding: 8px 0;
+	background: #fff;
+	border-radius: 0 0 var(--kio-radius) var(--kio-radius);
+	box-shadow: var(--kio-shadow-hover);
+	z-index: 100;
+}
+
+.kio-mega__item:hover > .kio-mega__sub,
+.kio-mega__item:focus-within > .kio-mega__sub {
+	display: block;
+}
+
+.kio-mega__brand a {
+	display: block;
+	padding: 9px 20px;
+	color: var(--kio-text);
+	font-size: 14px;
+}
+
+.kio-mega__brand a:hover {
+	background: var(--kio-bg);
+	color: var(--kio-brand);
+}
+
+/* ==========================================================================
+   5. Footer
+   ========================================================================== */
+
+.site-footer {
+	background: #10243f;
+	color: #b9c7da;
+	margin-top: 48px;
+}
+
+.kio-footer__grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1.2fr;
+	gap: 32px;
+	padding-top: 40px;
+	padding-bottom: 32px;
+}
+
+.kio-footer__about .kio-logo {
+	margin-bottom: 14px;
+}
+
+.kio-footer__about p {
+	font-size: 13px;
+	color: #8fa3bd;
+	max-width: 340px;
+}
+
+.kio-footer__title {
+	color: #fff;
+	font-size: 15px;
+	margin: 0 0 14px;
+}
+
+.kio-footer__menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.kio-footer__menu li {
+	margin-bottom: 8px;
+}
+
+.kio-footer__menu a {
+	color: #b9c7da;
+	font-size: 13px;
+}
+
+.kio-footer__menu a:hover {
+	color: #fff;
+}
+
+.kio-footer__hotline {
+	color: #fff;
+	font-size: 24px;
+	font-weight: 700;
+	margin: 0 0 4px;
+}
+
+.kio-footer__hours {
+	font-size: 13px;
+	color: #8fa3bd;
+	margin: 0 0 20px;
+}
+
+.kio-social {
+	display: flex;
+	gap: 10px;
+	list-style: none;
+	margin: 16px 0 0;
+	padding: 0;
+}
+
+.kio-social__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.kio-social__link:hover {
+	background: var(--kio-brand);
+	color: #fff;
+}
+
+.kio-social__link svg {
+	width: 18px;
+	height: 18px;
+}
+
+.kio-payments {
+	display: flex;
+	gap: 10px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.kio-payments__item {
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+	padding: 6px 12px;
+	border-radius: var(--kio-radius-sm);
+}
+
+.kio-footer__bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	padding: 16px 0;
+	font-size: 12px;
+	color: #7f93ad;
+}
+
+/* ==========================================================================
+   6. Trang chủ — hero slider
+   ========================================================================== */
+
+.kio-hero-grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 12px;
+	margin-top: 16px; /* tách khỏi thanh danh mục phía trên */
+	margin-bottom: 24px;
+}
+
+.kio-hero__side {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.kio-hero__side a {
+	display: block;
+	border-radius: var(--kio-radius);
+	overflow: hidden;
+	line-height: 0;
+}
+
+.kio-hero__side img {
+	width: 100%;
+	display: block;
+	height: auto;
+}
+
+.kio-hero {
+	position: relative;
+	margin-bottom: 24px;
+}
+
+.kio-hero__track {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	border-radius: var(--kio-radius);
+}
+
+.kio-hero__track::-webkit-scrollbar {
+	display: none;
+}
+
+.kio-hero__slide {
+	flex: 0 0 100%;
+	scroll-snap-align: start;
+}
+
+.kio-hero__slide img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--kio-radius);
+}
+
+.kio-hero__prev,
+.kio-hero__next {
+	position: absolute;
+	bottom: 12px;
+	top: auto;
+	transform: none;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	border: 0;
+	background: rgba(0, 0, 0, 0.4);
+	color: #fff;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1;
+}
+
+.kio-hero__prev {
+	right: 56px;
+	left: auto;
+}
+
+.kio-hero__next {
+	right: 12px;
+}
+
+/* ==========================================================================
+   7. Lưới icon danh mục
+   ========================================================================== */
+
+.kio-cats {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 12px;
+	list-style: none;
+	margin: 0 0 32px;
+	padding: 0;
+}
+
+.kio-cats__item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 18px 8px;
+	background: var(--kio-card);
+	border-radius: var(--kio-radius);
+	box-shadow: var(--kio-shadow);
+	color: var(--kio-text);
+	text-align: center;
+	font-size: 13px;
+	font-weight: 700;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kio-cats__item:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--kio-shadow-hover);
+	color: var(--kio-brand);
+}
+
+.kio-cats__icon {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--kio-bg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--kio-brand);
+}
+
+.kio-cats__icon svg {
+	width: 22px;
+	height: 22px;
+}
+
+/* ==========================================================================
+   8. Khối Flash sale (placeholder Phase 2)
+   ========================================================================== */
+
+.kio-flash-sale {
+	background: var(--kio-card);
+	border-radius: var(--kio-radius);
+	padding: 20px;
+	margin-bottom: 32px;
+	box-shadow: var(--kio-shadow);
+}
+
+.kio-flash-sale__head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.kio-flash-sale__title {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--kio-accent);
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.kio-flash-sale__timer {
+	color: var(--kio-muted);
+	font-size: 13px;
+	border: 1px dashed var(--kio-border);
+	padding: 4px 10px;
+	border-radius: var(--kio-radius-sm);
+}
+
+/* ==========================================================================
+   9. Dải sản phẩm + tiêu đề khối
+   ========================================================================== */
+
+.kio-section-title {
+	font-size: 22px;
+	font-weight: 700;
+	margin: 0 0 4px;
+	color: var(--kio-text);
+}
+
+.kio-section-sub {
+	color: var(--kio-muted);
+	font-size: 14px;
+	margin: 0 0 16px;
+}
+
+.kio-strip {
+	margin-bottom: 36px;
+}
+
+.kio-strip__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.kio-strip__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.kio-strip__chip {
+	display: inline-block;
+	padding: 6px 14px;
+	border: 1px solid var(--kio-border);
+	border-radius: 999px;
+	color: var(--kio-text);
+	font-size: 13px;
+	background: #fff;
+}
+
+.kio-strip__chip:hover {
+	border-color: var(--kio-brand);
+	color: var(--kio-brand);
+}
+
+.kio-strip__more {
+	font-size: 14px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+/* ==========================================================================
+   10. Hàng thương hiệu + dải cam kết
+   ========================================================================== */
+
+.kio-brands {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 12px;
+	list-style: none;
+	margin: 0 0 36px;
+	padding: 0;
+}
+
+.kio-brands__item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 72px;
+	background: #fff;
+	border-radius: var(--kio-radius);
+	box-shadow: var(--kio-shadow);
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--kio-muted);
+	letter-spacing: 0.02em;
+	transition: color 0.15s ease;
+}
+
+.kio-brands__item:hover {
+	color: var(--kio-brand);
+}
+
+.kio-commit {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 12px;
+	margin: 0 0 36px;
+	padding: 0;
+	list-style: none;
+}
+
+.kio-commit__item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px;
+	background: #fff;
+	border-radius: var(--kio-radius);
+	box-shadow: var(--kio-shadow);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.kio-commit__item svg {
+	width: 34px;
+	height: 34px;
+	flex: 0 0 auto;
+	color: var(--kio-brand);
+}
+
+/* ==========================================================================
+   11. Thẻ sản phẩm (trang danh mục + shortcode [products])
+   ========================================================================== */
+
+ul.products {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	margin: 0 !important;
+}
+
+ul.products::before,
+ul.products::after {
+	content: none !important;
+}
+
+ul.products li.product {
+	background: var(--kio-card);
+	border-radius: var(--kio-radius);
+	box-shadow: var(--kio-shadow);
+	padding: 12px !important;
+	position: relative;
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+	margin: 0 !important;
+	float: none !important;
+	width: auto !important;
+	clear: none !important;
+	text-align: left;
+}
+
+ul.products li.product:hover {
+	box-shadow: var(--kio-shadow-hover);
+	transform: translateY(-3px);
+}
+
+ul.products li.product img {
+	border-radius: var(--kio-radius-sm);
+	margin-bottom: 10px;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.4;
+	min-height: 2.8em;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	padding: 0 !important;
+}
+
+ul.products li.product .price {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	font-size: 15px;
+}
+
+ul.products li.product .price ins {
+	order: -1;
+	font-weight: 700;
+	color: var(--kio-price);
+	font-size: 16px;
+	text-decoration: none;
+}
+
+ul.products li.product .price del {
+	color: var(--kio-muted);
+	font-size: 13px;
+}
+
+ul.products li.product .button {
+	display: inline-block;
+	margin-top: 10px;
+	background: var(--kio-brand);
+	color: #fff;
+	border-radius: var(--kio-radius-sm);
+	font-weight: 700;
+	font-size: 13px;
+	padding: 8px 14px;
+}
+
+ul.products li.product .button:hover {
+	background: var(--kio-brand-dark);
+}
+
+/* ==========================================================================
+   12. Trang danh mục
+   ========================================================================== */
+
+.archive .page-title,
+.woocommerce-products-header__title {
+	font-size: 26px;
+	font-weight: 700;
+}
+
+.woocommerce-result-count {
+	color: var(--kio-muted);
+	font-size: 13px;
+}
+
+/* Nền trang sản phẩm/archive để thẻ nổi lên */
+.archive.woocommerce-page .content-area,
+.post-type-archive-product .content-area {
+	padding-top: 20px;
+}
+
+/* ==========================================================================
+   13. Trang sản phẩm — biến thể hết hàng
+   ========================================================================== */
+
+select option.kio-out-of-stock {
+	color: #c4c9d2;
+	font-style: italic;
+}
+
+.single-product div.product .price {
+	color: var(--kio-price);
+	font-size: 26px;
+}
+
+.single-product div.product .price del {
+	color: var(--kio-muted);
+	font-size: 16px;
+}
+
+/* ==========================================================================
+   14. Responsive
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+	.kio-cats {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.kio-brands {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.kio-footer__grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 767px) {
+	.col-full {
+		padding-left: 16px;
+		padding-right: 16px;
+		box-sizing: border-box;
+	}
+
+	.kio-hero-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.kio-hero__side {
+		display: none;
+	}
+
+	.kio-utility__tagline {
+		display: none;
+	}
+
+	.kio-header__main {
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.kio-header__logo {
+		order: 1;
+	}
+
+	.kio-header__actions {
+		order: 2;
+		margin-left: auto;
+	}
+
+	.kio-header__search {
+		order: 3;
+		flex-basis: 100%;
+	}
+
+	.kio-nav__toggle {
+		display: inline-flex;
+	}
+
+	.kio-mega {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background: #fff;
+		border-radius: 0 0 var(--kio-radius) var(--kio-radius);
+		box-shadow: var(--kio-shadow-hover);
+		z-index: 100;
+	}
+
+	.kio-mega.is-open {
+		display: block;
+	}
+
+	.kio-mega__list {
+		flex-direction: column;
+	}
+
+	.kio-mega__link {
+		color: var(--kio-text);
+		border-bottom: 1px solid var(--kio-border);
+	}
+
+	.kio-mega__sub {
+		display: none;
+		position: static;
+		box-shadow: none;
+		padding: 0 0 8px 20px;
+	}
+
+	.kio-mega.is-open .kio-mega__sub {
+		display: block;
+	}
+
+	.kio-cats {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.kio-commit {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.kio-footer__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 479px) {
+	.kio-action > span:last-child {
+		display: none;
+	}
+
+	.kio-cats {
+		gap: 8px;
+	}
+
+	.kio-brands {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.kio-hero__prev,
+	.kio-hero__next {
+		display: none;
+	}
+}
+
+/* Số cột sản phẩm tăng dần theo màn hình: 2 (mobile) → 3 → 4 → 5. */
+@media (min-width: 768px) {
+	ul.products {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+	}
+}
+
+@media (min-width: 1024px) {
+	ul.products {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (min-width: 1280px) {
+	ul.products {
+		grid-template-columns: repeat(5, 1fr);
+	}
+}

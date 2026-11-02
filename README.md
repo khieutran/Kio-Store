@@ -12,7 +12,7 @@ Website demo bán điện thoại, máy tính bảng và đồ điện tử, d�
 | CMS | WordPress (image Docker chính thức) |
 | Thương mại điện tử | WooCommerce |
 | Database | MySQL 8.4 + phpMyAdmin |
-| Theme | Classic theme miễn phí + child theme `kio-child` |
+| Theme | Storefront (classic, miễn phí) + child theme `kio-child` |
 | Code tuỳ biến | Plugin `kio-store` |
 | Tự động hoá | WP-CLI |
 | Môi trường | Docker Compose, chạy trên máy local |
@@ -44,7 +44,7 @@ cp .env.example .env        # rồi đổi các mật khẩu trong .env
 ./scripts/install.sh        # khởi động container, cài và cấu hình WordPress
 ```
 
-`install.sh` dựng toàn bộ cửa hàng: WordPress, WooCommerce, cấu hình Việt Nam, danh mục, thương hiệu, thuộc tính, giao hàng, thanh toán, coupon và 33 sản phẩm demo có ảnh. Lần đầu khoảng 5 phút. Chạy lặp lại được: thứ gì có rồi thì chỉ cập nhật.
+`install.sh` dựng toàn bộ cửa hàng: WordPress, WooCommerce, cấu hình Việt Nam, danh mục, thương hiệu, thuộc tính, giao hàng, thanh toán, coupon, 33 sản phẩm demo có ảnh, theme Storefront + child theme `kio-child`, header/mega menu/footer, trang chủ và các trang chính sách. Lần đầu khoảng 5 phút. Chạy lặp lại được: thứ gì có rồi thì chỉ cập nhật.
 
 > ⚠️ `./scripts/reset.sh` **xoá sạch database và ảnh upload** rồi cài lại từ đầu. Sản phẩm, đơn hàng tạo tay trong wp-admin sẽ mất. Chỉ dùng trên máy dev.
 
@@ -73,7 +73,7 @@ GitHub Actions chạy `.github/workflows/ci.yml` mỗi khi push lên `main` ho�
 | Job | Kiểm tra | Thời gian |
 |---|---|---|
 | **Lint** | Cú pháp PHP (`php -l`) · chuẩn WordPress cho plugin/theme (PHPCS + WPCS, gồm các quy tắc bảo mật) · JSON trong `data/` · script bash (shellcheck) | ~1 phút |
-| **Smoke test** | Dựng toàn bộ cửa hàng bằng `install.sh` trên máy ảo GitHub, rồi `scripts/smoke-test.py` kiểm tra như khách: trang web, 33 sản phẩm, giá VND, hết hàng, giỏ hàng, phí ship, coupon, email, log lỗi PHP | ~6 phút |
+| **Smoke test** | Dựng toàn bộ cửa hàng bằng `install.sh` trên máy ảo GitHub, rồi `scripts/smoke-test.py` kiểm tra như khách: trang web, theme `kio-child`, trang chủ, 33 sản phẩm, giá VND, hết hàng, giỏ hàng (shortcode), phí ship, coupon, email, log lỗi PHP | ~6 phút |
 
 Chạy giống CI trên máy (không cần cài PHP, dùng Docker):
 
@@ -99,7 +99,7 @@ Chưa có CD (tự deploy): sẽ làm ở Phase 7 khi có server. CD chỉ đưa
 | 0 | Dựng môi trường, làm quen WordPress | `docs/phase0/phase-0.md` (local) | ✅ Xong |
 | 1 | WooCommerce và dữ liệu sản phẩm | `docs/phase1/phase-1.md` (local) | ✅ Xong |
 | 1.5 | CI: lint + smoke test trên GitHub Actions | README, mục trên | 🟡 Chờ chạy lần đầu trên GitHub |
-| 2 | Giao diện: classic theme, child theme | | ⬜ |
+| 2 | Giao diện: classic theme, child theme | `docs/phase2/phase-2.md` (local) | ✅ Xong |
 | 3 | Plugin chức năng | | ⬜ |
 | 4 | Tuỳ biến bằng code: hook, CPT, REST API | | ⬜ |
 | 5 | Hiệu năng | | ⬜ |
