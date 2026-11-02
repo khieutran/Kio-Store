@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# Cài đặt và cấu hình WordPress bằng WP-CLI.
+# Chạy lại nhiều lần được: bước nào đã làm rồi thì bỏ qua.
+#
+# Cách dùng: ./scripts/install.sh
+
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+# Nạp biến từ .env (DB_*, WP_*)
+set -a; source .env; set +a
+
+# Gọi WP-CLI trong container.
+#   --progress quiet: ẩn log "Container ... Creating"
+#   --rm: xoá container sau khi chạy xong;  -T: không cần terminal tương tác
+wp() { docker compose --progress quiet run --rm -T wpcli "$@"; }
+
+echo "==> Khởi động các container"
+docker compose up -d --wait
+
+echo "==> Chờ WordPress chép xong file core vào volume"
+until docker compose exec -T wordpress test -f /var/www/html/wp-config.php; do sleep 2; done
+
+# --- 1. Cài core ------------------------------------------------------------
+if wp core is-installed 2>/dev/null; then
+  echo "==> WordPress đã được cài, bỏ qua bước cài core"
+else
+  echo "==> Cài WordPress"
+  wp core install \
+    --url="$WP_URL" \
+    --title="$WP_TITLE" \
+    --admin_user="$WP_ADMIN_USER" \
+    --admin_password="$WP_ADMIN_PASSWORD" \
+    --admin_email="$WP_ADMIN_EMAIL" \
+    --skip-email
+
+  # Chỉ xoá nội dung mẫu ngay sau khi cài mới, để không đụng vào dữ liệu thật
+  echo "==> Xoá nội dung mẫu"
+  # Bài "Hello world!" (ID 1), "Sample Page" (ID 2), "Privacy Policy" nháp (ID 3)
+  for id in 1 2 3; do
+    wp post delete "$id" --force >/dev/null 2>&1 || true
+  done
+  wp comment delete 1 --force >/dev/null 2>&1 || true
+fi
+
+# --- 2. Ngôn ngữ, thời gian ---------------------------------------------------
+echo "==> Cài tiếng Việt"
+wp language core install vi --activate
+
+echo "==> Múi giờ, định dạng ngày giờ"
+wp option update timezone_string "Asia/Ho_Chi_Minh"
+wp option update date_format "d/m/Y"
+wp option update time_format "H:i"
+wp option update start_of_week 1        # 1 = thứ Hai
+
+# --- 3. Permalink -------------------------------------------------------------
+echo "==> Permalink dạng /ten-bai-viet/"
+# File .htaccess chứa rewrite rule đã có sẵn trong image wordpress:*-apache,
+# nên chỉ cần lưu cấu trúc và làm mới rewrite rule trong database.
+wp rewrite structure '/%postname%/'
+wp rewrite flush
+
+# --- 4. Plugin mặc định --------------------------------------------------------
+echo "==> Gỡ plugin mặc định không dùng"
+wp plugin delete hello akismet >/dev/null 2>&1 || true
+
+# --- 5. Site demo: yêu cầu công cụ tìm kiếm không index ----------------------
+wp option update blog_public 0
+
+echo
+echo "Xong. Mở $WP_URL/wp-admin (user: $WP_ADMIN_USER, mật khẩu trong .env)"

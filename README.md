@@ -34,24 +34,36 @@ Chỉ có `kio-child` và `kio-store` được đưa vào git. Core WordPress, p
 
 ## Cách chạy
 
-> Đang hoàn thiện ở Phase 0.
+Yêu cầu: Docker Desktop, cổng `8080` và `8081` còn trống.
 
 ```bash
-cp .env.example .env        # đặt mật khẩu database
-docker compose up -d
+cp .env.example .env        # rồi đổi các mật khẩu trong .env
+./scripts/install.sh        # khởi động container, cài và cấu hình WordPress
 ```
 
-| Dịch vụ | Địa chỉ |
+`install.sh` chạy lặp lại được: nếu WordPress đã cài thì chỉ áp lại cấu hình.
+
+| Dịch vụ | Địa chỉ | Đăng nhập |
+|---|---|---|
+| Website | http://localhost:8080 | |
+| wp-admin | http://localhost:8080/wp-admin | `WP_ADMIN_USER` / `WP_ADMIN_PASSWORD` trong `.env` |
+| phpMyAdmin | http://localhost:8081 | tự đăng nhập |
+
+### Lệnh hay dùng
+
+| Việc | Lệnh |
 |---|---|
-| Website | http://localhost:8080 |
-| wp-admin | http://localhost:8080/wp-admin |
-| phpMyAdmin | http://localhost:8081 |
+| Chạy lệnh WP-CLI | `docker compose run --rm wpcli <lệnh>`, ví dụ `... wpcli plugin list` |
+| Xem log lỗi PHP | `docker compose exec wordpress tail -f wp-content/debug.log` |
+| Tắt (giữ dữ liệu) | `docker compose down` |
+| Xoá sạch, cài lại từ đầu | `./scripts/reset.sh` |
+| Tạo nội dung mẫu Phase 0 | `./scripts/phase0-sample-content.sh` |
 
 ## Lộ trình
 
 | Phase | Nội dung | Ghi chú | Trạng thái |
 |---|---|---|---|
-| 0 | Dựng môi trường, làm quen WordPress | [phase-0.md](docs/phase-0.md) | 🟡 Đang làm |
+| 0 | Dựng môi trường, làm quen WordPress | `docs/phase0/phase-0.md` (local) | ✅ Xong |
 | 1 | WooCommerce và dữ liệu sản phẩm | | ⬜ |
 | 2 | Giao diện: classic theme, child theme | | ⬜ |
 | 3 | Plugin chức năng | | ⬜ |
