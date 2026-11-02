@@ -24,3 +24,4 @@ define( 'KIO_STORE_DIR', plugin_dir_path( __FILE__ ) );
 
 // Mỗi tính năng một file trong includes/.
 require_once KIO_STORE_DIR . 'includes/local-mail.php';
+require_once KIO_STORE_DIR . 'includes/dev-metrics.php';

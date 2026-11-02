@@ -997,3 +997,173 @@ select option.kio-out-of-stock {
 		grid-template-columns: repeat(5, 1fr);
 	}
 }
+
+
+/* ==========================================================================
+   Phase 3 — Giao diện cho bộ lọc và plugin (yêu thích, so sánh)
+   Chỉ chỉnh để gọn và đúng màu; đợt "sinh động hơn" làm sau Phase 4.
+   ========================================================================== */
+
+/* Giá dạng khoảng (sản phẩm có biến thể: "giá – giá") nằm trên một dòng.
+   Phase 2 xếp .price thành cột (giá sale ở trên, giá gốc gạch ngang ở dưới); khoảng giá không có
+   giá gạch ngang (<del>) nên chỉ đổi sang hàng ngang cho trường hợp đó. */
+ul.products li.product .price:not(:has(del)) {
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+	column-gap: 4px;
+}
+
+/* Thẻ sản phẩm là mốc định vị cho nút trái tim */
+ul.products li.product {
+	position: relative;
+}
+
+/* Yêu thích (WPC Smart Wishlist): nút tròn hình trái tim ở góc trên ảnh */
+ul.products li.product .woosw-btn {
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	z-index: 2;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: #fff;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+	font-size: 0; /* ẩn chữ nhưng trình đọc màn hình vẫn đọc aria-label "Yêu thích" */
+	color: var(--kio-muted);
+	cursor: pointer;
+}
+ul.products li.product .woosw-btn::before {
+	content: "";
+	display: block;
+	width: 18px;
+	height: 18px;
+	margin: 9px auto;
+	background: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.5 5c2 0 3.4 1.1 4.2 2.4h2.6C14.1 6.1 15.5 5 17.5 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.5 5c2 0 3.4 1.1 4.2 2.4h2.6C14.1 6.1 15.5 5 17.5 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+ul.products li.product .woosw-btn:hover,
+ul.products li.product .woosw-btn.woosw-added,
+ul.products li.product .woosw-btn.woosw-btn-added {
+	color: var(--kio-price);
+}
+
+/* So sánh (YITH Compare): link nhỏ có icon, không phải nút to */
+ul.products li.product a.compare.button {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 8px 0 0;
+	padding: 0;
+	background: none;
+	border: 0;
+	box-shadow: none;
+	color: var(--kio-muted);
+	font-size: 0.85rem;
+	font-weight: 500;
+}
+ul.products li.product a.compare.button::before {
+	content: "⇄";
+	font-size: 1rem;
+}
+ul.products li.product a.compare.button:hover,
+ul.products li.product a.compare.button.added {
+	color: var(--kio-brand);
+}
+
+/* Thanh trượt giá: màu thương hiệu thay cho tím mặc định của WooCommerce */
+.widget_price_filter .ui-slider .ui-slider-range,
+.widget_price_filter .ui-slider .ui-slider-handle {
+	background-color: var(--kio-brand);
+}
+.widget_price_filter .price_slider_wrapper .ui-widget-content {
+	background-color: #dbe3f0;
+}
+
+/* Bộ lọc: tiêu đề nhóm gọn hơn */
+#secondary .widget-title {
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+/* Nút "Bộ lọc" + ngăn kéo: chỉ trên mobile */
+.kio-filter-toggle,
+.kio-filter-close,
+.kio-filter-backdrop {
+	display: none;
+}
+
+@media (max-width: 767px) {
+	.kio-filter-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		min-height: 44px;
+		padding: 0 14px;
+		border: 1px solid var(--kio-brand);
+		border-radius: var(--kio-radius);
+		background: #fff;
+		color: var(--kio-brand);
+		font-weight: 700;
+	}
+	.kio-filter-toggle svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	#secondary {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10001; /* trên thanh công cụ dưới đáy của Storefront (z-index 9999) */
+		width: min(86vw, 360px);
+		margin: 0;
+		padding: 56px 20px 24px;
+		overflow-y: auto;
+		background: #fff;
+		box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+		transform: translateX(100%);
+		transition: transform 0.25s ease;
+	}
+	.kio-filters-open #secondary {
+		transform: none;
+	}
+
+	.kio-filter-close {
+		display: block;
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		width: 44px;
+		height: 44px;
+		border: 0;
+		background: none;
+		font-size: 28px;
+		line-height: 1;
+		color: var(--kio-text);
+	}
+
+	.kio-filter-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 10000;
+		background: rgba(17, 24, 39, 0.45);
+	}
+	.kio-filters-open .kio-filter-backdrop {
+		display: block;
+	}
+	.kio-filters-open {
+		overflow: hidden; /* không cuộn trang phía sau khi ngăn kéo đang mở */
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#secondary {
+		transition: none;
+	}
+}

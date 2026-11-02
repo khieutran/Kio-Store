@@ -105,7 +105,52 @@
 		} );
 	}
 
+	/**
+	 * Ngăn kéo bộ lọc trên mobile: nút .kio-filter-toggle mở sidebar #secondary.
+	 * Đóng bằng nút ×, bấm vào nền mờ, hoặc phím Esc. Desktop: sidebar hiển thị bình thường.
+	 */
+	function setupFilterDrawer() {
+		var toggle = document.querySelector( '.kio-filter-toggle' );
+		var panel = document.getElementById( 'secondary' );
+		if ( ! toggle || ! panel ) {
+			return;
+		}
+
+		var close = document.createElement( 'button' );
+		close.type = 'button';
+		close.className = 'kio-filter-close';
+		close.setAttribute( 'aria-label', 'Đóng bộ lọc' );
+		close.textContent = '×';
+		panel.insertBefore( close, panel.firstChild );
+
+		var backdrop = document.createElement( 'div' );
+		backdrop.className = 'kio-filter-backdrop';
+		document.body.appendChild( backdrop );
+
+		function setOpen( open ) {
+			document.body.classList.toggle( 'kio-filters-open', open );
+			toggle.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+			( open ? close : toggle ).focus();
+		}
+
+		toggle.addEventListener( 'click', function () {
+			setOpen( true );
+		} );
+		close.addEventListener( 'click', function () {
+			setOpen( false );
+		} );
+		backdrop.addEventListener( 'click', function () {
+			setOpen( false );
+		} );
+		document.addEventListener( 'keydown', function ( event ) {
+			if ( 'Escape' === event.key && document.body.classList.contains( 'kio-filters-open' ) ) {
+				setOpen( false );
+			}
+		} );
+	}
+
 	document.addEventListener( 'DOMContentLoaded', function () {
+		setupFilterDrawer();
 		setupMegaMenu();
 		setupHeroSlider();
 		setupVariationStock();
