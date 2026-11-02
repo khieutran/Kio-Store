@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+  Cấu hình PHPCS: kiểm tra code theo WordPress Coding Standards.
+
+  Chỉ kiểm tra code CHẠY TRÊN SITE (plugin kio-store, theme kio-child).
+  Thư mục scripts/ là công cụ dev chạy qua WP-CLI, không lên server thật,
+  nên chỉ kiểm tra cú pháp (php -l), không áp chuẩn WordPress.
+
+  Chạy local: xem README, mục "Kiểm tra tự động (CI)".
+-->
+<ruleset name="Kio Store">
+	<description>WordPress Coding Standards cho plugin và theme của Kio Mobile</description>
+
+	<file>wp-content/plugins/kio-store</file>
+	<file>wp-content/themes/kio-child</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/> <!-- s: hiện tên quy tắc vi phạm, p: hiện tiến trình -->
+
+	<!-- Bộ quy tắc đầy đủ của WordPress: định dạng, đặt tên, docblock, và quan trọng nhất là BẢO MẬT
+	     (escape đầu ra, kiểm tra nonce, sanitize đầu vào, SQL an toàn). -->
+	<rule ref="WordPress"/>
+
+	<!-- Code phải chạy được trên PHP 8.1 trở lên và WordPress 6.5 trở lên -->
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="testVersion" value="8.1-"/>
+	<config name="minimum_wp_version" value="6.5"/>
+
+	<!-- Mọi chuỗi dịch phải dùng text domain của plugin -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="kio-store"/>
+				<element value="kio-child"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Hàm, hằng số, hook tự đặt phải có tiền tố riêng để không trùng plugin khác -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="kio_store"/>
+				<element value="kio_child"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

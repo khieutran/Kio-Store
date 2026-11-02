@@ -23,3 +23,6 @@ backups/
 
 # Kế hoạch cá nhân (chỉ giữ ở máy)
 docs/
+
+# Composer (công cụ kiểm tra code)
+/vendor/
