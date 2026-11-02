@@ -1,0 +1,22 @@
+# Bí mật
+.env
+
+# wp-content: chỉ theo dõi theme và plugin tự viết
+wp-content/*
+!wp-content/themes/
+wp-content/themes/*
+!wp-content/themes/kio-child/
+!wp-content/plugins/
+wp-content/plugins/*
+!wp-content/plugins/kio-store/
+
+# Dump database, backup
+*.sql
+*.sql.gz
+backups/
+
+# Hệ điều hành, editor
+.DS_Store
+.idea/
+.vscode/
+*.log
