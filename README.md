@@ -80,13 +80,15 @@ Chạy giống CI trên máy (không cần cài PHP, dùng Docker):
 ```bash
 # Lint
 docker run --rm -v "$PWD":/app -w /app composer:2 sh -c "composer install -q && vendor/bin/phpcs"
-docker run --rm -v "$PWD":/mnt -w /mnt koalaman/shellcheck:stable -x scripts/*.sh
+docker run --rm -v "$PWD":/mnt -w /mnt koalaman/shellcheck:v0.11.0 -x scripts/*.sh
 
 # Smoke test (sau khi site đang chạy)
 python3 scripts/smoke-test.py
 ```
 
 Tự sửa lỗi định dạng PHPCS: `docker run --rm -v "$PWD":/app -w /app composer:2 vendor/bin/phpcbf`
+
+**Phiên bản cố định:** image Docker (`docker-compose.yml`), WooCommerce (`WOO_VERSION` trong `scripts/setup-woocommerce.sh`), shellcheck và các gói Composer (`composer.lock`) đều ghi rõ phiên bản, để máy dev và CI chạy cùng một bộ phần mềm. Nâng cấp = đổi số phiên bản, chạy CI, xanh thì merge.
 
 Chưa có CD (tự deploy): sẽ làm ở Phase 7 khi có server. CD chỉ đưa **code** (`kio-child`, `kio-store`) lên server, không bao giờ đưa database hay chạy `reset.sh`.
 

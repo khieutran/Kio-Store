@@ -6,10 +6,15 @@
 # shellcheck source=scripts/_lib.sh
 source "$(dirname "$0")/_lib.sh"
 
+# Phiên bản WooCommerce cố định (giống lý do cố định image trong docker-compose.yml).
+# Nâng cấp: đổi số ở đây, chạy CI. Site đã cài bản cũ thì cập nhật bằng
+#   docker compose run --rm wpcli plugin update woocommerce --version=<bản mới>
+WOO_VERSION=11.2.1
+
 # --- 1. Cài WooCommerce -------------------------------------------------------
 if ! wp plugin is-installed woocommerce; then
-  step "Tải WooCommerce"
-  wp plugin install woocommerce
+  step "Tải WooCommerce $WOO_VERSION"
+  wp plugin install woocommerce --version="$WOO_VERSION"
 fi
 
 # Cài bản dịch TRƯỚC khi kích hoạt: lúc kích hoạt lần đầu, Woo tạo các trang
