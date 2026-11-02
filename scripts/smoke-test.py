@@ -19,6 +19,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import uuid
 from http.cookiejar import CookieJar
@@ -224,6 +225,82 @@ def check_mail():
     check("Mailpit nhận được email vừa gửi", found == 1, f"tìm thấy {found}")
 
 
+def product_titles(page_html):
+    return re.findall(r'woocommerce-loop-product__title">([^<]+)', page_html)
+
+
+def check_plugins():
+    """Phase 3: bộ lọc (widget Woo), so sánh, yêu thích, đánh giá có ảnh, SEO, form liên hệ."""
+    cat = SITE + "/danh-muc-san-pham/dien-thoai/"
+    _, page = get(cat)
+
+    # Bộ lọc: widget có sẵn của Woo trong sidebar, lọc qua tham số URL
+    check("Bộ lọc: sidebar có widget thương hiệu, khoảng giá, thuộc tính",
+          all(w in page for w in ["woocommerce_brand_nav-1", "woocommerce_price_filter-1", "woocommerce_layered_nav-1"]))
+    check("Bộ lọc: không còn widget mặc định của WordPress (tìm kiếm, bài viết…)",
+          "wp-block-latest-posts" not in page and "wp-block-search" not in page)
+    check("Bộ lọc: có nút 'Bộ lọc' cho mobile", 'class="kio-filter-toggle"' in page)
+    n = len(product_titles(get(cat + "?filter_ram=8gb")[1]))
+    check("Lọc RAM 8GB trong Điện thoại → 4 sản phẩm", n == 4, f"có {n}")
+    m = re.search(r'filter_product_brand=(\d+)"[^>]*>Apple<', page)
+    titles = product_titles(get(cat + f"?filtering=1&filter_product_brand={m.group(1)}")[1]) if m else []
+    check("Lọc thương hiệu Apple → chỉ iPhone", len(titles) == 3 and all("iPhone" in t for t in titles), titles)
+    n = len(product_titles(get(cat + "?min_price=0&max_price=10000000")[1]))
+    check("Lọc giá dưới 10 triệu → 2 sản phẩm", n == 2, f"có {n}")
+
+    # So sánh (YITH) + Yêu thích (WPC): nút trên thẻ sản phẩm, trang riêng
+    check("So sánh: nút trên thẻ sản phẩm", 'class="compare button' in page)
+    check("So sánh: trang /so-sanh/ → 200", get(SITE + "/so-sanh/")[0] == 200)
+    check("Yêu thích: nút trái tim trên thẻ sản phẩm", "woosw-btn" in page)
+    check("Yêu thích: trang /yeu-thich/ → 200", get(SITE + "/yeu-thich/")[0] == 200)
+
+    # Đánh giá có ảnh (Photo Reviews) + SEO (Rank Math) trên trang sản phẩm
+    _, product = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    check("Đánh giá có ảnh: Photo Reviews có trên trang sản phẩm", "woocommerce-photo-reviews" in product or "wcpr" in product)
+    title = (re.search(r"<title>([^<]+)", product) or [None, ""])[1]
+    check("SEO: title theo mẫu Rank Math (… | Kio Mobile)", title.endswith("| Kio Mobile"), title)
+    check("SEO: có meta description", '<meta name="description"' in product)
+    graph = []
+    for block in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', product, re.S):
+        data = json.loads(block)
+        graph += data.get("@graph", [data])
+    offers = next((g.get("offers") for g in graph if g.get("@type") == "Product"), None)
+    check("SEO: schema Product có offers (giá)", bool(offers), str(offers)[:80])
+    _, index = get(SITE + "/sitemap_index.xml")
+    check("SEO: sitemap có sản phẩm + danh mục + thương hiệu",
+          all(x in index for x in ["product-sitemap.xml", "product_cat-sitemap.xml", "product_brand-sitemap.xml"]))
+    n = get(SITE + "/product-sitemap.xml")[1].count("<loc>")
+    check(f"SEO: sitemap sản phẩm có ≥ {EXPECTED_PRODUCTS} URL", n >= EXPECTED_PRODUCTS, f"có {n}")
+
+    # Form liên hệ (Fluent Forms): gửi như khách thật → email tới Mailpit
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+    contact = opener.open(SITE + "/lien-he/", timeout=30).read().decode()
+    form = re.search(r'<form[^>]*data-form_id="(\d+)"[^>]*>(.*?)</form>', contact, re.S)
+    check("Liên hệ: form có trên trang", bool(form))
+    if not form:
+        return
+    hidden = dict(re.findall(r'<input[^>]*type="hidden"[^>]*name="([^"]+)"[^>]*value="([^"]*)"', form.group(2)))
+    token = uuid.uuid4().hex[:12]
+    fields = {**hidden, "names[first_name]": "Khách Smoke Test", "email": "khach@vidu.com",
+              "subject": f"Smoke {token}", "message": "Kiểm tra form liên hệ."}
+    ajax = re.search(r'"ajaxUrl":"([^"]+)"', contact).group(1).replace("\\/", "/")
+    body = urllib.parse.urlencode({"action": "fluentform_submit", "form_id": form.group(1),
+                                   "data": urllib.parse.urlencode(fields)}).encode()
+    try:
+        result = json.loads(opener.open(urllib.request.Request(ajax, data=body), timeout=30).read())
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        result = {"error": str(e)}
+    check("Liên hệ: gửi form thành công", result.get("success") is True, str(result)[:100])
+    found = 0
+    for _ in range(10):
+        status, mail = get(f"{MAILPIT}/search?query=subject:{token}")
+        found = json.loads(mail).get("messages_count", 0) if status == 200 else 0
+        if found:
+            break
+        time.sleep(1)
+    check("Liên hệ: chủ shop nhận email trong Mailpit", found == 1, f"tìm thấy {found}")
+
+
 def check_php_log():
     log = subprocess.run(
         ["docker", "compose", "exec", "-T", "wordpress", "sh", "-c", "cat wp-content/debug.log 2>/dev/null || true"],
@@ -242,7 +319,8 @@ def main():
     section("3. Theme và giao diện", check_theme)
     section("4. Giỏ hàng, giao hàng, coupon", check_cart)
     section("5. Email (Mailpit)", check_mail)
-    section("6. Log lỗi PHP", check_php_log)
+    section("6. Plugin chức năng (Phase 3)", check_plugins)
+    section("7. Log lỗi PHP", check_php_log)
 
     print()
     if failures:
