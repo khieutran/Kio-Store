@@ -1,0 +1,33 @@
+[
+  {
+    "slug": "query-monitor",
+    "version": "4.1.1",
+    "dev": true,
+    "why": "Công cụ dev: xem query DB, hook, template, CSS/JS của từng trang. Chỉ cài ở local, không lên server."
+  },
+  {
+    "slug": "yith-woocommerce-compare",
+    "version": "3.15.1",
+    "why": "So sánh sản phẩm. Nhẹ nhất trong các ứng viên (+5 query, +16ms, không thêm JS ở trang chủ), tương thích HPOS. Phương án loại: WPC Smart Compare (+50 query mọi trang)."
+  },
+  {
+    "slug": "woo-photo-reviews",
+    "version": "1.2.32",
+    "why": "Đánh giá có ảnh. Nhẹ (+1 query ngoài trang SP, không thêm CSS/JS ở trang chủ), gỡ sạch. Phương án loại: Customer Reviews (+147 KB CSS + 146 KB JS ở mọi trang)."
+  },
+  {
+    "slug": "woo-smart-wishlist",
+    "version": "6.2.0",
+    "why": "Danh sách yêu thích. Cân bằng nhất (+31–38 query, +40ms, ~137 KB CSS/JS). Phương án loại: YITH (+1,2 MB JS), TI (+110ms)."
+  },
+  {
+    "slug": "seo-by-rank-math",
+    "version": "1.0.280",
+    "why": "SEO: title/meta, sitemap, schema Product miễn phí. Nhẹ (+4 query, +7ms). Phương án loại: Yoast (+9–26 query, 6 bảng, schema Woo đầy đủ phải trả phí)."
+  },
+  {
+    "slug": "fluentform",
+    "version": "6.2.17",
+    "why": "Form liên hệ. Không nạp CSS/JS ở trang không có form, lưu lần gửi vào DB. Phương án loại: Contact Form 7 (nạp JS/CSS mọi trang), WPForms (+32ms, quảng cáo Pro)."
+  }
+]

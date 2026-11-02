@@ -70,7 +70,13 @@ wp option update blog_public 0
 step "Nạp sản phẩm demo"
 wp eval-file /scripts/import-products.php | tail -n +2 | wc -l | xargs printf '    %s sản phẩm\n'
 
-# --- 9. Nội dung theme: trang chủ, menu, trang chính sách, Customizer ----------
+# --- 9. Plugin chức năng (data/plugins.json) + cấu hình ------------------------
+# Chạy TRƯỚC bước nội dung theme: trang Liên hệ cần ID form do bước này tạo.
+step "Plugin chức năng"
+wp eval-file /scripts/setup-plugins.php
+wp eval-file /scripts/plugins-settings.php
+
+# --- 10. Nội dung theme: trang chủ, menu, trang chính sách, Customizer ---------
 step "Nội dung theme (trang chủ, menu, footer, Customizer)"
 wp eval-file /scripts/setup-theme-content.php
 
