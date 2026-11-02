@@ -40,11 +40,19 @@ jobs:
       - name: Chuẩn WordPress cho plugin và theme (PHPCS)
         run: vendor/bin/phpcs
 
+      # "|| exit 1": dừng ngay khi gặp file lỗi. Viết "python ... && echo" thì lỗi ở file
+      # không phải file cuối sẽ bị nuốt mất (bash -e bỏ qua lỗi trong chuỗi &&).
       - name: File JSON trong data/ hợp lệ
-        run: for f in data/*.json; do python3 -m json.tool "$f" > /dev/null && echo "OK $f"; done
+        run: for f in data/*.json; do python3 -m json.tool "$f" > /dev/null || exit 1; echo "OK $f"; done
 
+      # Python của runner (giống môi trường chạy smoke-test.py ở job sau)
+      - name: Cú pháp Python
+        run: python3 -m py_compile scripts/smoke-test.py
+
+      # Chạy shellcheck bằng image cố định phiên bản, giống hệt lệnh chạy ở máy dev (README).
+      # Không dùng bản cài sẵn trên runner vì phiên bản khác nhau → kết quả khác nhau.
       - name: Script bash (shellcheck)
-        run: shellcheck -x scripts/*.sh
+        run: docker run --rm -v "$PWD":/mnt -w /mnt koalaman/shellcheck:v0.11.0 -x scripts/*.sh
 
   smoke:
     name: Smoke test
