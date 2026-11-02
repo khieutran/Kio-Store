@@ -129,6 +129,56 @@ def check_products():
     check("22.990.000 ₫ hiển thị trên trang S26", "22.990.000" in get(SITE + "/san-pham/samsung-galaxy-s26/")[1])
 
 
+def check_theme():
+    _, home = get(SITE + "/")
+    check("Theme kio-child: style.css được nạp", "wp-content/themes/kio-child/style.css" in home)
+    for cls in ["kio-hero-grid", "kio-flash-sale", "kio-cats", "kio-brands", "kio-commit", "kio-footer"]:
+        check(f"Trang chủ có khối {cls}", cls in home)
+    check("Trang chủ có lưới sản phẩm", 'class="products' in home)
+    check("Có link 'Bỏ qua đến nội dung' (skip link → #content)", 'class="skip-link screen-reader-text" href="#content"' in home)
+    check("Mega menu: số thẻ <li> mở và đóng bằng nhau",
+          home.count("kio-mega__item") > 0
+          and len(re.findall(r"<li[\s>]", home[home.find("kio-mega__list"):home.find("</nav>")]))
+          == home[home.find("kio-mega__list"):home.find("</nav>")].count("</li>"))
+
+    # Trang Giỏ hàng/Thanh toán phải dùng shortcode (hook classic chạy ở Phase 4).
+    # Cần một sản phẩm simple trong giỏ "classic" (server-side) thì form mới hiện ra.
+    simple = next((p for p in by_sku.values() if p.get("type") == "simple"), None)
+    if simple is None:
+        check("Giỏ hàng dùng shortcode", False, "không tìm thấy sản phẩm simple")
+        return
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+    try:
+        opener.open(SITE + "/?add-to-cart=%d" % simple["id"], timeout=30).read()
+    except (urllib.error.HTTPError, urllib.error.URLError, OSError):
+        pass
+
+    def get_with_cart(path):
+        try:
+            return opener.open(SITE + path, timeout=30).read().decode()
+        except urllib.error.HTTPError as e:
+            return e.read().decode(errors="replace")
+        except (urllib.error.URLError, OSError):
+            return ""
+
+    # Thêm vào giỏ bằng AJAX (như nút "Thêm vào giỏ" ở trang danh mục): Woo trả về "fragments"
+    # để thay HTML không cần tải lại trang. Header tự dựng phải có fragment cho số đếm giỏ hàng.
+    try:
+        body = opener.open(urllib.request.Request(
+            SITE + "/?wc-ajax=add_to_cart", data=f"product_id={simple['id']}&quantity=1".encode(), method="POST",
+        ), timeout=30).read()
+        fragment = json.loads(body).get("fragments", {}).get("em.kio-cart-count", "")
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        fragment = str(e)
+    check("AJAX thêm vào giỏ cập nhật số đếm ở header (fragment em.kio-cart-count)",
+          'class="kio-cart-count"' in fragment and 'data-count="2"' in fragment, fragment[:80])
+
+    cart = get_with_cart("/gio-hang/")
+    check("Giỏ hàng dùng shortcode [woocommerce_cart]", "woocommerce-cart-form" in cart)
+    checkout = get_with_cart("/thanh-toan/")
+    check("Thanh toán dùng shortcode [woocommerce_checkout]", 'name="checkout"' in checkout)
+
+
 def check_cart():
     charger = by_sku.get("ANK-SAC20W", {}).get("id")
     cable = by_sku.get("APL-CAP-USBC1M", {}).get("id")
@@ -189,9 +239,10 @@ def check_php_log():
 def main():
     section("1. Trang web", check_pages)
     section("2. Sản phẩm (Store API)", check_products)
-    section("3. Giỏ hàng, giao hàng, coupon", check_cart)
-    section("4. Email (Mailpit)", check_mail)
-    section("5. Log lỗi PHP", check_php_log)
+    section("3. Theme và giao diện", check_theme)
+    section("4. Giỏ hàng, giao hàng, coupon", check_cart)
+    section("5. Email (Mailpit)", check_mail)
+    section("6. Log lỗi PHP", check_php_log)
 
     print()
     if failures:

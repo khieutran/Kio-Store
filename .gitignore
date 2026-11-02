@@ -29,3 +29,6 @@ docs/
 
 # Python
 __pycache__/
+
+# Công cụ chụp màn hình playwright-cli
+.playwright-cli/
