@@ -2,6 +2,25 @@
 # không phụ thuộc tên thư mục chứa repo.
 name: kio-store
 
+# Biến môi trường dùng chung cho "wordpress" và "wpcli": hai container chạy cùng
+# một bộ code WordPress nên phải thấy cùng một cấu hình.
+# (Khối bắt đầu bằng "x-" được Compose bỏ qua, chỉ dùng làm anchor &wp_env.)
+x-wp-env: &wp_env
+  WORDPRESS_DB_HOST: db:3306
+  WORDPRESS_DB_NAME: ${DB_NAME}
+  WORDPRESS_DB_USER: ${DB_USER}
+  WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+  WORDPRESS_TABLE_PREFIX: wp_
+  WORDPRESS_DEBUG: 1
+  # Đoạn PHP được chèn vào wp-config.php lúc chạy
+  WORDPRESS_CONFIG_EXTRA: |
+    define('WP_DEBUG_LOG', true);
+    define('WP_DEBUG_DISPLAY', false);
+    define('WP_ENVIRONMENT_TYPE', 'local');
+    // Plugin kio-store đọc 2 hằng số này để gửi mọi email vào Mailpit
+    define('KIO_SMTP_HOST', 'mailpit');
+    define('KIO_SMTP_PORT', 1025);
+
 services:
   # ---------------------------------------------------------------
   # Database: nơi WordPress lưu toàn bộ nội dung và cài đặt
@@ -35,23 +54,24 @@ services:
         condition: service_healthy
     ports:
       - "8080:80"
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: ${DB_NAME}
-      WORDPRESS_DB_USER: ${DB_USER}
-      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
-      WORDPRESS_TABLE_PREFIX: wp_
-      WORDPRESS_DEBUG: 1
-      WORDPRESS_CONFIG_EXTRA: |
-        define('WP_DEBUG_LOG', true);
-        define('WP_DEBUG_DISPLAY', false);
-        define('WP_ENVIRONMENT_TYPE', 'local');
-    volumes: &wp_volumes
+    environment: *wp_env
+    volumes:
       # Toàn bộ file WordPress nằm trong volume Docker (không lẫn vào repo)
       - wp_data:/var/www/html
       # Chỉ 2 thư mục tự viết được mount từ repo ra
       - ./wp-content/themes/kio-child:/var/www/html/wp-content/themes/kio-child
       - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
+
+  # ---------------------------------------------------------------
+  # Mailpit: hộp thư giả. Bắt mọi email WordPress gửi đi (SMTP cổng 1025
+  # trong mạng Docker) và hiển thị trên web http://localhost:8025.
+  # Không email nào thật sự ra ngoài internet.
+  # ---------------------------------------------------------------
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
 
   # ---------------------------------------------------------------
   # phpMyAdmin: xem database bằng giao diện web
@@ -82,12 +102,15 @@ services:
       db:
         condition: service_healthy
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: ${DB_NAME}
-      WORDPRESS_DB_USER: ${DB_USER}
-      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      <<: *wp_env
       WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
-    volumes: *wp_volumes
+    volumes:
+      - wp_data:/var/www/html
+      - ./wp-content/themes/kio-child:/var/www/html/wp-content/themes/kio-child
+      - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
+      # Script PHP và dữ liệu mẫu, chỉ đọc. Chạy bằng: wp eval-file /scripts/<file>.php
+      - ./scripts:/scripts:ro
+      - ./data:/data:ro
     entrypoint: ["wp"]
 
 volumes:

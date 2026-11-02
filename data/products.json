@@ -1,0 +1,415 @@
+[
+  {
+    "sku": "SS-S26", "type": "variable", "name": "Samsung Galaxy S26",
+    "category": "dien-thoai", "brand": "Samsung", "featured": true, "days_old": 20, "sold": 214,
+    "short_description": "Màn hình 6.3 inch Dynamic AMOLED 2X 120Hz, RAM 12GB, camera chính 50MP, Galaxy AI.",
+    "description": "Thiết kế khung nhôm Armor Aluminum, kính Gorilla Glass Victus 2. Pin 4.000 mAh, sạc nhanh 25W, kháng nước IP68. Hỗ trợ 7 năm cập nhật hệ điều hành.",
+    "specs": { "ram": "12GB", "man-hinh": "6.3 inch", "chip": "Snapdragon 8 Elite Gen 5", "pin": "4000 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },       "regular_price": 22990000, "stock": 12 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 22990000, "stock": 8 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },       "regular_price": 26990000, "stock": 5 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 26990000, "sale_price": 25490000, "stock": 3 }
+    ]
+  },
+  {
+    "sku": "APL-IP17PM", "type": "variable", "name": "iPhone 17 Pro Max",
+    "category": "dien-thoai", "brand": "Apple", "featured": true, "days_old": 45, "sold": 532,
+    "short_description": "Chip A19 Pro, màn hình 6.9 inch ProMotion 120Hz, cụm camera 48MP Fusion, khung nhôm nguyên khối.",
+    "description": "Hệ thống tản nhiệt buồng hơi, thời lượng pin dài nhất trên iPhone. Camera tele 48MP zoom quang 8x, quay video ProRes RAW. Kết nối USB-C tốc độ USB 3.",
+    "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Apple A19 Pro", "pin": "4832 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Cam" },        "regular_price": 37990000, "sale_price": 36490000, "stock": 15 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 37990000, "sale_price": 36490000, "stock": 10 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" },        "regular_price": 37990000, "sale_price": 36490000, "stock": 7 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Cam" },        "regular_price": 44490000, "stock": 6 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 44490000, "stock": 0 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Bạc" },        "regular_price": 44490000, "stock": 2 }
+    ]
+  },
+  {
+    "sku": "APL-IP17", "type": "variable", "name": "iPhone 17",
+    "category": "dien-thoai", "brand": "Apple", "featured": true, "days_old": 45, "sold": 408,
+    "short_description": "Màn hình 6.3 inch ProMotion 120Hz lần đầu trên iPhone tiêu chuẩn, chip A19, camera trước 18MP Center Stage.",
+    "description": "Màn hình Ceramic Shield 2 chống trầy gấp 3 lần. Camera kép 48MP Fusion và góc siêu rộng 48MP. Sạc nhanh 40W đạt 50% trong 20 phút.",
+    "specs": { "ram": "8GB", "man-hinh": "6.3 inch", "chip": "Apple A19", "pin": "3692 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },   "regular_price": 24990000, "stock": 20 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Trắng" }, "regular_price": 24990000, "stock": 14 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Tím" },   "regular_price": 24990000, "stock": 9 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },   "regular_price": 30990000, "stock": 5 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Trắng" }, "regular_price": 30990000, "stock": 3 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Tím" },   "regular_price": 30990000, "stock": 4 }
+    ]
+  },
+  {
+    "sku": "APL-IP16E", "type": "variable", "name": "iPhone 16e",
+    "category": "dien-thoai", "brand": "Apple", "days_old": 260, "sold": 377,
+    "short_description": "iPhone giá dễ tiếp cận với chip A18, màn hình 6.1 inch OLED, camera 48MP, hỗ trợ Apple Intelligence.",
+    "description": "Modem Apple C1 tiết kiệm điện, thời lượng pin đến 26 giờ xem video. Nút Tác vụ tuỳ chỉnh, kháng nước IP68, cổng USB-C.",
+    "specs": { "ram": "8GB", "man-hinh": "6.1 inch", "chip": "Apple A18", "pin": "4005 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Đen" },   "regular_price": 16990000, "sale_price": 14990000, "stock": 18 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Trắng" }, "regular_price": 16990000, "sale_price": 14990000, "stock": 11 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },   "regular_price": 19990000, "sale_price": 17990000, "stock": 6 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Trắng" }, "regular_price": 19990000, "sale_price": 17990000, "stock": 0 }
+    ]
+  },
+  {
+    "sku": "SS-S26U", "type": "variable", "name": "Samsung Galaxy S26 Ultra",
+    "category": "dien-thoai", "brand": "Samsung", "featured": true, "days_old": 20, "sold": 156,
+    "short_description": "Màn hình 6.9 inch QHD+ chống chói, camera 200MP, bút S Pen tích hợp, khung titan.",
+    "description": "Camera tele 50MP zoom quang 5x, zoom kỹ thuật số 100x. Pin 5.000 mAh, sạc nhanh 45W. Galaxy AI: khoanh vùng tìm kiếm, phiên dịch cuộc gọi, trợ lý ghi chú.",
+    "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Snapdragon 8 Elite Gen 5", "pin": "5000 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Titan Đen" },   "regular_price": 33990000, "stock": 9 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Titan Trắng" }, "regular_price": 33990000, "stock": 6 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Titan Đen" },   "regular_price": 37990000, "stock": 4 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Titan Trắng" }, "regular_price": 37990000, "stock": 2 }
+    ]
+  },
+  {
+    "sku": "SS-ZFLIP7", "type": "variable", "name": "Samsung Galaxy Z Flip7",
+    "category": "dien-thoai", "brand": "Samsung", "days_old": 120, "sold": 88,
+    "short_description": "Điện thoại gập vỏ sò, màn hình ngoài 4.1 inch tràn viền, màn hình chính 6.9 inch.",
+    "description": "Bản lề mỏng hơn, gập phẳng không khe hở. Chụp ảnh rảnh tay với FlexCam, màn hình ngoài dùng được đầy đủ ứng dụng. Pin 4.300 mAh.",
+    "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Exynos 2500", "pin": "4300 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },       "regular_price": 28990000, "sale_price": 24990000, "stock": 7 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 28990000, "sale_price": 24990000, "stock": 5 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },       "regular_price": 31990000, "sale_price": 27990000, "stock": 2 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 31990000, "sale_price": 27990000, "stock": 1 }
+    ]
+  },
+  {
+    "sku": "SS-A57", "type": "variable", "name": "Samsung Galaxy A57 5G",
+    "category": "dien-thoai", "brand": "Samsung", "days_old": 15, "sold": 64,
+    "short_description": "Màn hình 6.7 inch Super AMOLED 120Hz, pin 5.000 mAh, camera 50MP chống rung OIS.",
+    "description": "Thiết kế mỏng nhẹ, mặt lưng kính, kháng nước IP67. Hỗ trợ 6 năm cập nhật hệ điều hành, tích hợp Awesome Intelligence.",
+    "specs": { "ram": "8GB", "man-hinh": "6.7 inch", "chip": "Exynos 1680", "pin": "5000 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Đen" },     "regular_price": 9990000,  "stock": 25 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh lá" }, "regular_price": 9990000,  "stock": 0 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },     "regular_price": 11490000, "stock": 10 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh lá" }, "regular_price": 11490000, "stock": 8 }
+    ]
+  },
+  {
+    "sku": "XM-15TPRO", "type": "variable", "name": "Xiaomi 15T Pro",
+    "category": "dien-thoai", "brand": "Xiaomi", "days_old": 50, "sold": 97,
+    "short_description": "Camera Leica tele 5x, chip Dimensity 9400+, sạc nhanh 90W, màn hình 6.83 inch 144Hz.",
+    "description": "Hệ thống camera hợp tác Leica với cảm biến chính Light Fusion 900. Pin 5.500 mAh, sạc không dây 50W. Hỗ trợ eSIM, kháng nước IP68.",
+    "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Dimensity 9400+", "pin": "5500 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" }, "regular_price": 19990000, "stock": 8 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xám" }, "regular_price": 19990000, "stock": 6 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" }, "regular_price": 21990000, "stock": 4 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xám" }, "regular_price": 21990000, "stock": 3 }
+    ]
+  },
+  {
+    "sku": "XM-RN15PRO", "type": "variable", "name": "Xiaomi Redmi Note 15 Pro 5G",
+    "category": "dien-thoai", "brand": "Xiaomi", "days_old": 75, "sold": 321,
+    "short_description": "Camera 200MP, màn hình 6.67 inch AMOLED 120Hz, pin 5.110 mAh, sạc nhanh 45W.",
+    "description": "Màn hình độ sáng 3.000 nit, kính Gorilla Glass Victus 2. Kháng nước IP68 hiếm có ở phân khúc tầm trung.",
+    "specs": { "ram": "8GB", "man-hinh": "6.7 inch", "chip": "Dimensity 7400 Ultra", "pin": "5110 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Đen" }, "regular_price": 7490000, "sale_price": 6790000, "stock": 30 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Tím" }, "regular_price": 7490000, "sale_price": 6790000, "stock": 12 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" }, "regular_price": 8490000, "stock": 15 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Tím" }, "regular_price": 8490000, "stock": 9 }
+    ]
+  },
+  {
+    "sku": "OP-RENO15", "type": "variable", "name": "OPPO Reno15 5G",
+    "category": "dien-thoai", "brand": "OPPO", "days_old": 10, "sold": 23,
+    "short_description": "Camera chân dung 50MP tele 3.5x, màn hình 6.59 inch, pin 6.000 mAh, sạc SUPERVOOC 80W.",
+    "description": "Thiết kế mỏng 7.9mm, kháng nước IP69. Bộ công cụ chỉnh ảnh AI: xoá vật thể, làm nét, phản chiếu thông minh.",
+    "specs": { "ram": "12GB", "man-hinh": "6.7 inch", "chip": "Dimensity 8450", "pin": "6000 mAh" },
+    "image": { "device": "phone" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 12990000, "stock": 10 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" },        "regular_price": 12990000, "stock": 7 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 14990000, "stock": 3 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Bạc" },        "regular_price": 14990000, "stock": 2 }
+    ]
+  },
+
+  {
+    "sku": "APL-IPADAIR11", "type": "variable", "name": "iPad Air 11 inch M3 Wi-Fi",
+    "category": "may-tinh-bang", "brand": "Apple", "days_old": 200, "sold": 143,
+    "short_description": "Chip Apple M3, màn hình Liquid Retina 11 inch, hỗ trợ Apple Pencil Pro và Magic Keyboard.",
+    "description": "Hiệu năng mạnh cho học tập, vẽ và chỉnh sửa ảnh. Camera trước ngang 12MP, Touch ID trên nút nguồn, cổng USB-C.",
+    "specs": { "ram": "8GB", "man-hinh": "11 inch", "chip": "Apple M3", "pin": "7606 mAh" },
+    "image": { "device": "tablet" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xám" },       "regular_price": 16990000, "sale_price": 14990000, "sale_from": "+1 day", "sale_to": "+8 days", "stock": 6 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh dương" }, "regular_price": 16990000, "stock": 4 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xám" },       "regular_price": 19990000, "stock": 3 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 19990000, "stock": 0 }
+    ]
+  },
+  {
+    "sku": "APL-IPADPRO13M5", "type": "variable", "name": "iPad Pro 13 inch M5 Wi-Fi",
+    "category": "may-tinh-bang", "brand": "Apple", "featured": true, "days_old": 18, "sold": 31,
+    "short_description": "Chip M5, màn hình Ultra Retina XDR OLED kép 13 inch, mỏng 5.1mm.",
+    "description": "Hiệu năng AI vượt trội với Neural Accelerator trong từng lõi GPU. Màn hình OLED Tandem độ sáng 1.600 nit HDR. Hỗ trợ Apple Pencil Pro và Magic Keyboard.",
+    "specs": { "ram": "12GB", "man-hinh": "13 inch", "chip": "Apple M5", "pin": "10290 mAh" },
+    "image": { "device": "tablet" },
+    "variations": [
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" }, "regular_price": 36990000, "stock": 4 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" }, "regular_price": 36990000, "stock": 3 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" }, "regular_price": 42990000, "stock": 2 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Bạc" }, "regular_price": 42990000, "stock": 1 }
+    ]
+  },
+  {
+    "sku": "APL-IPAD11A16", "type": "variable", "name": "iPad 11 inch A16 Wi-Fi",
+    "category": "may-tinh-bang", "brand": "Apple", "days_old": 240, "sold": 289,
+    "short_description": "Chip A16, màn hình Liquid Retina 11 inch, bộ nhớ khởi điểm 128GB, nhiều màu trẻ trung.",
+    "description": "Lựa chọn phổ thông cho học sinh, sinh viên. Hỗ trợ Apple Pencil (USB-C) và Magic Keyboard Folio. Pin dùng cả ngày.",
+    "specs": { "ram": "6GB", "man-hinh": "11 inch", "chip": "Apple A16", "pin": "7606 mAh" },
+    "image": { "device": "tablet" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh dương" }, "regular_price": 9990000,  "sale_price": 8990000,  "stock": 20 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Hồng" },       "regular_price": 9990000,  "sale_price": 8990000,  "stock": 14 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 12490000, "sale_price": 11490000, "stock": 6 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Hồng" },       "regular_price": 12490000, "sale_price": 11490000, "stock": 5 }
+    ]
+  },
+  {
+    "sku": "SS-TABS11", "type": "variable", "name": "Samsung Galaxy Tab S11",
+    "category": "may-tinh-bang", "brand": "Samsung", "days_old": 55, "sold": 42,
+    "short_description": "Màn hình 11 inch Dynamic AMOLED 2X, kèm bút S Pen, chip Dimensity 9400+.",
+    "description": "Thiết kế mỏng 5.5mm, khung Armor Aluminum, kháng nước IP68. Chế độ DeX biến máy tính bảng thành máy tính làm việc.",
+    "specs": { "ram": "12GB", "man-hinh": "11 inch", "chip": "Dimensity 9400+", "pin": "8400 mAh" },
+    "image": { "device": "tablet" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xám" }, "regular_price": 19990000, "stock": 5 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Bạc" }, "regular_price": 19990000, "stock": 4 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xám" }, "regular_price": 22990000, "stock": 3 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" }, "regular_price": 22990000, "stock": 0 }
+    ]
+  },
+  {
+    "sku": "XM-PAD7", "type": "variable", "name": "Xiaomi Pad 7",
+    "category": "may-tinh-bang", "brand": "Xiaomi", "days_old": 300, "sold": 176,
+    "short_description": "Màn hình 11.2 inch 3.2K 144Hz, Snapdragon 7+ Gen 3, pin 8.850 mAh.",
+    "description": "Màn hình tỉ lệ 3:2 phù hợp đọc tài liệu, hỗ trợ bút Focus Pen và bàn phím rời. Loa 4 kênh Dolby Atmos.",
+    "specs": { "ram": "8GB", "man-hinh": "11 inch", "chip": "Snapdragon 7+ Gen 3", "pin": "8850 mAh" },
+    "image": { "device": "tablet" },
+    "variations": [
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xám" },       "regular_price": 8990000, "sale_price": 7990000, "stock": 12 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh dương" }, "regular_price": 8990000, "sale_price": 7990000, "stock": 8 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xám" },       "regular_price": 9990000, "stock": 6 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 9990000, "stock": 2 }
+    ]
+  },
+
+  {
+    "sku": "APL-MBA13M4", "type": "variable", "name": "MacBook Air 13 inch M4",
+    "category": "laptop", "brand": "Apple", "featured": true, "days_old": 230, "sold": 198,
+    "short_description": "Chip M4, RAM khởi điểm 16GB, màn hình Liquid Retina 13.6 inch, pin đến 18 giờ.",
+    "description": "Thiết kế không quạt, hoàn toàn yên tĩnh. Camera Center Stage 12MP, hỗ trợ 2 màn hình ngoài. Sạc MagSafe, 2 cổng Thunderbolt 4.",
+    "specs": { "man-hinh": "13 inch", "mau-sac": "Bạc", "chip": "Apple M4", "pin": "53.8 Wh" },
+    "image": { "device": "laptop" },
+    "variations": [
+      { "attributes": { "ram": "16GB", "dung-luong": "256GB" }, "regular_price": 24990000, "sale_price": 23490000, "stock": 10 },
+      { "attributes": { "ram": "16GB", "dung-luong": "512GB" }, "regular_price": 29990000, "stock": 6 },
+      { "attributes": { "ram": "24GB", "dung-luong": "512GB" }, "regular_price": 34990000, "stock": 3 }
+    ]
+  },
+  {
+    "sku": "APL-MBP14M5", "type": "variable", "name": "MacBook Pro 14 inch M5",
+    "category": "laptop", "brand": "Apple", "days_old": 18, "sold": 27,
+    "short_description": "Chip M5, màn hình Liquid Retina XDR 14.2 inch, pin đến 24 giờ.",
+    "description": "Hiệu năng đồ hoạ và AI vượt trội cho lập trình, dựng phim, thiết kế 3D. Cổng HDMI, khe SD, 3 cổng Thunderbolt 4, MagSafe 3.",
+    "specs": { "man-hinh": "14 inch", "mau-sac": "Đen", "chip": "Apple M5", "pin": "72.4 Wh" },
+    "image": { "device": "laptop" },
+    "variations": [
+      { "attributes": { "ram": "16GB", "dung-luong": "512GB" }, "regular_price": 42990000, "stock": 5 },
+      { "attributes": { "ram": "24GB", "dung-luong": "1TB" },   "regular_price": 52990000, "stock": 2 }
+    ]
+  },
+  {
+    "sku": "AS-VIVO15OLED", "type": "variable", "name": "ASUS Vivobook 15 OLED",
+    "category": "laptop", "brand": "ASUS", "days_old": 150, "sold": 115,
+    "short_description": "Màn hình OLED 15.6 inch, Intel Core Ultra 5, mỏng nhẹ cho văn phòng và học tập.",
+    "description": "Màn hình OLED độ phủ màu 100% DCI-P3, chuẩn TÜV giảm ánh sáng xanh. Bàn phím có phím số, bản lề mở 180 độ, sạc nhanh USB-C.",
+    "specs": { "man-hinh": "15.6 inch", "mau-sac": "Bạc", "chip": "Intel Core Ultra 5 125H", "pin": "50 Wh" },
+    "image": { "device": "laptop" },
+    "variations": [
+      { "attributes": { "ram": "16GB", "dung-luong": "512GB" }, "regular_price": 16990000, "sale_price": 15490000, "stock": 9 },
+      { "attributes": { "ram": "16GB", "dung-luong": "1TB" },   "regular_price": 18490000, "stock": 4 }
+    ]
+  },
+  {
+    "sku": "LN-IDEASLIM5", "type": "variable", "name": "Lenovo IdeaPad Slim 5 14 inch",
+    "category": "laptop", "brand": "Lenovo", "days_old": 90, "sold": 61,
+    "short_description": "AMD Ryzen AI 7, màn hình 14 inch WUXGA OLED, vỏ nhôm, nặng 1.46kg.",
+    "description": "NPU tích hợp cho các tính năng Copilot+ PC. Webcam 1080p có màn che, pin 84Wh dùng cả ngày, sạc nhanh 65W.",
+    "specs": { "man-hinh": "14 inch", "mau-sac": "Xám", "chip": "AMD Ryzen AI 7 350", "pin": "84 Wh" },
+    "image": { "device": "laptop" },
+    "variations": [
+      { "attributes": { "ram": "16GB", "dung-luong": "512GB" }, "regular_price": 17490000, "stock": 7 },
+      { "attributes": { "ram": "32GB", "dung-luong": "1TB" },   "regular_price": 21990000, "stock": 0 }
+    ]
+  },
+
+  {
+    "sku": "APL-AW11", "type": "variable", "name": "Apple Watch Series 11 GPS 42mm",
+    "category": "dong-ho-thong-minh", "brand": "Apple", "featured": true, "days_old": 45, "sold": 134,
+    "short_description": "Theo dõi huyết áp cao, điểm giấc ngủ, pin đến 24 giờ, mặt kính Ion-X chống trầy gấp đôi.",
+    "description": "Màn hình luôn bật Retina LTPO3, chip S10, đo nhịp tim, ECG, nồng độ oxy trong máu. Kháng nước 50m, sạc nhanh 80% trong 30 phút.",
+    "specs": { "man-hinh": "1.9 inch", "chip": "Apple S10" },
+    "image": { "device": "watch" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" },  "regular_price": 10990000, "stock": 9 },
+      { "attributes": { "mau-sac": "Bạc" },  "regular_price": 10990000, "stock": 6 },
+      { "attributes": { "mau-sac": "Hồng" }, "regular_price": 10990000, "stock": 4 }
+    ]
+  },
+  {
+    "sku": "APL-AWSE3", "type": "variable", "name": "Apple Watch SE 3 GPS 40mm",
+    "category": "dong-ho-thong-minh", "brand": "Apple", "days_old": 45, "sold": 210,
+    "short_description": "Apple Watch giá tốt với chip S10, màn hình luôn bật, theo dõi giấc ngủ và nhiệt độ cổ tay.",
+    "description": "Phát hiện té ngã, phát hiện va chạm, cử chỉ chạm hai lần. Pin đến 18 giờ, hỗ trợ sạc nhanh.",
+    "specs": { "man-hinh": "1.5 inch", "chip": "Apple S10" },
+    "image": { "device": "watch" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" }, "regular_price": 6490000, "sale_price": 5990000, "stock": 12 },
+      { "attributes": { "mau-sac": "Bạc" }, "regular_price": 6490000, "sale_price": 5990000, "stock": 0 }
+    ]
+  },
+  {
+    "sku": "SS-GW8", "type": "variable", "name": "Samsung Galaxy Watch8 40mm",
+    "category": "dong-ho-thong-minh", "brand": "Samsung", "days_old": 110, "sold": 73,
+    "short_description": "Thiết kế mỏng, đo chỉ số chống oxy hoá, huấn luyện chạy bộ cá nhân hoá với Gemini.",
+    "description": "Màn hình Super AMOLED sáng 3.000 nit, đo thành phần cơ thể, theo dõi giấc ngủ chuyên sâu. Kháng nước 5ATM và IP68.",
+    "specs": { "man-hinh": "1.5 inch", "chip": "Exynos W1000" },
+    "image": { "device": "watch" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" }, "regular_price": 7490000, "stock": 8 },
+      { "attributes": { "mau-sac": "Bạc" }, "regular_price": 7490000, "stock": 5 }
+    ]
+  },
+
+  {
+    "sku": "JBL-T520BT", "type": "simple", "name": "Tai nghe Bluetooth JBL Tune 520BT",
+    "category": "am-thanh", "brand": "JBL", "days_old": 400, "sold": 512,
+    "regular_price": 1290000, "sale_price": 990000, "stock": 0,
+    "short_description": "Tai nghe chụp tai không dây, âm thanh JBL Pure Bass, pin đến 57 giờ.",
+    "description": "Kết nối Bluetooth 5.3, hỗ trợ kết nối đồng thời 2 thiết bị, sạc 5 phút nghe thêm 3 giờ. Gập gọn để mang theo.",
+    "specs": { "pin": "57 giờ" },
+    "image": { "device": "headphones", "color": "#1f1f1f" }
+  },
+  {
+    "sku": "APL-AIRPODSPRO3", "type": "simple", "name": "AirPods Pro 3",
+    "category": "am-thanh", "brand": "Apple", "featured": true, "days_old": 45, "sold": 620,
+    "regular_price": 6490000, "sale_price": 5990000, "stock": 15,
+    "short_description": "Chống ồn chủ động gấp đôi thế hệ trước, đo nhịp tim khi luyện tập, phiên dịch trực tiếp.",
+    "description": "Chip H2, âm thanh không gian cá nhân hoá, chế độ xuyên âm thích ứng. Kháng nước IP57, hộp sạc USB-C có loa tìm kiếm.",
+    "specs": { "chip": "Apple H2", "pin": "8 giờ" },
+    "image": { "device": "earbuds", "color": "#f5f5f5" }
+  },
+  {
+    "sku": "SONY-WH1000XM6", "type": "variable", "name": "Tai nghe Sony WH-1000XM6",
+    "category": "am-thanh", "brand": "Sony", "days_old": 160, "sold": 58,
+    "short_description": "Chống ồn hàng đầu với 12 micro, chip QN3, âm thanh Hi-Res Audio Wireless.",
+    "description": "Bộ xử lý chống ồn QN3 nhanh gấp 7 lần, gập gọn có hộp đựng nam châm. Pin 30 giờ, sạc 3 phút nghe 3 giờ.",
+    "specs": { "pin": "30 giờ" },
+    "image": { "device": "headphones" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" }, "regular_price": 9990000, "sale_price": 8990000, "stock": 6 },
+      { "attributes": { "mau-sac": "Bạc" }, "regular_price": 9990000, "sale_price": 8990000, "stock": 3 }
+    ]
+  },
+  {
+    "sku": "JBL-FLIP7", "type": "variable", "name": "Loa Bluetooth JBL Flip 7",
+    "category": "am-thanh", "brand": "JBL", "days_old": 180, "sold": 142,
+    "short_description": "Loa di động chống nước bụi IP68, chịu va đập rơi 1.5m, pin 14 giờ.",
+    "description": "Công nghệ AI Sound Boost tối ưu âm bass, kết nối Auracast ghép nhiều loa. Có thể nghe nhạc qua cổng USB-C lossless.",
+    "specs": { "pin": "14 giờ" },
+    "image": { "device": "speaker" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" },       "regular_price": 3490000, "stock": 10 },
+      { "attributes": { "mau-sac": "Xanh dương" }, "regular_price": 3490000, "stock": 7 },
+      { "attributes": { "mau-sac": "Hồng" },       "regular_price": 3490000, "stock": 2 }
+    ]
+  },
+
+  {
+    "sku": "ANK-SAC20W", "type": "simple", "name": "Sạc nhanh Anker Nano 20W USB-C",
+    "category": "phu-kien", "brand": "Anker", "days_old": 500, "sold": 1340,
+    "regular_price": 390000, "stock": 2,
+    "short_description": "Củ sạc nhỏ gọn, công suất 20W, sạc nhanh iPhone 50% trong khoảng 30 phút.",
+    "description": "Sạc nhanh chuẩn Power Delivery qua cổng USB-C. Thiết kế nhỏ gọn, chân cắm phù hợp ổ điện Việt Nam. Bảo hành 18 tháng.",
+    "image": { "device": "charger", "color": "#f5f5f5" }
+  },
+  {
+    "sku": "BS-GAN65W", "type": "simple", "name": "Sạc nhanh Baseus GaN 65W 3 cổng",
+    "category": "phu-kien", "brand": "Baseus", "days_old": 210, "sold": 455,
+    "regular_price": 890000, "sale_price": 690000, "stock": 22,
+    "short_description": "Công nghệ GaN nhỏ gọn, 2 cổng USB-C + 1 USB-A, sạc được laptop, điện thoại cùng lúc.",
+    "description": "Tổng công suất 65W, tự chia điện thông minh. Sạc MacBook Air, iPad và iPhone trên cùng một củ sạc.",
+    "image": { "device": "charger", "color": "#1f1f1f", "badge": "65W" }
+  },
+  {
+    "sku": "APL-CAP-USBC1M", "type": "simple", "name": "Cáp sạc Apple USB-C 1m",
+    "category": "phu-kien", "brand": "Apple", "days_old": 365, "sold": 980,
+    "regular_price": 590000, "stock": 40,
+    "short_description": "Cáp dệt bện bền bỉ, sạc 60W và truyền dữ liệu USB 2.",
+    "description": "Tương thích iPhone 15 trở lên, iPad, MacBook có cổng USB-C. Chính hãng Apple.",
+    "image": { "device": "cable", "color": "#f5f5f5" }
+  },
+  {
+    "sku": "ANK-PB10K", "type": "simple", "name": "Sạc dự phòng Anker 10.000mAh 22.5W",
+    "category": "phu-kien", "brand": "Anker", "days_old": 330, "sold": 760,
+    "regular_price": 690000, "sale_price": 590000, "stock": 25,
+    "short_description": "Nhỏ gọn bỏ túi, sạc nhanh 22.5W, kèm cáp USB-C liền thân.",
+    "description": "Màn hình hiển thị phần trăm pin, sạc đồng thời 2 thiết bị. Đạt chuẩn an toàn mang lên máy bay.",
+    "specs": { "pin": "10000 mAh" },
+    "image": { "device": "powerbank", "color": "#1f1f1f" }
+  },
+  {
+    "sku": "BS-PB20K", "type": "simple", "name": "Sạc dự phòng Baseus 20.000mAh 65W",
+    "category": "phu-kien", "brand": "Baseus", "days_old": 25, "sold": 41,
+    "regular_price": 1190000, "stock": 3,
+    "short_description": "Dung lượng lớn 20.000mAh, sạc được laptop với công suất 65W.",
+    "description": "3 cổng sạc ra, màn hình số hiển thị công suất. Sạc đầy MacBook Air khoảng 1 lần, iPhone khoảng 4 lần.",
+    "specs": { "pin": "20000 mAh" },
+    "image": { "device": "powerbank", "color": "#8e8e93" }
+  },
+  {
+    "sku": "APL-OP-17PM", "type": "variable", "name": "Ốp lưng MagSafe iPhone 17 Pro Max",
+    "category": "phu-kien", "brand": "Apple", "days_old": 45, "sold": 233,
+    "short_description": "Ốp silicon chính hãng Apple, hít nam châm MagSafe, bảo vệ cụm camera.",
+    "description": "Lớp lót sợi siêu mịn bên trong, mặt ngoài silicon mềm mịn. Tương thích sạc MagSafe và phụ kiện MagSafe.",
+    "image": { "device": "case" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" },       "regular_price": 1490000, "stock": 12 },
+      { "attributes": { "mau-sac": "Cam" },        "regular_price": 1490000, "stock": 8 },
+      { "attributes": { "mau-sac": "Xanh dương" }, "regular_price": 1490000, "stock": 0 }
+    ]
+  },
+  {
+    "sku": "SS-OP-S26", "type": "variable", "name": "Ốp lưng Silicone Galaxy S26",
+    "category": "phu-kien", "brand": "Samsung", "days_old": 20, "sold": 37,
+    "short_description": "Ốp silicon chính hãng Samsung, mỏng nhẹ, chống bám vân tay.",
+    "description": "Ôm sát thân máy, gờ bảo vệ camera và màn hình. Hỗ trợ sạc không dây.",
+    "image": { "device": "case" },
+    "variations": [
+      { "attributes": { "mau-sac": "Đen" }, "regular_price": 590000, "stock": 15 },
+      { "attributes": { "mau-sac": "Tím" }, "regular_price": 590000, "stock": 3 }
+    ]
+  }
+]

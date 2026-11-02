@@ -4,16 +4,7 @@
 #
 # Cách dùng: ./scripts/install.sh
 
-set -euo pipefail
-cd "$(dirname "$0")/.."
-
-# Nạp biến từ .env (DB_*, WP_*)
-set -a; source .env; set +a
-
-# Gọi WP-CLI trong container.
-#   --progress quiet: ẩn log "Container ... Creating"
-#   --rm: xoá container sau khi chạy xong;  -T: không cần terminal tương tác
-wp() { docker compose --progress quiet run --rm -T wpcli "$@"; }
+source "$(dirname "$0")/_lib.sh"
 
 echo "==> Khởi động các container"
 docker compose up -d --wait
@@ -67,5 +58,17 @@ wp plugin delete hello akismet >/dev/null 2>&1 || true
 # --- 5. Site demo: yêu cầu công cụ tìm kiếm không index ----------------------
 wp option update blog_public 0
 
+# --- 6. WooCommerce ------------------------------------------------------------
+./scripts/setup-woocommerce.sh
+
+# --- 7. Sản phẩm demo (data/products.json) -------------------------------------
+# Lần đầu ~2 phút vì phải vẽ ảnh; chạy lại chỉ cập nhật, ảnh được dùng lại.
+step "Nạp sản phẩm demo"
+wp eval-file /scripts/import-products.php | tail -n +2 | wc -l | xargs printf '    %s sản phẩm\n'
+
 echo
-echo "Xong. Mở $WP_URL/wp-admin (user: $WP_ADMIN_USER, mật khẩu trong .env)"
+echo "Xong."
+echo "  Cửa hàng:   $WP_URL/cua-hang/"
+echo "  wp-admin:   $WP_URL/wp-admin (user: $WP_ADMIN_USER, mật khẩu trong .env)"
+echo "  Mailpit:    http://localhost:8025"
+echo "  phpMyAdmin: http://localhost:8081"

@@ -4,10 +4,7 @@
 #
 # Cách dùng: ./scripts/phase0-sample-content.sh
 
-set -euo pipefail
-cd "$(dirname "$0")/.."
-
-wp() { docker compose --progress quiet run --rm -T wpcli "$@"; }
+source "$(dirname "$0")/_lib.sh"
 
 if [[ -n "$(wp post list --post_type=page --name=gioi-thieu --field=ID)" ]]; then
   echo "Nội dung mẫu đã có, bỏ qua."; exit 0

@@ -1,0 +1,200 @@
+{
+  "categories": [
+    {
+      "name": "Điện thoại",
+      "slug": "dien-thoai",
+      "description": "Điện thoại di động chính hãng: iPhone, Samsung Galaxy, Xiaomi, OPPO."
+    },
+    {
+      "name": "Máy tính bảng",
+      "slug": "may-tinh-bang",
+      "description": "iPad, Galaxy Tab, Xiaomi Pad cho học tập, làm việc và giải trí."
+    },
+    {
+      "name": "Laptop",
+      "slug": "laptop",
+      "description": "MacBook và laptop Windows cho văn phòng, đồ hoạ, gaming."
+    },
+    {
+      "name": "Đồng hồ thông minh",
+      "slug": "dong-ho-thong-minh",
+      "description": "Apple Watch, Galaxy Watch theo dõi sức khoẻ và luyện tập."
+    },
+    {
+      "name": "Âm thanh",
+      "slug": "am-thanh",
+      "description": "Tai nghe không dây, tai nghe chống ồn, loa Bluetooth."
+    },
+    {
+      "name": "Phụ kiện",
+      "slug": "phu-kien",
+      "description": "Sạc, cáp, ốp lưng, sạc dự phòng chính hãng."
+    }
+  ],
+  "default_category": {
+    "name": "Khác",
+    "slug": "khac"
+  },
+  "brands": [
+    {
+      "name": "Apple",
+      "slug": "apple"
+    },
+    {
+      "name": "Samsung",
+      "slug": "samsung"
+    },
+    {
+      "name": "Xiaomi",
+      "slug": "xiaomi"
+    },
+    {
+      "name": "OPPO",
+      "slug": "oppo"
+    },
+    {
+      "name": "ASUS",
+      "slug": "asus"
+    },
+    {
+      "name": "Lenovo",
+      "slug": "lenovo"
+    },
+    {
+      "name": "Sony",
+      "slug": "sony"
+    },
+    {
+      "name": "JBL",
+      "slug": "jbl"
+    },
+    {
+      "name": "Anker",
+      "slug": "anker"
+    },
+    {
+      "name": "Baseus",
+      "slug": "baseus"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "Dung lượng",
+      "slug": "dung-luong",
+      "for_variations": true,
+      "terms": [
+        "64GB",
+        "128GB",
+        "256GB",
+        "512GB",
+        "1TB"
+      ]
+    },
+    {
+      "name": "Màu sắc",
+      "slug": "mau-sac",
+      "for_variations": true,
+      "terms": [
+        {
+          "name": "Đen",
+          "hex": "#1f1f1f"
+        },
+        {
+          "name": "Trắng",
+          "hex": "#f5f5f5"
+        },
+        {
+          "name": "Xám",
+          "hex": "#8e8e93"
+        },
+        {
+          "name": "Bạc",
+          "hex": "#d8d8d8"
+        },
+        {
+          "name": "Xanh dương",
+          "hex": "#2f5d8a"
+        },
+        {
+          "name": "Xanh lá",
+          "hex": "#4f7a5b"
+        },
+        {
+          "name": "Tím",
+          "hex": "#7b5ea7"
+        },
+        {
+          "name": "Hồng",
+          "hex": "#f2c4ce"
+        },
+        {
+          "name": "Vàng",
+          "hex": "#f3d36b"
+        },
+        {
+          "name": "Cam",
+          "hex": "#e8743b"
+        },
+        {
+          "name": "Titan Tự nhiên",
+          "hex": "#bab4a9"
+        },
+        {
+          "name": "Titan Sa mạc",
+          "hex": "#c9a986"
+        },
+        {
+          "name": "Titan Đen",
+          "hex": "#3c3b39"
+        },
+        {
+          "name": "Titan Trắng",
+          "hex": "#eae8e3"
+        }
+      ]
+    },
+    {
+      "name": "RAM",
+      "slug": "ram",
+      "for_variations": true,
+      "terms": [
+        "4GB",
+        "6GB",
+        "8GB",
+        "12GB",
+        "16GB",
+        "24GB",
+        "32GB"
+      ]
+    },
+    {
+      "name": "Kích thước màn hình",
+      "slug": "man-hinh",
+      "for_variations": false,
+      "terms": [
+        "1.5 inch",
+        "1.9 inch",
+        "6.1 inch",
+        "6.3 inch",
+        "6.7 inch",
+        "6.9 inch",
+        "11 inch",
+        "13 inch",
+        "14 inch",
+        "15.6 inch"
+      ]
+    },
+    {
+      "name": "Chip xử lý",
+      "slug": "chip",
+      "for_variations": false,
+      "terms": []
+    },
+    {
+      "name": "Dung lượng pin",
+      "slug": "pin",
+      "for_variations": false,
+      "terms": []
+    }
+  ]
+}
