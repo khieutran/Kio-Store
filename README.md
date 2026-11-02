@@ -26,7 +26,10 @@ Website demo bán điện thoại, máy tính bảng và đồ điện tử, d�
 │   ├── themes/kio-child/    # child theme: phần hiển thị
 │   └── plugins/kio-store/   # plugin: phần chức năng
 ├── data/                    # dữ liệu mẫu (JSON) và font để vẽ ảnh sản phẩm
-├── scripts/                 # script WP-CLI: cài đặt, nạp dữ liệu, reset
+├── scripts/                 # script WP-CLI: cài đặt, nạp dữ liệu, reset, smoke test
+├── .github/workflows/ci.yml # CI: lint + smoke test
+├── composer.json            # chỉ chứa công cụ kiểm tra code (PHPCS)
+├── phpcs.xml.dist           # quy tắc PHPCS
 └── docs/                    # ghi chú học tập theo từng phase
 ```
 
@@ -63,12 +66,39 @@ cp .env.example .env        # rồi đổi các mật khẩu trong .env
 | Tạo nội dung mẫu Phase 0 | `./scripts/phase0-sample-content.sh` |
 | Nạp lại sản phẩm demo | `docker compose run --rm wpcli eval-file /scripts/import-products.php` |
 
+## Kiểm tra tự động (CI)
+
+GitHub Actions chạy `.github/workflows/ci.yml` mỗi khi push lên `main` hoặc mở Pull Request:
+
+| Job | Kiểm tra | Thời gian |
+|---|---|---|
+| **Lint** | Cú pháp PHP (`php -l`) · chuẩn WordPress cho plugin/theme (PHPCS + WPCS, gồm các quy tắc bảo mật) · JSON trong `data/` · script bash (shellcheck) | ~1 phút |
+| **Smoke test** | Dựng toàn bộ cửa hàng bằng `install.sh` trên máy ảo GitHub, rồi `scripts/smoke-test.py` kiểm tra như khách: trang web, 33 sản phẩm, giá VND, hết hàng, giỏ hàng, phí ship, coupon, email, log lỗi PHP | ~6 phút |
+
+Chạy giống CI trên máy (không cần cài PHP, dùng Docker):
+
+```bash
+# Lint
+docker run --rm -v "$PWD":/app -w /app composer:2 sh -c "composer install -q && vendor/bin/phpcs"
+docker run --rm -v "$PWD":/mnt -w /mnt koalaman/shellcheck:v0.11.0 -x scripts/*.sh
+
+# Smoke test (sau khi site đang chạy)
+python3 scripts/smoke-test.py
+```
+
+Tự sửa lỗi định dạng PHPCS: `docker run --rm -v "$PWD":/app -w /app composer:2 vendor/bin/phpcbf`
+
+**Phiên bản cố định:** image Docker (`docker-compose.yml`), WooCommerce (`WOO_VERSION` trong `scripts/setup-woocommerce.sh`), shellcheck và các gói Composer (`composer.lock`) đều ghi rõ phiên bản, để máy dev và CI chạy cùng một bộ phần mềm. Nâng cấp = đổi số phiên bản, chạy CI, xanh thì merge.
+
+Chưa có CD (tự deploy): sẽ làm ở Phase 7 khi có server. CD chỉ đưa **code** (`kio-child`, `kio-store`) lên server, không bao giờ đưa database hay chạy `reset.sh`.
+
 ## Lộ trình
 
 | Phase | Nội dung | Ghi chú | Trạng thái |
 |---|---|---|---|
 | 0 | Dựng môi trường, làm quen WordPress | `docs/phase0/phase-0.md` (local) | ✅ Xong |
 | 1 | WooCommerce và dữ liệu sản phẩm | `docs/phase1/phase-1.md` (local) | ✅ Xong |
+| 1.5 | CI: lint + smoke test trên GitHub Actions | README, mục trên | 🟡 Chờ chạy lần đầu trên GitHub |
 | 2 | Giao diện: classic theme, child theme | | ⬜ |
 | 3 | Plugin chức năng | | ⬜ |
 | 4 | Tuỳ biến bằng code: hook, CPT, REST API | | ⬜ |

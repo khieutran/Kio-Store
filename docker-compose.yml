@@ -2,6 +2,10 @@
 # không phụ thuộc tên thư mục chứa repo.
 name: kio-store
 
+# Mọi image đều ghi rõ phiên bản: máy dev, máy khác và CI chạy đúng cùng một bộ phần mềm.
+# Tag trôi nổi (latest, php8.3-apache…) có thể tự đổi khi có bản mới và làm CI đỏ bất ngờ.
+# Nâng cấp = sửa số phiên bản ở đây, chạy CI, xanh thì merge.
+
 # Biến môi trường dùng chung cho "wordpress" và "wpcli": hai container chạy cùng
 # một bộ code WordPress nên phải thấy cùng một cấu hình.
 # (Khối bắt đầu bằng "x-" được Compose bỏ qua, chỉ dùng làm anchor &wp_env.)
@@ -26,7 +30,7 @@ services:
   # Database: nơi WordPress lưu toàn bộ nội dung và cài đặt
   # ---------------------------------------------------------------
   db:
-    image: mysql:8.4
+    image: mysql:8.4.13
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_NAME}
@@ -47,7 +51,7 @@ services:
   # WordPress: Apache + PHP + core WordPress
   # ---------------------------------------------------------------
   wordpress:
-    image: wordpress:php8.3-apache
+    image: wordpress:7.1.4-php8.3-apache
     restart: unless-stopped
     depends_on:
       db:
@@ -68,7 +72,7 @@ services:
   # Không email nào thật sự ra ngoài internet.
   # ---------------------------------------------------------------
   mailpit:
-    image: axllent/mailpit:latest
+    image: axllent/mailpit:v1.33.0
     restart: unless-stopped
     ports:
       - "8025:8025"
@@ -95,7 +99,7 @@ services:
   # chỉ chạy khi gọi: docker compose run --rm wpcli <lệnh>
   # ---------------------------------------------------------------
   wpcli:
-    image: wordpress:cli-php8.3
+    image: wordpress:cli-2.12.0-php8.3
     profiles: ["tools"]
     user: "33:33" # www-data, trùng chủ sở hữu file với container wordpress
     depends_on:

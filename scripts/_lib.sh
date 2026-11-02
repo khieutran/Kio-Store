@@ -1,10 +1,19 @@
+# shellcheck shell=bash
 # Hàm dùng chung cho các script. Không chạy trực tiếp, dùng: source "$(dirname "$0")/_lib.sh"
 
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-# Nạp biến từ .env (DB_*, WP_*)
-set -a; source .env; set +a
+# Nạp biến từ .env (DB_*, WP_*). File .env không có trong git (chứa mật khẩu),
+# nên máy mới clone về (và CI) phải tạo từ mẫu trước.
+if [[ ! -f .env ]]; then
+  echo "Thiếu file .env. Tạo từ mẫu: cp .env.example .env" >&2
+  exit 1
+fi
+set -a
+# shellcheck source=.env.example
+source .env
+set +a
 
 # Gọi WP-CLI trong container.
 #   --progress quiet: ẩn log "Container ... Creating"
