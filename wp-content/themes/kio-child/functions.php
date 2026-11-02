@@ -279,6 +279,25 @@ function kio_child_customize_register( WP_Customize_Manager $wp_customize ) {
 add_action( 'customize_register', 'kio_child_customize_register' );
 
 /**
+ * Nút "Bộ lọc" (chỉ hiện trên mobile) ở đầu danh sách sản phẩm.
+ *
+ * Trên mobile Storefront xếp sidebar (chứa bộ lọc) xuống dưới cùng danh sách sản phẩm, khách phải
+ * cuộn hết mới thấy. Nút này mở sidebar thành ngăn kéo trượt từ phải (CSS + assets/js/main.js).
+ * Chỉ in khi trang là danh sách sản phẩm và sidebar có widget.
+ */
+function kio_child_filter_toggle() {
+	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+		return;
+	}
+	printf(
+		'<button type="button" class="kio-filter-toggle" aria-controls="secondary" aria-expanded="false">%s<span>%s</span></button>',
+		kio_child_icon( 'grid' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG đã lọc qua wp_kses.
+		esc_html__( 'Bộ lọc', 'kio-child' )
+	);
+}
+add_action( 'woocommerce_before_shop_loop', 'kio_child_filter_toggle', 25 );
+
+/**
  * Nút "Danh mục" + mega menu. Menu do script tạo, lưu ở vị trí kio-categories.
  */
 function kio_child_category_menu() {

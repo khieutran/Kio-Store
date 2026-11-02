@@ -97,6 +97,8 @@ foreach ( $pages as $slug => $meta ) {
 	if ( 'trang-chu' === $slug ) {
 		$content = strtr( $content, $banner_urls );
 	}
+	// Trang Liên hệ: ID form Fluent Forms do scripts/plugins-settings.php tạo (chạy trước script này).
+	$content = strtr( $content, [ '{{CONTACT_FORM_ID}}' => (string) get_option( 'kio_contact_form_id', 0 ) ] );
 
 	$page_ids[ $slug ] = kio_upsert_page( $slug, $meta['title'], $content, $meta['template'] ?? '' );
 }
@@ -106,6 +108,13 @@ foreach ( $pages as $slug => $meta ) {
 update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $page_ids['trang-chu'] );
 WP_CLI::log( '    show_on_front=page, page_on_front=' . $page_ids['trang-chu'] );
+
+// SEO trang chủ (Rank Math). Trang chủ là trang tĩnh nên Rank Math lấy tiêu đề/mô tả từ meta
+// riêng của trang này, không dùng cài đặt "homepage" chung. Chỉ ghi khi Rank Math đang bật.
+if ( defined( 'RANK_MATH_VERSION' ) ) {
+	update_post_meta( $page_ids['trang-chu'], 'rank_math_title', '%sitename% %sep% Điện thoại, máy tính bảng, laptop chính hãng' );
+	update_post_meta( $page_ids['trang-chu'], 'rank_math_description', 'Kio Mobile (website demo): điện thoại, máy tính bảng, laptop, đồng hồ, phụ kiện chính hãng. Trả góp 0%, giao nhanh 2h, đổi trả 30 ngày.' );
+}
 
 // Option riêng để header lấy link trang "Tra cứu đơn hàng".
 update_option( 'kio_tracking_page_id', $page_ids['tra-cuu-don-hang'] );
