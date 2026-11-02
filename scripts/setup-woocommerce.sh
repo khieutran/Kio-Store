@@ -3,6 +3,7 @@
 #
 # Cách dùng: ./scripts/setup-woocommerce.sh
 
+# shellcheck source=scripts/_lib.sh
 source "$(dirname "$0")/_lib.sh"
 
 # --- 1. Cài WooCommerce -------------------------------------------------------

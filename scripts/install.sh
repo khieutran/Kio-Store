@@ -4,6 +4,7 @@
 #
 # Cách dùng: ./scripts/install.sh
 
+# shellcheck source=scripts/_lib.sh
 source "$(dirname "$0")/_lib.sh"
 
 echo "==> Khởi động các container"

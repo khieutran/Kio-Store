@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Hàm dùng chung cho các script. Không chạy trực tiếp, dùng: source "$(dirname "$0")/_lib.sh"
 
 set -euo pipefail

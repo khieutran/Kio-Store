@@ -4,6 +4,7 @@
 #
 # Cách dùng: ./scripts/phase0-sample-content.sh
 
+# shellcheck source=scripts/_lib.sh
 source "$(dirname "$0")/_lib.sh"
 
 if [[ -n "$(wp post list --post_type=page --name=gioi-thieu --field=ID)" ]]; then
@@ -27,6 +28,8 @@ echo "==> Ảnh đại diện (tạo ảnh PNG bằng PHP GD rồi import vào M
 # Mỗi lệnh wp chạy trong một container mới (--rm), nên file tạm phải nằm trong
 # volume dùng chung /var/www/html, không dùng /tmp.
 TMP_IMG=/var/www/html/wp-content/kio-cover.png
+# Nháy đơn là cố ý: $im là biến PHP, bash không được thay giá trị ($TMP_IMG thì chèn riêng).
+# shellcheck disable=SC2016
 wp eval '
   $im = imagecreatetruecolor(1200, 630);
   imagefill($im, 0, 0, imagecolorallocate($im, 13, 71, 161));
