@@ -62,10 +62,17 @@ wp option update blog_public 0
 # --- 6. WooCommerce ------------------------------------------------------------
 ./scripts/setup-woocommerce.sh
 
-# --- 7. Sản phẩm demo (data/products.json) -------------------------------------
+# --- 7. Theme (Storefront + child theme kio-child) -----------------------------
+./scripts/setup-theme.sh
+
+# --- 8. Sản phẩm demo (data/products.json) -------------------------------------
 # Lần đầu ~2 phút vì phải vẽ ảnh; chạy lại chỉ cập nhật, ảnh được dùng lại.
 step "Nạp sản phẩm demo"
 wp eval-file /scripts/import-products.php | tail -n +2 | wc -l | xargs printf '    %s sản phẩm\n'
+
+# --- 9. Nội dung theme: trang chủ, menu, trang chính sách, Customizer ----------
+step "Nội dung theme (trang chủ, menu, footer, Customizer)"
+wp eval-file /scripts/setup-theme-content.php
 
 echo
 echo "Xong."
