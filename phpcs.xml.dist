@@ -46,4 +46,20 @@
 			</property>
 		</properties>
 	</rule>
+
+	<!-- Các capability riêng của WooCommerce (PHPCS không tự biết, phải khai báo) -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="manage_woocommerce"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- File phụ thuộc của script block phải tên "<script>.asset.php" (WordPress tìm đúng tên này
+	     khi block.json khai báo "editorScript": "file:./editor.js"), trái với quy tắc tên file
+	     chữ thường + gạch nối của WPCS → miễn quy tắc tên file cho riêng các file này. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>*.asset.php</exclude-pattern>
+	</rule>
 </ruleset>

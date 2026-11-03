@@ -1,0 +1,62 @@
+[
+  {
+    "key": "tang-op-lung",
+    "title": "Tặng ốp lưng chính hãng",
+    "content": "Mua iPhone 16e / 17 / 17 Pro Max tặng ốp lưng chính hãng trị giá 500.000 ₫.",
+    "products": ["APL-IP16E", "APL-IP17", "APL-IP17PM"],
+    "categories": [],
+    "start": "2026-11-01",
+    "end": "2026-12-31",
+    "order": 1
+  },
+  {
+    "key": "thu-cu-doi-moi",
+    "title": "Thu cũ đổi mới trợ giá 1 triệu",
+    "content": "Thu cũ đổi mới điện thoại, trợ giá thêm 1.000.000 ₫.",
+    "products": [],
+    "categories": ["dien-thoai"],
+    "start": "2026-11-01",
+    "end": "2026-12-31",
+    "order": 2
+  },
+  {
+    "key": "giam-500k-chuyen-khoan",
+    "title": "Giảm thêm 500k khi thanh toán chuyển khoản",
+    "content": "Thanh toán qua chuyển khoản giảm thêm 500.000 ₫ cho đơn từ 10 triệu.",
+    "products": [],
+    "categories": [],
+    "start": "2026-11-01",
+    "end": "2026-12-31",
+    "order": 3
+  },
+  {
+    "key": "phieu-qua-tang-100k",
+    "title": "Phiếu quà tặng 100k",
+    "content": "Tặng phiếu quà tặng 100.000 ₫ cho đơn hàng trên 1 triệu.",
+    "products": [],
+    "categories": [],
+    "start": "2026-11-01",
+    "end": "2026-12-31",
+    "order": 4
+  },
+  {
+    "key": "tang-mieng-dan-tablet",
+    "title": "Tặng miếng dán màn hình",
+    "content": "Mua máy tính bảng tặng miếng dán màn hình.",
+    "products": [],
+    "categories": ["may-tinh-bang"],
+    "start": "2026-11-01",
+    "end": "2026-12-31",
+    "order": 5
+  },
+  {
+    "key": "uu-dai-het-han",
+    "title": "Ưu đãi hết hạn (demo)",
+    "content": "Khuyến mãi đã hết hiệu lực, dùng để kiểm tra lọc theo ngày.",
+    "products": [],
+    "categories": [],
+    "start": "2026-01-01",
+    "end": "2026-01-31",
+    "order": 6
+  }
+]

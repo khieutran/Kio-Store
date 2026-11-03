@@ -44,6 +44,7 @@ $settings = [
 	'woocommerce_enable_guest_checkout'                 => 'yes', // mua không cần đăng ký
 	'woocommerce_enable_checkout_login_reminder'        => 'yes', // nhắc đăng nhập nếu đã có tài khoản
 	'woocommerce_enable_signup_and_login_from_checkout' => 'yes', // tạo tài khoản ngay lúc thanh toán
+	'woocommerce_checkout_phone_field'                  => 'required', // F8: bán COD thì số điện thoại bắt buộc (cài đặt có sẵn của Woo)
 
 	// --- Đánh giá sản phẩm ---
 	'woocommerce_enable_reviews'                      => 'yes',

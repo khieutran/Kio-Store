@@ -19,6 +19,8 @@ foreach ( $coupons as $data ) {
 	$coupon->set_minimum_amount( $data['minimum_amount'] ?? '' );
 	$coupon->set_usage_limit_per_user( $data['usage_limit_per_user'] ?? 0 );
 	$coupon->set_free_shipping( ! empty( $data['free_shipping'] ) );
+	$coupon->set_individual_use( ! empty( $data['individual_use'] ) );            // "Chỉ dùng riêng" (có sẵn của Woo)
+	$coupon->update_meta_data( '_kio_max_discount', $data['max_discount'] ?? '' ); // F9: giảm tối đa (plugin kio-store)
 	$coupon->set_product_categories( array_map(
 		fn( $slug ) => get_term_by( 'slug', $slug, 'product_cat' )->term_id,
 		$data['categories'] ?? []

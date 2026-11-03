@@ -70,6 +70,10 @@ wp option update blog_public 0
 step "Nạp sản phẩm demo"
 wp eval-file /scripts/import-products.php | tail -n +2 | wc -l | xargs printf '    %s sản phẩm\n'
 
+# --- 8b. Khuyến mãi mẫu (Phase 4 · F4, data/promotions.json) --------------------
+step "Nạp khuyến mãi mẫu"
+wp eval-file /scripts/import-promotions.php | tail -n +2 | wc -l | xargs printf '    %s khuyến mãi\n'
+
 # --- 9. Plugin chức năng (data/plugins.json) + cấu hình ------------------------
 # Chạy TRƯỚC bước nội dung theme: trang Liên hệ cần ID form do bước này tạo.
 step "Plugin chức năng"

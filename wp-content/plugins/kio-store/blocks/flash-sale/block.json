@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kio-store/flash-sale",
+	"title": "Flash Sale",
+	"category": "widgets",
+	"icon": "lightning",
+	"description": "Danh sách sản phẩm đang flash sale kèm đồng hồ đếm ngược.",
+	"textdomain": "kio-store",
+	"attributes": {
+		"limit": {
+			"type": "number",
+			"default": 8
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./editor.js",
+	"render": "file:./render.php"
+}

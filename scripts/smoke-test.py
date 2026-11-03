@@ -229,6 +229,16 @@ def product_titles(page_html):
     return re.findall(r'woocommerce-loop-product__title">([^<]+)', page_html)
 
 
+def product_card(page_html, title):
+    """Trả về đoạn HTML của thẻ <li class="product"> chứa tiêu đề sản phẩm đã cho."""
+    i = page_html.find('woocommerce-loop-product__title">' + title)
+    if i < 0:
+        return ""
+    start = page_html.rfind('<li class="', 0, i)
+    end = page_html.find("</li>", i)
+    return page_html[start:end] if start >= 0 and end >= 0 else ""
+
+
 def check_plugins():
     """Phase 3: bộ lọc (widget Woo), so sánh, yêu thích, đánh giá có ảnh, SEO, form liên hệ."""
     cat = SITE + "/danh-muc-san-pham/dien-thoai/"
@@ -301,6 +311,206 @@ def check_plugins():
     check("Liên hệ: chủ shop nhận email trong Mailpit", found == 1, f"tìm thấy {found}")
 
 
+def check_labels():
+    """Phase 4 · F1: nhãn tự động trên thẻ sản phẩm (giảm giá %, Mới, Hết hàng)."""
+    _, cat = get(SITE + "/danh-muc-san-pham/dien-thoai/")
+
+    flip = product_card(cat, "Samsung Galaxy Z Flip7")
+    check("F1: Z Flip7 nhãn giảm giá đúng mức lớn nhất (Giảm đến 14%)",
+          "Giảm đến 14%" in flip, flip[:120] if flip else "không tìm thấy thẻ sản phẩm")
+
+    reno = product_card(cat, "OPPO Reno15 5G")
+    check("F1: OPPO Reno15 (10 ngày) có nhãn 'Mới'", 'kio-badge--new">Mới</span>' in reno,
+          reno[:120] if reno else "không tìm thấy thẻ sản phẩm")
+
+    iphone = product_card(cat, "iPhone 16e")
+    check("F1: iPhone 16e (260 ngày) không có nhãn 'Mới'", 'kio-badge--new"' not in iphone)
+    check("F1: iPhone 16e (đang sale) vẫn có nhãn giảm giá", "kio-badge--sale" in iphone)
+
+
+def check_installment():
+    """Phase 4 · F2: dòng trả góp 0% tính từ giá, chỉ hiện khi ≥ giá tối thiểu."""
+    _, s26 = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    i = s26.find('class="kio-installment"')
+    block = s26[i:i + 200] if i >= 0 else ""
+    check("F2: S26 hiện dòng trả góp", 'class="kio-installment"' in s26)
+    # 22.990.000 ÷ 6 kỳ, làm tròn LÊN nghìn → 3.832.000
+    check("F2: S26 trả góp đúng 3.832.000 ₫/tháng", "3.832.000" in block, block[:140])
+
+    cheap = by_sku.get("ANK-SAC20W", {}).get("permalink")
+    if cheap:
+        _, page = get(cheap)
+        check("F2: sản phẩm 390.000 (< 3.000.000) không hiện trả góp", "kio-installment" not in page)
+    else:
+        check("F2: sản phẩm dưới giá tối thiểu không hiện trả góp", False, "không lấy được link sản phẩm")
+
+
+def check_specs():
+    """Phase 4 · F3: thông số nổi bật trên thẻ sản phẩm (chip, RAM, màn hình, pin)."""
+    _, phones = get(SITE + "/danh-muc-san-pham/dien-thoai/")
+    s26 = product_card(phones, "Samsung Galaxy S26")
+    check("F3: điện thoại S26 hiện 3 thông số (Chip, RAM, Màn hình)",
+          all(x in s26 for x in ["Chip", "RAM", "Màn hình"]) and "Snapdragon 8 Elite Gen 5" in s26,
+          s26[:140])
+
+    _, acc = get(SITE + "/danh-muc-san-pham/phu-kien/")
+    pb = product_card(acc, "Sạc dự phòng Anker 10.000mAh 22.5W")
+    check("F3: sạc dự phòng hiện 'Pin' (10000 mAh)", "Pin" in pb and "10000 mAh" in pb)
+
+    sac = product_card(acc, "Sạc nhanh Anker Nano 20W USB-C")
+    check("F3: phụ kiện không có thông số thì không hiện khối", "kio-specs" not in sac)
+
+
+def check_promotions():
+    """Phase 4 · F4: khối khuyến mãi trên trang sản phẩm (Custom Post Type)."""
+    iphone = by_sku.get("APL-IP16E", {}).get("permalink")
+    if not iphone:
+        check("F4: lấy link sản phẩm iPhone 16e", False, "không lấy được link")
+        return
+    _, page = get(iphone)
+    check("F4: iPhone 16e hiện khối 'Khuyến mãi'", "kio-promotions" in page)
+    check("F4: có khuyến mãi 'Tặng ốp lưng chính hãng'", "Tặng ốp lưng chính hãng" in page)
+    # iPhone 16e khớp 4 khuyến mãi (ốp lưng + thu cũ đổi mới + giảm 500k + phiếu quà tặng)
+    check("F4: khớp > 3 khuyến mãi nên có nút 'Xem thêm'", "kio-promotions__toggle" in page)
+    check("F4: khuyến mãi hết hạn không hiện", "hết hạn (demo)" not in page)
+
+    ipad = by_sku.get("APL-IPADAIR11", {}).get("permalink")
+    if ipad:
+        _, page = get(ipad)
+        check("F4: iPad Air (đúng 3 khuyến mãi) không có nút 'Xem thêm'", "kio-promotions__toggle" not in page)
+
+
+def check_flash_sale():
+    """Phase 4 · F5: khối flash sale (block) trên trang chủ + đồng hồ đếm ngược."""
+    _, home = get(SITE + "/")
+
+    m = re.search(r'data-ends-at="(\d+)"', home)
+    check("F5: khối flash sale render đồng hồ đếm ngược", bool(m), "" if m else "không có data-ends-at")
+    check("F5: đồng hồ đếm ngược trỏ về tương lai", bool(m) and int(m.group(1)) > int(time.time()),
+          m.group(1) if m else "")
+    check("F5: hết placeholder 'Đồng hồ đếm ngược — Phase 4'", "Đồng hồ đếm ngược — Phase 4" not in home)
+
+    i = home.find('class="kio-flash-sale"')
+    end = home.find("kio-section-title", i) if i >= 0 else -1
+    region = home[i:end] if i >= 0 and end > 0 else ""
+    titles = product_titles(region)
+    check("F5: flash sale có 6 sản phẩm", len(titles) == 6, f"có {len(titles)}")
+
+
+def wp_eval(code):
+    """Chạy một đoạn PHP trong WordPress qua WP-CLI, trả về chuỗi in ra."""
+    return subprocess.run(["docker", "compose", "run", "--rm", "-T", "wpcli", "eval", code],
+                          capture_output=True, text=True).stdout.strip()
+
+
+def check_phase4_review():
+    """Hồi quy cho các lỗi tìm thấy khi review Phase 4 (F1, F2, F4, F5)."""
+    # F5: REST API trả danh sách flash sale, khớp số thẻ trên trang chủ
+    status, body = get(SITE + "/wp-json/kio/v1/flash-sale")
+    data = json.loads(body) if status == 200 else {}
+    check("F5: REST /wp-json/kio/v1/flash-sale có 6 sản phẩm và thời điểm kết thúc trong tương lai",
+          data.get("count") == 6 and data.get("ends_at", 0) > time.time(), f"{status} count={data.get('count')}")
+    skus = [p["sku"] for p in data.get("products", [])]
+    check("F5: sale hẹn giờ CHƯA tới (iPad Air Xanh dương) không làm sai % giảm iPad",
+          next((p["discount_percent"] for p in data.get("products", []) if p["sku"] == "APL-IPADAIR11"), None) == 12, skus)
+
+    out = wp_eval(
+        # F5: lưu biến thể (việc Woo làm khi bật/tắt sale hẹn giờ) phải xoá cache flash sale
+        "kio_store_flash_sale_data(); wc_get_product(wc_get_product_id_by_sku('XM-RN15PRO-128GB-DEN'))->save();"
+        "echo false === get_transient('kio_flash_sale') ? 'cache:ok ' : 'cache:con ';"
+        # F1: tính % giảm của sản phẩm biến thể không được nạp từng biến thể (dùng dữ liệu giá có cache)
+        "global $wpdb; wp_cache_flush(); $p = wc_get_product(wc_get_product_id_by_sku('APL-IP17PM'));"
+        "$p->get_variation_prices(true); $q = $wpdb->num_queries; kio_store_discount_percent($p);"
+        "echo 'query:', $wpdb->num_queries - $q, ' ';"
+        # F2: Quản lý cửa hàng phải LƯU được cài đặt trả góp (options.php)
+        "echo get_role('shop_manager')->has_cap(apply_filters('option_page_capability_kio_installment', 'manage_options')) ? 'sm:ok ' : 'sm:khong ';"
+        # F4: khuyến mãi thiếu meta thứ tự vẫn phải hiện
+        "$id = wp_insert_post(array('post_type'=>'kio_promotion','post_status'=>'publish','post_title'=>'smoke-no-order','post_content'=>'x'));"
+        "$t = wp_list_pluck(kio_store_product_promotions(wc_get_product(wc_get_product_id_by_sku('SS-S26'))), 'post_title');"
+        "wp_delete_post($id, true); echo in_array('smoke-no-order', $t, true) ? 'promo:ok' : 'promo:mat';"
+    )
+    check("F5: lưu biến thể → xoá cache flash sale", "cache:ok" in out, out)
+    m = re.search(r"query:(\d+)", out)
+    check("F1: tính % giảm sản phẩm biến thể không tốn query (dùng giá có cache)", bool(m) and int(m.group(1)) == 0, out)
+    check("F2: Quản lý cửa hàng lưu được cài đặt trả góp", "sm:ok" in out, out)
+    check("F4: khuyến mãi thiếu meta thứ tự vẫn hiển thị", "promo:ok" in out, out)
+
+
+def check_rows_and_buy_bar():
+    """Phase 4 · F6 (dải sản phẩm trang chủ bằng code) + F7 (thanh mua hàng mobile)."""
+    _, home = get(SITE + "/")
+    rows = re.findall(r'<section class="kio-strip kio-product-row" data-category="([^"]+)">(.*?)</section>', home, re.S)
+    check("F6: trang chủ có 4 dải [kio_product_row]", [r[0] for r in rows] == ["dien-thoai", "laptop", "am-thanh", "phu-kien"],
+          [r[0] for r in rows])
+    laptop = dict(rows).get("laptop", "")
+    chips = re.findall(r'kio-strip__chip" href="([^"]+)">([^<]+)', laptop)
+    check("F6: chip thương hiệu dải Laptop tự sinh (Apple, ASUS, Lenovo)",
+          sorted(n for _, n in chips) == ["ASUS", "Apple", "Lenovo"], [n for _, n in chips])
+    apple = next((html.unescape(u) for u, n in chips if n == "Apple"), "")
+    titles = re.findall(r'woocommerce-loop-product__title">([^<]+)', get(apple)[1]) if apple else []
+    check("F6: bấm chip Apple ở dải Laptop → chỉ MacBook", bool(titles) and all("MacBook" in t for t in titles), titles)
+    out = wp_eval("$v = (int) get_option('kio_product_rows_version', 1); wc_get_product(wc_get_product_id_by_sku('SS-S26'))->save();"
+                  "echo (int) get_option('kio_product_rows_version', 1) > $v ? 'ok' : 'khong';")
+    check("F6: lưu sản phẩm → tăng phiên bản cache các dải", out.endswith("ok"), out)
+
+    _, product = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    check("F7: trang sản phẩm có thanh mua hàng + JS", 'class="kio-buy-bar"' in product and "sticky-buy-bar.js" in product)
+    check("F7: trang chủ không nạp JS/CSS thanh mua hàng", "sticky-buy-bar" not in home)
+
+
+def check_checkout_and_coupons():
+    """Phase 4 · F8 (form thanh toán VN) + F9 (coupon giảm tối đa, chặn cộng dồn)."""
+    # F8: đặt hàng thật qua trang thanh toán (shortcode) như khách
+    charger = by_sku.get("APL-CAP-USBC1M", {}).get("id")
+
+    def place_order(phone):
+        op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+        op.open(f"{SITE}/?add-to-cart={charger}", timeout=30).read()
+        page = op.open(SITE + "/thanh-toan/", timeout=30).read().decode()
+        nonce = re.search(r'name="woocommerce-process-checkout-nonce" value="([^"]+)"', page)
+        form = {"billing_first_name": "Khách Smoke Test", "billing_country": "VN", "billing_state": "HA-NOI",
+                "billing_city": "Phường Ba Đình", "billing_address_1": "1 Hoàng Hoa Thám", "billing_phone": phone,
+                "billing_email": "khach@vidu.com", "payment_method": "cod",
+                "woocommerce-process-checkout-nonce": nonce.group(1) if nonce else "", "_wp_http_referer": "/thanh-toan/"}
+        res = json.loads(op.open(urllib.request.Request(SITE + "/?wc-ajax=checkout",
+                                                        data=urllib.parse.urlencode(form).encode()), timeout=60).read())
+        return page, res
+
+    page, res = place_order("")
+    states = re.search(r'<select name="billing_state".*?</select>', page, re.S)
+    check("F8: ô Tỉnh/Thành phố có đúng 34 lựa chọn",
+          bool(states) and len(re.findall(r'<option value="[A-Z]', states.group(0))) == 34)
+    check("F8: một ô 'Họ và tên', không còn ô 'Họ' (billing_last_name)",
+          'id="billing_first_name"' in page and 'id="billing_last_name"' not in page)
+    check("F8: thiếu số điện thoại → không đặt được", res.get("result") == "failure" and "Số điện thoại" in res.get("messages", ""))
+    _, res = place_order("0123 456")
+    check("F8: số điện thoại sai định dạng → báo lỗi tiếng Việt",
+          res.get("result") == "failure" and "không hợp lệ" in html.unescape(res.get("messages", "")))
+    _, res = place_order("090 123 4567")
+    m = re.search(r"order-received/(\d+)", res.get("redirect", ""))
+    check("F8: số điện thoại đúng → đặt hàng thành công", res.get("result") == "success" and bool(m), res.get("result"))
+    if m:
+        out = wp_eval(f"$o = wc_get_order({m.group(1)}); echo $o->get_billing_state(), '|', $o->get_billing_city();"
+                      f"$o->update_status('cancelled'); $o->delete(true);")   # huỷ để trả lại tồn kho rồi xoá đơn thử
+        check("F8: đơn lưu mã tỉnh + phường/xã", out.startswith("HA-NOI|Phường Ba Đình"), out)
+
+    # F9: coupon qua Store API
+    s26 = by_sku.get("SS-S26", {})
+    variation = next((v["id"] for v in s26.get("variations", [])
+                      if {a["value"] for a in v["attributes"]} == {"256gb", "den"}), None)
+    cart = Cart()
+    cart.call("/cart/add-item", {"id": variation, "quantity": 1})
+    cart.call("/cart/add-item", {"id": by_sku.get("ANK-SAC20W", {}).get("id"), "quantity": 1})
+    c = cart.call("/cart/apply-coupon", {"code": "KIO10"})
+    discount = c.get("totals", {}).get("total_discount")
+    check("F9: KIO10 trên giỏ 23.380.000 giảm đúng mức trần 500.000", discount == "500000", discount)
+    c = cart.call("/cart/apply-coupon", {"code": "GIAM500K"})
+    check("F9: không dùng chung GIAM500K với KIO10", c.get("code") == "woocommerce_rest_cart_coupon_error", c.get("code"))
+    c = cart.call("/cart/apply-coupon", {"code": "FREESHIP"})
+    check("F9: FREESHIP (chỉ miễn phí ship) vẫn dùng chung được với KIO10",
+          sorted(x["code"] for x in c.get("coupons", [])) == ["freeship", "kio10"], c.get("message", ""))
+
+
 def check_php_log():
     log = subprocess.run(
         ["docker", "compose", "exec", "-T", "wordpress", "sh", "-c", "cat wp-content/debug.log 2>/dev/null || true"],
@@ -320,7 +530,15 @@ def main():
     section("4. Giỏ hàng, giao hàng, coupon", check_cart)
     section("5. Email (Mailpit)", check_mail)
     section("6. Plugin chức năng (Phase 3)", check_plugins)
-    section("7. Log lỗi PHP", check_php_log)
+    section("7. Nhãn sản phẩm (Phase 4 · F1)", check_labels)
+    section("8. Trả góp (Phase 4 · F2)", check_installment)
+    section("9. Thông số nổi bật (Phase 4 · F3)", check_specs)
+    section("10. Khuyến mãi (Phase 4 · F4)", check_promotions)
+    section("11. Flash sale (Phase 4 · F5)", check_flash_sale)
+    section("12. Hồi quy sau review Phase 4", check_phase4_review)
+    section("13. Dải sản phẩm + thanh mua hàng (Phase 4 · F6, F7)", check_rows_and_buy_bar)
+    section("14. Thanh toán VN + coupon tối đa (Phase 4 · F8, F9)", check_checkout_and_coupons)
+    section("15. Log lỗi PHP", check_php_log)
 
     print()
     if failures:

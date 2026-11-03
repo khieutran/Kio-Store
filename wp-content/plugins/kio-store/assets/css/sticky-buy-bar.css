@@ -1,0 +1,75 @@
+/*
+ * F7 — Thanh mua hàng dính dưới màn hình. Chỉ nạp trên trang sản phẩm.
+ * Màu lấy từ biến CSS của child theme (--kio-brand…) nếu có, kèm giá trị dự phòng.
+ */
+
+.kio-buy-bar {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.kio-buy-bar {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 9998;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+		background: #fff;
+		box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+		transform: translateY(110%);
+		transition: transform 0.2s ease;
+	}
+
+	.kio-buy-bar.is-visible {
+		transform: none;
+	}
+
+	/* Khi thanh mua hàng hiện thì tạm ẩn thanh công cụ dưới đáy của Storefront: 2 thanh chồng nhau chiếm quá nhiều màn hình. */
+	.kio-buy-bar-visible .storefront-handheld-footer-bar {
+		display: none;
+	}
+
+	.kio-buy-bar__info {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.kio-buy-bar__name {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 0.85rem;
+		color: var(--kio-text, #1f2937);
+	}
+
+	.kio-buy-bar__price {
+		font-weight: 700;
+		color: var(--kio-price, #d70018);
+	}
+
+	.kio-buy-bar__price del {
+		display: none; /* thanh nhỏ: chỉ hiện giá đang bán */
+	}
+
+	.kio-buy-bar__button {
+		min-height: 44px;
+		padding: 0 20px;
+		border: 0;
+		border-radius: var(--kio-radius, 12px);
+		background: var(--kio-price, #d70018);
+		color: #fff;
+		font-weight: 700;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kio-buy-bar {
+		transition: none;
+	}
+}
