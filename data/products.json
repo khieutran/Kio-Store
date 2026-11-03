@@ -10,7 +10,7 @@
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },       "regular_price": 22990000, "stock": 12 },
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 22990000, "stock": 8 },
       { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },       "regular_price": 26990000, "stock": 5 },
-      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 26990000, "sale_price": 25490000, "stock": 3 }
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 26990000, "sale_price": 25490000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 3 }
     ]
   },
   {
@@ -21,9 +21,9 @@
     "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Apple A19 Pro", "pin": "4832 mAh" },
     "image": { "device": "phone" },
     "variations": [
-      { "attributes": { "dung-luong": "256GB", "mau-sac": "Cam" },        "regular_price": 37990000, "sale_price": 36490000, "stock": 15 },
-      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 37990000, "sale_price": 36490000, "stock": 10 },
-      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" },        "regular_price": 37990000, "sale_price": 36490000, "stock": 7 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Cam" },        "regular_price": 37990000, "sale_price": 36490000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 15 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 37990000, "sale_price": 36490000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 10 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Bạc" },        "regular_price": 37990000, "sale_price": 36490000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 7 },
       { "attributes": { "dung-luong": "512GB", "mau-sac": "Cam" },        "regular_price": 44490000, "stock": 6 },
       { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 44490000, "stock": 0 },
       { "attributes": { "dung-luong": "512GB", "mau-sac": "Bạc" },        "regular_price": 44490000, "stock": 2 }
@@ -81,10 +81,10 @@
     "specs": { "ram": "12GB", "man-hinh": "6.9 inch", "chip": "Exynos 2500", "pin": "4300 mAh" },
     "image": { "device": "phone" },
     "variations": [
-      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },       "regular_price": 28990000, "sale_price": 24990000, "stock": 7 },
-      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 28990000, "sale_price": 24990000, "stock": 5 },
-      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },       "regular_price": 31990000, "sale_price": 27990000, "stock": 2 },
-      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 31990000, "sale_price": 27990000, "stock": 1 }
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" },       "regular_price": 28990000, "sale_price": 24990000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 7 },
+      { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 28990000, "sale_price": 24990000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 5 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Đen" },       "regular_price": 31990000, "sale_price": 27990000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 2 },
+      { "attributes": { "dung-luong": "512GB", "mau-sac": "Xanh dương" }, "regular_price": 31990000, "sale_price": 27990000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 1 }
     ]
   },
   {
@@ -123,8 +123,8 @@
     "specs": { "ram": "8GB", "man-hinh": "6.7 inch", "chip": "Dimensity 7400 Ultra", "pin": "5110 mAh" },
     "image": { "device": "phone" },
     "variations": [
-      { "attributes": { "dung-luong": "128GB", "mau-sac": "Đen" }, "regular_price": 7490000, "sale_price": 6790000, "stock": 30 },
-      { "attributes": { "dung-luong": "128GB", "mau-sac": "Tím" }, "regular_price": 7490000, "sale_price": 6790000, "stock": 12 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Đen" }, "regular_price": 7490000, "sale_price": 6790000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 30 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Tím" }, "regular_price": 7490000, "sale_price": 6790000, "sale_from": "-1 day", "sale_to": "+2 days", "stock": 12 },
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Đen" }, "regular_price": 8490000, "stock": 15 },
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Tím" }, "regular_price": 8490000, "stock": 9 }
     ]
@@ -152,8 +152,8 @@
     "specs": { "ram": "8GB", "man-hinh": "11 inch", "chip": "Apple M3", "pin": "7606 mAh" },
     "image": { "device": "tablet" },
     "variations": [
-      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xám" },       "regular_price": 16990000, "sale_price": 14990000, "sale_from": "+1 day", "sale_to": "+8 days", "stock": 6 },
-      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh dương" }, "regular_price": 16990000, "stock": 4 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xám" },       "regular_price": 16990000, "sale_price": 14990000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 6 },
+      { "attributes": { "dung-luong": "128GB", "mau-sac": "Xanh dương" }, "regular_price": 16990000, "sale_price": 15490000, "sale_from": "+3 days", "sale_to": "+10 days", "stock": 4 },
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Xám" },       "regular_price": 19990000, "stock": 3 },
       { "attributes": { "dung-luong": "256GB", "mau-sac": "Xanh dương" }, "regular_price": 19990000, "stock": 0 }
     ]
@@ -286,8 +286,8 @@
     "specs": { "man-hinh": "1.5 inch", "chip": "Apple S10" },
     "image": { "device": "watch" },
     "variations": [
-      { "attributes": { "mau-sac": "Đen" }, "regular_price": 6490000, "sale_price": 5990000, "stock": 12 },
-      { "attributes": { "mau-sac": "Bạc" }, "regular_price": 6490000, "sale_price": 5990000, "stock": 0 }
+      { "attributes": { "mau-sac": "Đen" }, "regular_price": 6490000, "sale_price": 5990000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 12 },
+      { "attributes": { "mau-sac": "Bạc" }, "regular_price": 6490000, "sale_price": 5990000, "sale_from": "-1 day", "sale_to": "+1 day", "stock": 0 }
     ]
   },
   {

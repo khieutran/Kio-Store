@@ -1,19 +1,22 @@
 [
   {
     "code": "KIO10",
-    "description": "Giảm 10% cho đơn từ 2 triệu, mỗi khách dùng 1 lần",
+    "description": "Giảm 10% tối đa 500.000 ₫ cho đơn từ 2 triệu, mỗi khách dùng 1 lần, không dùng chung mã giảm tiền khác",
     "discount_type": "percent",
     "amount": 10,
     "minimum_amount": 2000000,
-    "usage_limit_per_user": 1
+    "usage_limit_per_user": 1,
+    "max_discount": 500000,
+    "individual_use": true
   },
   {
     "code": "GIAM500K",
-    "description": "Giảm 500.000 ₫ cho đơn từ 10 triệu, chỉ áp dụng điện thoại và máy tính bảng",
+    "description": "Giảm 500.000 ₫ cho đơn từ 10 triệu, chỉ áp dụng điện thoại và máy tính bảng, không dùng chung mã giảm tiền khác",
     "discount_type": "fixed_cart",
     "amount": 500000,
     "minimum_amount": 10000000,
-    "categories": ["dien-thoai", "may-tinh-bang"]
+    "categories": ["dien-thoai", "may-tinh-bang"],
+    "individual_use": true
   },
   {
     "code": "FREESHIP",

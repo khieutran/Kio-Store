@@ -31,20 +31,7 @@
 </ul>
 <!-- /wp:html -->
 
-<!-- wp:group {"className":"kio-flash-sale","layout":{"type":"default"}} -->
-<div class="wp-block-group kio-flash-sale">
-	<!-- wp:html -->
-	<div class="kio-flash-sale__head">
-		<h2 class="kio-flash-sale__title">Flash Sale</h2>
-		<span class="kio-flash-sale__timer">Đồng hồ đếm ngược — Phase 4</span>
-	</div>
-	<!-- /wp:html -->
-
-	<!-- wp:shortcode -->
-	[products limit="5" columns="5" on_sale="true" orderby="popularity"]
-	<!-- /wp:shortcode -->
-</div>
-<!-- /wp:group -->
+<!-- wp:kio-store/flash-sale {"limit":8} /-->
 
 <!-- wp:heading {"className":"kio-section-title"} -->
 <h2 class="kio-section-title">Sản phẩm nổi bật</h2>
@@ -54,77 +41,20 @@
 [products limit="5" columns="5" featured="true" orderby="date"]
 <!-- /wp:shortcode -->
 
-<!-- wp:html -->
-<div class="kio-strip">
-	<div class="kio-strip__head">
-		<h2 class="kio-section-title">Điện thoại</h2>
-		<a class="kio-strip__more" href="/danh-muc-san-pham/dien-thoai/">Xem tất cả</a>
-	</div>
-	<div class="kio-strip__chips">
-		<a class="kio-strip__chip" href="/thuong-hieu/apple/">Apple</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/samsung/">Samsung</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/xiaomi/">Xiaomi</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/oppo/">OPPO</a>
-	</div>
-</div>
-<!-- /wp:html -->
-
 <!-- wp:shortcode -->
-[products limit="5" columns="5" category="dien-thoai" orderby="popularity"]
+[kio_product_row category="dien-thoai" limit="5"]
 <!-- /wp:shortcode -->
 
-<!-- wp:html -->
-<div class="kio-strip">
-	<div class="kio-strip__head">
-		<h2 class="kio-section-title">Laptop</h2>
-		<a class="kio-strip__more" href="/danh-muc-san-pham/laptop/">Xem tất cả</a>
-	</div>
-	<div class="kio-strip__chips">
-		<a class="kio-strip__chip" href="/thuong-hieu/apple/">MacBook</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/asus/">ASUS</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/lenovo/">Lenovo</a>
-	</div>
-</div>
-<!-- /wp:html -->
-
 <!-- wp:shortcode -->
-[products limit="5" columns="5" category="laptop" orderby="popularity"]
+[kio_product_row category="laptop" limit="5"]
 <!-- /wp:shortcode -->
 
-<!-- wp:html -->
-<div class="kio-strip">
-	<div class="kio-strip__head">
-		<h2 class="kio-section-title">Âm thanh</h2>
-		<a class="kio-strip__more" href="/danh-muc-san-pham/am-thanh/">Xem tất cả</a>
-	</div>
-	<div class="kio-strip__chips">
-		<a class="kio-strip__chip" href="/thuong-hieu/apple/">Apple</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/sony/">Sony</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/jbl/">JBL</a>
-	</div>
-</div>
-<!-- /wp:html -->
-
 <!-- wp:shortcode -->
-[products limit="5" columns="5" category="am-thanh" orderby="popularity"]
+[kio_product_row category="am-thanh" limit="5"]
 <!-- /wp:shortcode -->
 
-<!-- wp:html -->
-<div class="kio-strip">
-	<div class="kio-strip__head">
-		<h2 class="kio-section-title">Phụ kiện</h2>
-		<a class="kio-strip__more" href="/danh-muc-san-pham/phu-kien/">Xem tất cả</a>
-	</div>
-	<div class="kio-strip__chips">
-		<a class="kio-strip__chip" href="/thuong-hieu/anker/">Anker</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/baseus/">Baseus</a>
-		<a class="kio-strip__chip" href="/thuong-hieu/apple/">Apple</a>
-	</div>
-</div>
-<!-- /wp:html -->
-
 <!-- wp:shortcode -->
-[products limit="5" columns="5" category="phu-kien" orderby="popularity"]
+[kio_product_row category="phu-kien" limit="5"]
 <!-- /wp:shortcode -->
 
 <!-- wp:heading {"className":"kio-section-title"} -->
