@@ -1,0 +1,406 @@
+/*
+ * Trang sản phẩm (Phase 4.5). Chỉ nạp ở trang sản phẩm.
+ */
+
+/* Bố cục: ảnh + thông tin mua trong khung riêng .kio-product-top (inc/single-product.php). Cột ảnh
+   ngắn hơn nên dính lại khi cuộn, khách vẫn thấy máy trong lúc xem khuyến mãi và chọn phiên bản.
+   Khung riêng là giới hạn của sticky: hết khung thì cột ảnh trôi đi, không đè lên khối tab. */
+
+/* Storefront đặt overflow: hidden ở đây; overflow khác visible làm sticky của phần tử con mất tác dụng. */
+.single-product div.product {
+	overflow: visible;
+}
+
+.kio-product-top {
+	position: relative;
+}
+
+/* Woo in nhãn giảm giá ngay trước ảnh: đưa về góc ảnh, không chiếm ô lưới. */
+.kio-product-top > .onsale.kio-badge {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 3;
+	margin: 0;
+}
+
+/* Thêm .storefront-full-width-content để đủ mạnh hơn độ rộng % của Storefront. */
+@media (min-width: 768px) {
+	.kio-product-top {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+		column-gap: 24px;
+		align-items: start;
+	}
+
+	.storefront-full-width-content.single-product div.product .kio-product-top > .woocommerce-product-gallery {
+		position: sticky;
+		top: calc(var(--kio-header-h, 0px) + var(--kio-nav-h, 46px) + 16px); /* chừa chỗ header + thanh danh mục */
+		float: none;
+		width: auto;
+		margin: 0;
+	}
+
+	.storefront-full-width-content.single-product div.product .kio-product-top > .summary {
+		float: none;
+		width: auto;
+		margin: 0;
+	}
+}
+
+.kio-product-top > .woocommerce-product-gallery,
+.kio-product-top > .summary,
+.single-product div.product > .woocommerce-tabs {
+	padding: 20px;
+	border-radius: var(--kio-radius);
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow);
+}
+
+.single-product div.product > .woocommerce-tabs {
+	margin-top: 24px;
+}
+
+.single-product.storefront-full-width-content .related.products > h2:first-child {
+	margin: 32px 0 16px;
+	font-size: var(--kio-text-lg);
+	font-weight: 700;
+	text-align: left;
+}
+
+/* Ảnh gốc 416px: căn giữa thay vì kéo giãn cho mờ. */
+.single-product .woocommerce-product-gallery__image img {
+	display: block;
+	margin-inline: auto;
+	border-radius: var(--kio-radius-sm);
+}
+
+.single-product .woocommerce-product-gallery .flex-viewport {
+	margin-bottom: 0;
+}
+
+.single-product .woocommerce-product-gallery .flex-control-thumbs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin: 12px 0 0;
+}
+
+.storefront-full-width-content.single-product div.product .woocommerce-product-gallery.woocommerce-product-gallery--columns-4 .flex-control-thumbs li {
+	float: none;
+	width: 64px;
+	margin: 0;
+}
+
+.single-product .woocommerce-product-gallery .flex-control-thumbs img {
+	border: 2px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+	opacity: 1;
+	cursor: pointer;
+}
+
+.single-product .woocommerce-product-gallery .flex-control-thumbs img.flex-active {
+	border-color: var(--kio-brand);
+}
+
+/* Thông tin mua */
+.single-product .product_title {
+	margin: 0 0 8px;
+	font-size: var(--kio-text-xl);
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.single-product div.product .summary > .price {
+	margin: 0 0 4px;
+	font-weight: 700;
+}
+
+.single-product div.product .summary > .price ins {
+	font-weight: 700;
+	text-decoration: none;
+}
+
+/* Thông số nổi bật */
+.kio-spec-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 8px;
+	margin: 0 0 16px;
+}
+
+.kio-spec-grid__item {
+	padding: 8px 12px;
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-bg);
+}
+
+.kio-spec-grid__label {
+	display: block;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-xs);
+}
+
+.kio-spec-grid__value {
+	display: block;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+/* Khuyến mãi: nền cam nhạt, có icon quà */
+.single-product .kio-promotions {
+	border-color: #ffd2b3;
+	background: var(--kio-accent-soft);
+}
+
+.single-product .kio-promotions__title {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--kio-accent-text);
+}
+
+.single-product .kio-promotions__title::before {
+	content: "";
+	width: 18px;
+	height: 18px;
+	background: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 8h-2.2A3 3 0 0 0 12 5.4 3 3 0 0 0 6.2 8H4a1 1 0 0 0-1 1v3h8V8h2v4h8V9a1 1 0 0 0-1-1zM9 8a1 1 0 1 1 1-1v1zm6 0h-1V7a1 1 0 1 1 1 1zM4 14v6a1 1 0 0 0 1 1h6v-7zm9 0v7h6a1 1 0 0 0 1-1v-6z'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 8h-2.2A3 3 0 0 0 12 5.4 3 3 0 0 0 6.2 8H4a1 1 0 0 0-1 1v3h8V8h2v4h8V9a1 1 0 0 0-1-1zM9 8a1 1 0 1 1 1-1v1zm6 0h-1V7a1 1 0 1 1 1 1zM4 14v6a1 1 0 0 0 1 1h6v-7zm9 0v7h6a1 1 0 0 0 1-1v-6z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Bảng chọn phiên bản: bỏ dáng bảng, nhãn nằm trên chip */
+.single-product .variations,
+.single-product .variations tbody,
+.single-product .variations tr,
+.single-product .variations th,
+.single-product .variations td {
+	display: block;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+.single-product .variations {
+	margin: 0 0 12px;
+}
+
+.single-product .variations tr {
+	margin-bottom: 12px;
+}
+
+.single-product .variations th.label label {
+	font-size: var(--kio-text-sm);
+	font-weight: 700;
+}
+
+.kio-variation-select,
+.single-product .variations .reset_variations {
+	display: none !important;
+}
+
+.kio-chips {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+	gap: 8px;
+	margin-top: 6px;
+}
+
+.kio-chip {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 6px 10px;
+	overflow: hidden;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-card);
+	cursor: pointer;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-chip:active {
+	transform: scale(0.98);
+}
+
+@media (hover: hover) {
+	.kio-chip:hover {
+		border-color: var(--kio-brand);
+	}
+}
+
+/* Ẩn nút radio nhưng vẫn giữ nó trong luồng focus và cho trình đọc màn hình. */
+.kio-chip input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.kio-chip.is-selected {
+	border-color: var(--kio-brand);
+	box-shadow: inset 0 0 0 1px var(--kio-brand);
+	background: var(--kio-brand-soft);
+}
+
+.kio-chip:has(input:focus-visible) {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-chip__swatch {
+	flex: 0 0 auto;
+	width: 22px;
+	height: 22px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 50%;
+}
+
+.kio-chip__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	line-height: 1.3;
+}
+
+.kio-chip__label {
+	font-size: 13px;
+	font-weight: 700;
+}
+
+/* Giữ sẵn chỗ một dòng: JS điền giá sau nên chip không đổi chiều cao. */
+.kio-chip__price {
+	min-height: 1.3em;
+	color: var(--kio-price);
+	font-size: var(--kio-text-xs);
+}
+
+/* Hết hàng: chữ nhạt + gạch chéo. Vẫn bấm được để khách thấy thông báo hết hàng của Woo. */
+.kio-chip.is-out .kio-chip__label,
+.kio-chip.is-out .kio-chip__price {
+	color: var(--kio-muted);
+}
+
+.kio-chip.is-out .kio-chip__swatch {
+	opacity: 0.45;
+}
+
+.kio-chip.is-out::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top right, transparent calc(50% - 1px), var(--kio-border) calc(50% - 1px), var(--kio-border) calc(50% + 1px), transparent calc(50% + 1px));
+	pointer-events: none;
+}
+
+/* Đã có giá đổi theo phiên bản ở đầu trang nên bỏ dòng giá thứ hai của Woo. */
+.kio-chips-ready .woocommerce-variation-price {
+	display: none;
+}
+
+/* Khu mua */
+.single-product .woocommerce-variation-add-to-cart,
+.single-product form.cart:not(.variations_form) {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.single-product div.product form.cart {
+	margin-bottom: 12px;
+	padding: 0;
+}
+
+.single-product div.product .woocommerce-variation-add-to-cart {
+	padding: 0;
+}
+
+.single-product div.product .woocommerce-variation-availability p {
+	margin: 0 0 8px;
+}
+
+/* Clearfix của Storefront: trong flex, 2 giả phần tử này thành phần tử con và ăn thêm khoảng gap. */
+.single-product div.product .woocommerce-variation-add-to-cart::before,
+.single-product div.product .woocommerce-variation-add-to-cart::after,
+.single-product div.product form.cart:not(.variations_form)::before,
+.single-product div.product form.cart:not(.variations_form)::after {
+	content: none;
+}
+
+.single-product div.product form.cart .quantity {
+	float: none;
+	margin: 0;
+}
+
+.single-product form.cart .quantity .qty {
+	width: 64px;
+	height: 48px;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-card);
+	box-shadow: none;
+}
+
+.single-product form.cart .single_add_to_cart_button {
+	flex: 1 1 auto;
+	float: none;
+	min-height: 48px;
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-brand);
+	color: #fff;
+	font-size: var(--kio-text-md);
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.single-product form.cart .single_add_to_cart_button:hover {
+	background: var(--kio-brand-dark);
+}
+
+.single-product form.cart .single_add_to_cart_button:active {
+	transform: scale(0.98);
+}
+
+/* Yêu thích / So sánh: việc phụ nên là nút viền, không tranh với nút mua. */
+.single-product .summary .woosw-btn,
+.single-product .summary a.compare.button {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	margin: 0 8px 8px 0;
+	padding: 6px 14px;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-card);
+	color: var(--kio-text);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.single-product .summary .woosw-btn:hover,
+.single-product .summary a.compare.button:hover {
+	border-color: var(--kio-brand);
+	color: var(--kio-brand);
+}
+
+.single-product .product_meta {
+	margin-top: 8px;
+	padding-top: 12px;
+	border-top: 1px solid var(--kio-border);
+	color: var(--kio-muted);
+	font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kio-chip,
+	.single-product form.cart .single_add_to_cart_button {
+		transition: none;
+	}
+
+	.kio-chip:active,
+	.single-product form.cart .single_add_to_cart_button:active {
+		transform: none;
+	}
+}

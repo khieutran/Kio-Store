@@ -28,6 +28,7 @@ add_action( 'woocommerce_new_product', 'kio_store_flash_sale_invalidate' );
 add_action( 'woocommerce_delete_product', 'kio_store_flash_sale_invalidate' );
 add_action( 'woocommerce_trash_product', 'kio_store_flash_sale_invalidate' );
 add_action( 'rest_api_init', 'kio_store_register_flash_sale_rest' );
+add_action( 'woocommerce_after_shop_loop_item_title', 'kio_store_render_flash_sale_progress', 18 );
 add_action( 'init', 'kio_store_register_flash_sale_block' );
 
 /**
@@ -77,19 +78,22 @@ function kio_store_flash_sale_data(): array {
 		)
 	);
 
-	$ids  = array();
-	$ends = array();
+	$ids      = array();
+	$ends     = array();
+	$progress = array();
 	foreach ( $products as $product ) {
 		$end = kio_store_product_sale_end( $product );
 		if ( null !== $end ) {
-			$ids[]  = $product->get_id();
-			$ends[] = $end;
+			$ids[]                          = $product->get_id();
+			$ends[]                         = $end;
+			$progress[ $product->get_id() ] = kio_store_sold_percent( $product );
 		}
 	}
 
 	$data = array(
-		'ids'     => $ids,
-		'ends_at' => empty( $ends ) ? 0 : min( $ends ),
+		'ids'      => $ids,
+		'ends_at'  => empty( $ends ) ? 0 : min( $ends ),
+		'progress' => $progress,
 	);
 
 	// Hết hạn sau 1 giờ, hoặc ĐÚNG lúc flash sale sớm nhất kết thúc nếu sớm hơn: lỡ Action
@@ -101,6 +105,57 @@ function kio_store_flash_sale_data(): array {
 	set_transient( 'kio_flash_sale', $data, $ttl );
 
 	return $data;
+}
+
+/**
+ * Phần trăm đã bán: đã bán / (đã bán + còn trong kho). Sản phẩm biến thể cộng tồn của từng biến thể.
+ *
+ * Tính trong lúc dựng cache nên việc nạp từng biến thể chỉ tốn lúc cache hết hạn.
+ *
+ * @param WC_Product $product Sản phẩm.
+ * @return int|null Phần trăm 0–100; null nếu không biết tồn kho (không theo dõi kho, chưa bán).
+ */
+function kio_store_sold_percent( WC_Product $product ): ?int {
+	$items = $product->is_type( 'variable' ) ? array_filter( array_map( 'wc_get_product', $product->get_children() ) ) : array( $product );
+	$stock = 0;
+	foreach ( $items as $item ) {
+		if ( ! $item->managing_stock() ) {
+			return null;
+		}
+		$stock += max( 0, (int) $item->get_stock_quantity() );
+	}
+
+	$sold = (int) $product->get_total_sales();
+
+	return $sold + $stock > 0 ? (int) round( $sold / ( $sold + $stock ) * 100 ) : null;
+}
+
+/**
+ * ACTION woocommerce_after_shop_loop_item_title: thanh "Đã bán x%", chỉ trong khối Flash Sale.
+ *
+ * Tên vòng lặp do kio_store_product_loop_html() đặt, nên cùng một hook mà các lưới khác không in.
+ * Thanh vẽ bằng transform: scaleX (đọc --kio-sold) thay vì đổi width.
+ *
+ * @return void
+ */
+function kio_store_render_flash_sale_progress(): void {
+	global $product;
+
+	if ( 'kio_flash_sale' !== wc_get_loop_prop( 'name' ) || ! $product instanceof WC_Product ) {
+		return;
+	}
+
+	$percent = kio_store_flash_sale_data()['progress'][ $product->get_id() ] ?? null;
+	if ( null === $percent ) {
+		return;
+	}
+
+	printf(
+		'<div class="kio-sold-bar"><span class="kio-sold-bar__text">%1$s</span><span class="kio-sold-bar__track" aria-hidden="true"><span class="kio-sold-bar__fill" style="--kio-sold:%2$s"></span></span></div>',
+		/* translators: %d: phần trăm đã bán. */
+		esc_html( sprintf( __( 'Đã bán %d%%', 'kio-store' ), $percent ) ),
+		esc_attr( (string) ( $percent / 100 ) )
+	);
 }
 
 /**
@@ -138,6 +193,7 @@ function kio_store_flash_sale_render( array $atts ): string {
 		KIO_STORE_VERSION,
 		true
 	);
+	wp_enqueue_script( 'kio-store-carousel' );
 
 	ob_start();
 	?>
@@ -157,7 +213,9 @@ function kio_store_flash_sale_render( array $atts ): string {
 			<?php endif; ?>
 		</div>
 
-		<?php echo kio_store_product_loop_html( $ids, 'kio_flash_sale', 5 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML vòng lặp Woo, đã escape trong template. ?>
+		<div data-kio-carousel data-label="<?php esc_attr_e( 'Sản phẩm Flash Sale', 'kio-store' ); ?>">
+			<?php echo kio_store_product_loop_html( $ids, 'kio_flash_sale', 5 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML vòng lặp Woo, đã escape trong template. ?>
+		</div>
 	</div>
 	<?php
 

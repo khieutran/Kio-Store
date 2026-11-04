@@ -1,0 +1,613 @@
+/*
+ * Giỏ hàng và thanh toán (Phase 4.5). Chỉ nạp ở 2 trang này.
+ */
+
+.woocommerce-cart .hentry.type-page .entry-header,
+.woocommerce-checkout .hentry.type-page .entry-header {
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+
+.woocommerce-cart .entry-title,
+.woocommerce-checkout .entry-title {
+	margin: 0;
+	font-size: var(--kio-text-xl);
+	font-weight: 700;
+	text-align: left;
+}
+
+.woocommerce-cart .hentry,
+.woocommerce-checkout .hentry {
+	margin-bottom: 32px;
+	padding: 0;
+	border: 0;
+}
+
+/* Thanh bước */
+.kio-steps {
+	display: flex;
+	gap: 8px;
+	margin: 0 0 20px;
+	padding: 0;
+	list-style: none;
+}
+
+.kio-steps__item {
+	display: flex;
+	flex: 1 1 0;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+	margin: 0;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-sm);
+}
+
+/* Đường nối tới bước sau */
+.kio-steps__item:not(:last-child)::after {
+	content: "";
+	flex: 1 1 auto;
+	height: 2px;
+	background: var(--kio-border);
+}
+
+.kio-steps__item.is-done:not(:last-child)::after {
+	background: var(--kio-brand);
+}
+
+.kio-steps__item a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.kio-steps__number {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #e2e6ec;
+	color: #4b5563;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.kio-steps__label {
+	white-space: nowrap;
+}
+
+.kio-steps__item.is-current,
+.kio-steps__item.is-done {
+	color: var(--kio-text);
+	font-weight: 700;
+}
+
+.kio-steps__item.is-current .kio-steps__number,
+.kio-steps__item.is-done .kio-steps__number {
+	background: var(--kio-brand);
+	color: #fff;
+}
+
+/* Khối trắng */
+.woocommerce-cart-form,
+.cart_totals,
+.woocommerce-checkout #customer_details,
+.kio-order-side,
+.woocommerce-order {
+	padding: 20px;
+	border-radius: var(--kio-radius);
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow);
+}
+
+.cart_totals h2,
+#order_review_heading,
+.woocommerce-checkout #customer_details h3 {
+	margin: 0 0 12px;
+	font-size: var(--kio-text-md);
+	font-weight: 700;
+}
+
+.woocommerce-cart table.shop_table,
+.woocommerce-checkout table.shop_table,
+.woocommerce-cart table.shop_table th,
+.woocommerce-cart table.shop_table td,
+.woocommerce-checkout table.shop_table th,
+.woocommerce-checkout table.shop_table td {
+	border: 0;
+	background: none;
+}
+
+.woocommerce-cart table.shop_table tbody tr:nth-child(2n) td,
+.woocommerce-checkout table.shop_table tbody tr:nth-child(2n) td,
+.woocommerce-cart table.shop_table tbody th,
+.woocommerce-checkout table.shop_table tfoot th,
+.woocommerce-checkout table.shop_table tfoot td {
+	background: none;
+}
+
+.woocommerce-cart table.shop_table th,
+.woocommerce-cart table.shop_table td,
+.woocommerce-checkout table.shop_table th,
+.woocommerce-checkout table.shop_table td {
+	padding: 8px 4px;
+	font-size: var(--kio-text-sm);
+}
+
+.cart_totals .order-total td,
+.woocommerce-checkout .order-total td {
+	color: var(--kio-price);
+	font-size: var(--kio-text-lg);
+	font-weight: 700;
+}
+
+ul#shipping_method {
+	margin: 0;
+	list-style: none;
+}
+
+.woocommerce-cart-form table.cart,
+.cart_totals table.shop_table,
+.woocommerce-checkout-review-order-table {
+	margin-bottom: 0;
+}
+
+/* Hàng sản phẩm trong giỏ */
+.woocommerce-cart table.cart tbody tr.cart_item {
+	border-bottom: 1px solid var(--kio-border);
+}
+
+.woocommerce-cart table.cart td.product-thumbnail img {
+	width: 72px;
+	border-radius: var(--kio-radius-sm);
+}
+
+.woocommerce-cart table.cart td.product-name a {
+	color: var(--kio-text);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.woocommerce-cart table.cart td.product-subtotal {
+	color: var(--kio-price);
+	font-weight: 700;
+}
+
+.woocommerce-cart table.cart td.actions {
+	padding-top: 16px;
+}
+
+/* Tự cập nhật nên không cần nút. Tắt JS thì lớp woocommerce-js không có, nút vẫn hiện. */
+.woocommerce-js .woocommerce-cart-form [name="update_cart"] {
+	display: none;
+}
+
+/* Storefront để viền và lề dưới cho khối mã giảm giá, dành cho nút cập nhật đứng dưới nó. */
+.woocommerce-cart table.cart td.actions .coupon {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.woocommerce-cart table.cart td.actions .coupon .button {
+	min-height: 44px;
+	border-radius: var(--kio-radius-sm);
+}
+
+/* Woo in lỗi mã giảm giá ngay dưới ô nhập: cho xuống hàng riêng. */
+.woocommerce-cart table.cart td.actions .coupon .coupon-error-notice {
+	flex: 0 0 100%;
+	margin: 0;
+	color: var(--kio-price);
+	font-size: 13px;
+}
+
+.kio-qty .qty:focus {
+	outline: 0;
+}
+
+.kio-qty:focus-within {
+	border-color: var(--kio-brand);
+}
+
+.woocommerce-cart table.cart td.actions .coupon .input-text {
+	width: 200px;
+}
+
+/* Ô số lượng có nút − + */
+.kio-qty {
+	display: inline-flex;
+	align-items: center;
+	overflow: hidden;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+}
+
+.kio-qty .qty {
+	width: 44px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	text-align: center;
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+.kio-qty .qty::-webkit-outer-spin-button,
+.kio-qty .qty::-webkit-inner-spin-button {
+	margin: 0;
+	-webkit-appearance: none;
+}
+
+.kio-qty__btn {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	background: var(--kio-bg);
+	color: var(--kio-text);
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.kio-qty__btn:hover {
+	background: var(--kio-brand-soft);
+	color: var(--kio-brand);
+}
+
+.kio-qty__btn:focus-visible,
+.kio-steps__item a:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: -2px;
+}
+
+/* Woo làm mờ vùng đang cập nhật bằng blockUI: giữ nguyên chỗ. */
+.woocommerce-cart .blockUI.blockOverlay {
+	border-radius: var(--kio-radius);
+}
+
+/* Nút chính */
+.wc-proceed-to-checkout .checkout-button,
+#place_order {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 48px;
+	margin: 0;
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-brand);
+	color: #fff;
+	font-size: var(--kio-text-md);
+	font-weight: 700;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.wc-proceed-to-checkout .checkout-button:hover,
+#place_order:hover {
+	background: var(--kio-brand-dark);
+	color: #fff;
+}
+
+.wc-proceed-to-checkout .checkout-button:active,
+#place_order:active {
+	transform: scale(0.98);
+}
+
+.wc-proceed-to-checkout {
+	padding: 8px 0 0;
+}
+
+/* 2 hộp "có tài khoản / có mã giảm giá" thành 2 dòng chữ trên một hàng.
+   Cha là flex; form đăng nhập và form mã giảm giá rộng 100% nên mở ra sẽ nằm dưới cả hai. */
+.woocommerce-checkout .entry-content > .woocommerce {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 24px;
+}
+
+.woocommerce-checkout .entry-content > .woocommerce > * {
+	flex: 0 0 100%;
+	min-width: 0;
+	order: 3;
+}
+
+.woocommerce-checkout .entry-content > .woocommerce > .kio-steps {
+	order: 0;
+}
+
+.woocommerce-checkout .entry-content > .woocommerce > .woocommerce-form-login-toggle,
+.woocommerce-checkout .entry-content > .woocommerce > .woocommerce-form-coupon-toggle {
+	flex: 0 1 auto;
+	order: 1;
+}
+
+.woocommerce-checkout .entry-content > .woocommerce > form.login,
+.woocommerce-checkout .entry-content > .woocommerce > form.checkout_coupon {
+	order: 2;
+}
+
+.woocommerce-form-login-toggle .woocommerce-info,
+.woocommerce-form-coupon-toggle .woocommerce-info {
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-sm);
+}
+
+.woocommerce-form-login-toggle .woocommerce-info::before,
+.woocommerce-form-coupon-toggle .woocommerce-info::before {
+	content: none;
+}
+
+.woocommerce-form-login-toggle .woocommerce-info a,
+.woocommerce-form-coupon-toggle .woocommerce-info a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 32px;
+	color: var(--kio-brand);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+form.checkout_coupon,
+.woocommerce-checkout form.login {
+	margin: 0 0 16px;
+	padding: 16px;
+	border: 0;
+	border-radius: var(--kio-radius);
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow);
+}
+
+/* Ô nhập */
+.woocommerce-checkout .form-row .input-text,
+.woocommerce-checkout .form-row select,
+.woocommerce-cart .coupon .input-text {
+	min-height: 44px;
+	padding: 8px 12px;
+	border: 1px solid var(--kio-input-border);
+	border-radius: var(--kio-radius-sm);
+	background: #fff;
+	box-shadow: none;
+}
+
+.woocommerce-checkout .form-row .input-text:focus,
+.woocommerce-checkout .form-row select:focus,
+.woocommerce-cart .coupon .input-text:focus {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 0;
+}
+
+/* Ô có lỗi: viền đỏ + chữ đỏ ngay dưới. Storefront chỉ vẽ một vạch 2px bên trái, ô hợp lệ vạch xanh. */
+.woocommerce-checkout .form-row .input-text,
+.woocommerce-checkout .form-row.woocommerce-validated .input-text,
+.woocommerce-checkout .form-row.woocommerce-validated select {
+	box-shadow: none;
+}
+
+.woocommerce-checkout .form-row.woocommerce-invalid .input-text,
+.woocommerce-checkout .form-row.woocommerce-invalid select,
+.woocommerce-checkout .form-row.woocommerce-invalid .select2-container .select2-selection--single {
+	border-color: var(--kio-danger);
+	box-shadow: inset 0 0 0 1px var(--kio-danger);
+}
+
+.woocommerce-checkout .checkout-inline-error-message {
+	margin: 4px 0 0;
+	color: var(--kio-danger);
+	font-size: 13px;
+}
+
+.woocommerce-checkout .select2-container .select2-selection--single {
+	height: 44px;
+	border: 1px solid var(--kio-input-border);
+	border-radius: var(--kio-radius-sm);
+}
+
+.woocommerce-checkout .select2-container .select2-selection--single .select2-selection__rendered {
+	line-height: 42px;
+}
+
+.woocommerce-checkout .select2-container .select2-selection--single .select2-selection__arrow {
+	height: 42px;
+}
+
+.woocommerce-checkout #payment {
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-bg);
+}
+
+.woocommerce-checkout #payment .payment_box {
+	font-size: 13px;
+}
+
+/* Storefront vẽ nút chọn bằng icon font, lúc chưa chọn cũng là chấm đặc nên dễ nhầm. Vẽ lại bằng CSS:
+   chưa chọn là vòng rỗng, đã chọn là vòng có chấm. Radio thật vẫn nằm đó, chỉ đổi phần hiển thị. */
+.woocommerce-checkout #payment .payment_methods > .wc_payment_method > label::before {
+	content: "";
+	display: inline-block;
+	box-sizing: border-box;
+	width: 18px;
+	height: 18px;
+	margin-right: 10px;
+	border: 2px solid var(--kio-muted);
+	border-radius: 50%;
+	background: #fff;
+	vertical-align: -3px;
+}
+
+.woocommerce-checkout #payment .payment_methods > .wc_payment_method > input[type="radio"]:first-child:checked + label::before {
+	content: "";
+	border-color: var(--kio-brand);
+	background: var(--kio-brand);
+	box-shadow: inset 0 0 0 3px #fff;
+}
+
+.woocommerce-checkout #payment .payment_methods > .wc_payment_method > input[type="radio"]:focus-visible + label::before {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.woocommerce-checkout #payment .place-order {
+	margin: 0;
+	padding: 12px;
+}
+
+.woocommerce-checkout #payment .wc_payment_methods {
+	margin: 0;
+	border: 0;
+}
+
+.woocommerce-checkout #payment .wc_payment_methods > li:last-child {
+	margin-bottom: 0;
+}
+
+/* Trang đặt hàng thành công */
+.woocommerce-order .kio-steps {
+	margin-bottom: 16px;
+}
+
+.woocommerce-order ul.order_details {
+	margin: 0 0 16px;
+	padding: 0;
+}
+
+.woocommerce-order h2,
+.woocommerce-order h3 {
+	margin: 16px 0 8px;
+	font-size: var(--kio-text-md);
+	font-weight: 700;
+}
+
+.woocommerce-order address {
+	font-size: var(--kio-text-sm);
+	font-style: normal;
+}
+
+/* Bố cục 2 cột: cột tóm tắt dính khi cuộn */
+@media (min-width: 900px) {
+	.woocommerce-cart .entry-content > .woocommerce {
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+		gap: 0 24px;
+		align-items: start;
+	}
+
+	.woocommerce-cart .entry-content > .woocommerce > * {
+		grid-column: 1 / -1;
+	}
+
+	.woocommerce-cart .entry-content > .woocommerce > .woocommerce-cart-form {
+		grid-column: 1;
+		margin: 0;
+	}
+
+	.woocommerce-cart .entry-content > .woocommerce > .cart-collaterals {
+		position: sticky;
+		top: calc(var(--kio-header-h, 0px) + var(--kio-nav-h, 46px) + 16px);
+		grid-column: 2;
+	}
+
+	.woocommerce-cart .cart-collaterals .cart_totals {
+		float: none;
+		width: auto;
+		margin: 0;
+	}
+
+	.woocommerce-checkout form.woocommerce-checkout {
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		gap: 0 24px;
+		align-items: start;
+	}
+
+	.woocommerce-checkout form.woocommerce-checkout::before,
+	.woocommerce-checkout form.woocommerce-checkout::after {
+		content: none;
+	}
+
+	/* Woo chèn hộp lỗi vào đầu form: không chỉ định thì nó chiếm ô đầu và đẩy 2 cột lệch đi. */
+	.woocommerce-checkout form.woocommerce-checkout > .woocommerce-NoticeGroup {
+		grid-column: 1 / -1;
+	}
+
+	.woocommerce-checkout form.woocommerce-checkout #customer_details {
+		grid-column: 1;
+		float: none;
+		width: auto;
+		margin: 0;
+	}
+
+	.kio-order-side {
+		grid-column: 2;
+		position: sticky;
+		top: calc(var(--kio-header-h, 0px) + 16px);
+	}
+
+	.storefront-full-width-content.woocommerce-checkout #order_review_heading,
+	.storefront-full-width-content.woocommerce-checkout #order_review {
+		float: none;
+		width: auto;
+		margin: 0;
+	}
+
+	.woocommerce-checkout #order_review_heading {
+		margin-bottom: 12px;
+	}
+}
+
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2 {
+	float: none;
+	width: auto;
+	margin: 0;
+}
+
+/* Mobile: chỉ hiện chữ của bước hiện tại để thanh bước vừa một hàng */
+@media (max-width: 479px) {
+	.kio-steps__item:not(.is-current) .kio-steps__label {
+		display: none;
+	}
+
+	.kio-steps__item {
+		flex: 0 1 auto;
+	}
+
+	.kio-steps__item.is-current {
+		flex: 1 1 auto;
+	}
+
+	.woocommerce-cart table.cart td.actions .coupon .input-text {
+		flex: 1 1 auto;
+		width: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wc-proceed-to-checkout .checkout-button,
+	#place_order {
+		transition: none;
+	}
+
+	.wc-proceed-to-checkout .checkout-button:active,
+	#place_order:active {
+		transform: none;
+	}
+}

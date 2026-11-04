@@ -237,12 +237,19 @@ function kio_store_promotion_save( int $post_id ): void {
 }
 
 /**
- * Danh sách khuyến mãi đang hiệu lực và áp dụng cho một sản phẩm.
+ * Mọi khuyến mãi đang trong thời hạn, đã sắp theo thứ tự hiển thị.
  *
- * @param WC_Product $product Sản phẩm đang xem.
+ * Nhớ trong biến static: hàm được gọi cho TỪNG thẻ sản phẩm (dòng "+2 ưu đãi"), một trang có
+ * vài chục thẻ mà danh sách thì như nhau trong cả request.
+ *
  * @return WP_Post[]
  */
-function kio_store_product_promotions( WC_Product $product ): array {
+function kio_store_active_promotions(): array {
+	static $active = null;
+	if ( null !== $active ) {
+		return $active;
+	}
+
 	// Không sắp xếp bằng 'meta_key' + 'orderby' => 'meta_value_num' trong query: khi có
 	// 'meta_key', WordPress JOIN bảng postmeta và chỉ lấy bài CÓ meta đó, nên khuyến mãi
 	// thiếu meta thứ tự (tạo qua import, REST, nhân bản bài…) sẽ biến mất. Lấy hết rồi sắp
@@ -263,22 +270,34 @@ function kio_store_product_promotions( WC_Product $product ): array {
 		}
 	);
 
+	$today  = wp_date( 'Y-m-d' );
+	$active = array_values(
+		array_filter(
+			$all,
+			static function ( WP_Post $promotion ) use ( $today ): bool {
+				$start = (string) get_post_meta( $promotion->ID, '_kio_promotion_start', true );
+				$end   = (string) get_post_meta( $promotion->ID, '_kio_promotion_end', true );
+
+				return ( '' === $start || $today >= $start ) && ( '' === $end || $today <= $end );
+			}
+		)
+	);
+
+	return $active;
+}
+
+/**
+ * Danh sách khuyến mãi đang hiệu lực và áp dụng cho một sản phẩm.
+ *
+ * @param WC_Product $product Sản phẩm đang xem.
+ * @return WP_Post[]
+ */
+function kio_store_product_promotions( WC_Product $product ): array {
 	$product_id   = $product->get_id();
 	$category_ids = array_map( 'intval', $product->get_category_ids() );
-	$today        = wp_date( 'Y-m-d' );
 	$matches      = array();
 
-	foreach ( $all as $promotion ) {
-		$start = (string) get_post_meta( $promotion->ID, '_kio_promotion_start', true );
-		$end   = (string) get_post_meta( $promotion->ID, '_kio_promotion_end', true );
-
-		if ( '' !== $start && $today < $start ) {
-			continue;
-		}
-		if ( '' !== $end && $today > $end ) {
-			continue;
-		}
-
+	foreach ( kio_store_active_promotions() as $promotion ) {
 		$apply_products   = kio_store_promotion_meta_products( $promotion->ID );
 		$apply_categories = kio_store_promotion_meta_categories( $promotion->ID );
 

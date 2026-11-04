@@ -20,6 +20,7 @@
 defined( 'ABSPATH' ) || exit;
 
 add_action( 'woocommerce_after_shop_loop_item_title', 'kio_store_render_loop_specs', 7 );
+add_action( 'woocommerce_single_product_summary', 'kio_store_render_single_specs', 22 );
 
 /**
  * Bản đồ danh mục → danh sách thuộc tính (theo thứ tự ưu tiên hiển thị).
@@ -106,6 +107,36 @@ function kio_store_render_loop_specs(): void {
 	foreach ( $specs as $spec ) {
 		printf(
 			'<span class="kio-specs__item"><span class="kio-specs__label">%1$s</span>%2$s</span>',
+			esc_html( $spec[0] ),
+			esc_html( $spec[1] )
+		);
+	}
+	echo '</div>';
+}
+
+/**
+ * ACTION woocommerce_single_product_summary: thông số nổi bật trên trang sản phẩm.
+ *
+ * Priority 22: sau mô tả ngắn (20), trước khuyến mãi (25).
+ *
+ * @return void
+ */
+function kio_store_render_single_specs(): void {
+	global $product;
+
+	if ( ! $product instanceof WC_Product ) {
+		return;
+	}
+
+	$specs = kio_store_product_specs( $product );
+	if ( empty( $specs ) ) {
+		return;
+	}
+
+	echo '<div class="kio-spec-grid">';
+	foreach ( $specs as $spec ) {
+		printf(
+			'<div class="kio-spec-grid__item"><span class="kio-spec-grid__label">%1$s</span><span class="kio-spec-grid__value">%2$s</span></div>',
 			esc_html( $spec[0] ),
 			esc_html( $spec[1] )
 		);

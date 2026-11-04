@@ -1,0 +1,241 @@
+/* Video reels: thẻ dọc 9:16 và cửa sổ xem. Chỉ nạp khi trang có video. */
+.kio-reels {
+	margin-bottom: 36px;
+}
+
+.kio-reels .kio-section-title {
+	margin-bottom: 16px;
+}
+
+.kio-reels__track {
+	grid-auto-columns: 180px;
+	list-style: none;
+}
+
+.kio-reels__track > li {
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.kio-reels__card {
+	position: relative;
+	display: block;
+	aspect-ratio: 9 / 16;
+	overflow: hidden;
+	border-radius: var(--kio-radius);
+	background: #111827;
+	color: #fff;
+}
+
+.kio-reels__card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform var(--kio-dur-base) var(--kio-ease-out);
+}
+
+@media (hover: hover) {
+	.kio-reels__card:hover img {
+		transform: scale(1.04);
+	}
+}
+
+.kio-reels__card:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-reels__play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 48px;
+	height: 48px;
+	margin: -24px 0 0 -24px;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.55);
+}
+
+.kio-reels__play::before {
+	content: "";
+	position: absolute;
+	top: 14px;
+	left: 19px;
+	border-style: solid;
+	border-width: 10px 0 10px 16px;
+	border-color: transparent transparent transparent #fff;
+}
+
+.kio-reels__title {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 32px 10px 10px;
+	background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.kio-reels__dialog {
+	width: min(420px, calc(100vw - 24px));
+	max-height: calc(100dvh - 24px);
+	padding: 0;
+	overflow: visible;
+	border: 0;
+	border-radius: var(--kio-radius);
+	background: #111827;
+	color: #fff;
+}
+
+.kio-reels__dialog::backdrop {
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.kio-reels__frame {
+	aspect-ratio: 9 / 16;
+	max-height: calc(100dvh - 120px);
+	width: 100%;
+	overflow: hidden;
+	border-radius: var(--kio-radius) var(--kio-radius) 0 0;
+	background: #000;
+}
+
+.kio-reels__frame iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+/* !important: Storefront gạch chân link bằng selector khác nhau ở từng loại trang. Gạch chân vẽ từ
+   chính thẻ a, nên bỏ ở thẻ a là đủ cho cả chữ bên trong. */
+.kio-reels a {
+	text-decoration: none !important;
+}
+
+.kio-reels__product {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	background: var(--kio-card);
+	border-radius: 0 0 var(--kio-radius) var(--kio-radius);
+	color: var(--kio-text);
+}
+
+.kio-reels__product img {
+	flex: 0 0 auto;
+	width: 48px;
+	height: 48px;
+	border-radius: var(--kio-radius-sm);
+}
+
+.kio-reels__product-text {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	min-width: 0;
+	font-size: 13px;
+}
+
+.kio-reels__product-name {
+	overflow: hidden;
+	font-weight: 700;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.kio-reels__product-price {
+	overflow: hidden;
+	color: var(--kio-price);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.kio-reels__buy {
+	flex: 0 0 auto;
+	padding: 10px 12px;
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-brand);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.kio-reels__close,
+.kio-reels__nav {
+	position: absolute;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	cursor: pointer;
+}
+
+.kio-reels__close {
+	top: 8px;
+	right: 8px;
+	z-index: 2;
+}
+
+.kio-reels__close {
+	font-size: 28px;
+	line-height: 1;
+}
+
+.kio-reels__close:focus-visible,
+.kio-reels__nav:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+.kio-reels__nav {
+	top: 40%;
+	z-index: 2;
+}
+
+.kio-reels__nav::before {
+	content: "";
+	position: absolute;
+	top: 16px;
+	left: 17px;
+	width: 11px;
+	height: 11px;
+	border-top: 2px solid currentColor;
+	border-right: 2px solid currentColor;
+	transform: rotate(45deg);
+}
+
+.kio-reels__nav--prev {
+	left: 8px;
+}
+
+.kio-reels__nav--prev::before {
+	left: 19px;
+	transform: rotate(-135deg);
+}
+
+.kio-reels__nav--next {
+	right: 8px;
+}
+
+@media (max-width: 767px) {
+	.kio-reels__track {
+		grid-auto-columns: 42%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kio-reels__card img {
+		transition: none;
+	}
+
+	.kio-reels__card:hover img {
+		transform: none;
+	}
+}
