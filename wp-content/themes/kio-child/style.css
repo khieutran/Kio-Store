@@ -42,7 +42,7 @@ Text Domain: kio-child
 	--kio-accent: #ff6a00;
 	--kio-bg: #f4f6f8;
 	--kio-text: #1f2937;
-	--kio-muted: #6b7280;
+	--kio-muted: #5b6472;
 	--kio-border: #e5e7eb;
 	--kio-card: #ffffff;
 	--kio-success: #16a34a;
@@ -53,4 +53,27 @@ Text Domain: kio-child
 	--kio-font: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	--kio-max: 1280px;
 	--kio-gutter: 24px;
+
+	/* Chuyển động (Phase 4.5): chỉ dùng cho transform và opacity. */
+	--kio-dur-fast: 150ms;
+	--kio-dur-base: 250ms;
+	--kio-dur-slow: 400ms;
+	--kio-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--kio-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+	/* Cỡ chữ (Phase 4.5). */
+	--kio-text-xs: 12px;
+	--kio-text-sm: 14px;
+	--kio-text-md: 16px;
+	--kio-text-lg: 20px;
+	--kio-text-xl: 24px;
+	--kio-text-2xl: 32px;
+
+	/* Nền nhạt cho khối khuyến mãi / ưu đãi. */
+	--kio-accent-soft: #fff4ec;
+	--kio-accent-strong: #c2410c; /* cam dùng cho CHỮ: --kio-accent trên nền trắng chỉ đạt 2,9:1 */
+	--kio-danger: #c81e1e;
+	--kio-input-border: #8691a1; /* viền ô nhập đạt 3:1 trên nền trắng */
+	--kio-accent-text: #b84300;
+	--kio-brand-soft: #e8f0fc;
 }

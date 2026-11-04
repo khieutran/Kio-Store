@@ -13,6 +13,26 @@
 
 defined( 'ABSPATH' ) || exit;
 
+add_action( 'wp_enqueue_scripts', 'kio_store_register_carousel' );
+
+/**
+ * Đăng ký JS băng chuyền. Chỉ đăng ký, chưa nạp: khối nào cần thì khai báo phụ thuộc hoặc enqueue.
+ *
+ * @return void
+ */
+function kio_store_register_carousel(): void {
+	wp_register_script(
+		'kio-store-carousel',
+		KIO_STORE_URL . 'assets/js/carousel.js',
+		array(),
+		KIO_STORE_VERSION,
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+
 /**
  * Trả về HTML lưới sản phẩm.
  *

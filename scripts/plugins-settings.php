@@ -94,6 +94,8 @@ kio_merge_option(
 		'photo'  => [
 			'enable'                 => 'on',
 			'maxfiles'               => 3,
+			'overall_rating'         => 'on', // ô điểm trung bình phía trên danh sách đánh giá.
+			'rating_count'           => 'on', // thanh tỉ lệ từng mức sao.
 			'rating_count_bar_color' => '#0d47a1',
 			'verified'               => 'default',
 			'verified_text'          => 'Đã mua hàng',

@@ -36,3 +36,5 @@ require_once KIO_STORE_DIR . 'includes/product-row.php';
 require_once KIO_STORE_DIR . 'includes/sticky-buy-bar.php';
 require_once KIO_STORE_DIR . 'includes/checkout-vn.php';
 require_once KIO_STORE_DIR . 'includes/coupon-max-discount.php';
+require_once KIO_STORE_DIR . 'includes/video-reels.php';
+require_once KIO_STORE_DIR . 'includes/ajax-add-to-cart.php';

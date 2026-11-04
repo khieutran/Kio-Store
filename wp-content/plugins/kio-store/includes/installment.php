@@ -255,10 +255,11 @@ function kio_store_installment_html( WC_Product $product ): string {
 	}
 
 	return sprintf(
-		'<div class="kio-installment" data-months="%1$d" data-min-price="%2$d">%3$s <span class="kio-installment__amount">%4$s</span>%5$s</div>',
+		'<div class="kio-installment" data-months="%1$d" data-min-price="%2$d"><span class="kio-installment__tag">%3$s</span> %4$s <span class="kio-installment__amount">%5$s</span>%6$s</div>',
 		(int) $options['months'],
 		(int) $options['min_price'],
-		esc_html__( 'Trả góp 0% chỉ từ', 'kio-store' ),
+		esc_html__( 'Trả góp 0%', 'kio-store' ),
+		esc_html__( 'chỉ từ', 'kio-store' ),
 		esc_html( number_format( $amount, 0, ',', '.' ) . ' ₫' ),
 		esc_html__( '/tháng', 'kio-store' )
 	);

@@ -1,0 +1,268 @@
+/*
+ * Trang chủ (Phase 4.5). Chỉ nạp ở trang chủ.
+ */
+
+/* Hiện khi cuộn tới: lớp do home.js thêm */
+.kio-reveal,
+ul.products li.product.kio-reveal {
+	opacity: 0;
+	transform: translateY(16px);
+}
+
+.kio-reveal.is-in,
+ul.products li.product.kio-reveal.is-in {
+	opacity: 1;
+	transform: none;
+	transition: opacity var(--kio-dur-slow) var(--kio-ease-out) var(--kio-reveal-delay, 0ms), transform var(--kio-dur-slow) var(--kio-ease-out) var(--kio-reveal-delay, 0ms);
+}
+
+/* Storefront gạch chân mọi link trong nội dung: bỏ cho link dạng thẻ/nút. */
+.hentry .entry-content a.kio-cats__item,
+.hentry .entry-content a.kio-brands__item,
+.hentry .entry-content a.kio-strip__chip,
+.hentry .entry-content a.kio-strip__more {
+	text-decoration: none;
+}
+
+.home .kio-section-title {
+	margin-bottom: 16px;
+}
+
+.home .entry-content > .woocommerce {
+	margin-bottom: 36px;
+}
+
+/* Banner: 2 mũi tên trắng, nút dừng nằm chung cụm với các chấm vị trí */
+/* Góc phải dưới: chữ trên banner nằm ở bên trái và giữa, để mũi tên không đè lên chữ. */
+.kio-hero__prev,
+.kio-hero__next {
+	top: auto;
+	bottom: 12px;
+	left: auto;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: var(--kio-shadow-hover);
+	color: var(--kio-text);
+	font-size: 0; /* ẩn ký tự ‹ › trong HTML, tên nút đọc từ aria-label */
+	cursor: pointer;
+	transition: opacity var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-hero__prev {
+	right: 64px;
+}
+
+.kio-hero__next {
+	right: 12px;
+}
+
+.kio-hero__prev::before,
+.kio-hero__next::before {
+	content: "";
+	position: absolute;
+	top: 16px;
+	left: 14px;
+	width: 11px;
+	height: 11px;
+	border-top: 2px solid currentColor;
+	border-right: 2px solid currentColor;
+	transform: rotate(45deg);
+}
+
+.kio-hero__prev::before {
+	left: 18px;
+	transform: rotate(-135deg);
+}
+
+/* Có chuột thì chỉ hiện khi cần, banner bớt rối. Dùng phím tới nút thì vẫn hiện. */
+@media (hover: hover) {
+	.kio-hero__prev,
+	.kio-hero__next {
+		opacity: 0;
+	}
+
+	.kio-hero:hover .kio-hero__prev,
+	.kio-hero:hover .kio-hero__next,
+	.kio-hero:focus-within .kio-hero__prev,
+	.kio-hero:focus-within .kio-hero__next {
+		opacity: 1;
+	}
+}
+
+.kio-hero__controls {
+	position: absolute;
+	bottom: 12px;
+	left: 50%;
+	display: flex;
+	align-items: center;
+	padding: 0 4px;
+	border-radius: 999px;
+	background: rgba(0, 0, 0, 0.45);
+	transform: translateX(-50%);
+}
+
+.kio-hero__dots {
+	display: flex;
+}
+
+/* Vùng bấm 28px, chấm nhìn thấy 8px. Chấm hiện tại phóng bằng scale để không đổi layout. */
+.kio-hero__dot {
+	position: relative;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+}
+
+.kio-hero__dot::before {
+	content: "";
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.6);
+	transition: transform var(--kio-dur-base) var(--kio-ease-out);
+}
+
+.kio-hero__dot[aria-current]::before {
+	background: #fff;
+	transform: scale(1.4);
+}
+
+.kio-hero__toggle {
+	position: relative;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #fff;
+	cursor: pointer;
+}
+
+.kio-hero__toggle::before {
+	content: "";
+	position: absolute;
+	top: 9px;
+	left: 10px;
+	width: 8px;
+	height: 10px;
+	border-right: 2px solid currentColor;
+	border-left: 2px solid currentColor;
+}
+
+.kio-hero__toggle.is-paused::before {
+	top: 8px;
+	left: 11px;
+	width: 0;
+	height: 0;
+	border-width: 6px 0 6px 9px;
+	border-style: solid;
+	border-color: transparent transparent transparent currentColor;
+}
+
+.kio-hero button:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+.kio-brands__item,
+.kio-cats__item {
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+@media (hover: hover) {
+	.kio-brands__item:hover {
+		transform: translateY(-2px);
+	}
+}
+
+.kio-strip__chip {
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-strip__chip:active {
+	transform: scale(0.96);
+}
+
+/* Mobile: các hàng dài chuyển thành cuộn ngang có điểm dừng, trang ngắn đi nhiều */
+@media (max-width: 767px) {
+	.home ul.products:not(.kio-carousel__track),
+	.kio-cats,
+	.kio-brands,
+	.kio-strip__chips {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x proximity;
+		scrollbar-width: none;
+	}
+
+	.home ul.products::-webkit-scrollbar,
+	.kio-cats::-webkit-scrollbar,
+	.kio-brands::-webkit-scrollbar,
+	.kio-strip__chips::-webkit-scrollbar {
+		display: none;
+	}
+
+	.home ul.products:not(.kio-carousel__track) {
+		gap: 10px;
+		padding: 2px 2px 8px;
+	}
+
+	.home ul.products:not(.kio-carousel__track) > li.product {
+		flex: 0 0 44%;
+		scroll-snap-align: start;
+	}
+
+	.kio-cats > li {
+		flex: 0 0 84px;
+		scroll-snap-align: start;
+	}
+
+	.kio-brands > li {
+		flex: 0 0 110px;
+		scroll-snap-align: start;
+	}
+
+	.kio-brands__item {
+		min-height: 56px;
+		font-size: 15px;
+	}
+
+	.kio-strip__chip {
+		flex: 0 0 auto;
+		padding: 10px 14px;
+		white-space: nowrap;
+	}
+
+	.kio-hero-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kio-brands__item,
+	.kio-cats__item,
+	.kio-strip__chip,
+	.kio-hero__prev,
+	.kio-hero__next,
+	.kio-hero__dot::before {
+		transition: none;
+	}
+
+	.kio-brands__item:hover,
+	.kio-strip__chip:active {
+		transform: none;
+	}
+}

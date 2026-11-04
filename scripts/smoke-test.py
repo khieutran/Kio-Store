@@ -439,11 +439,11 @@ def check_phase4_review():
 def check_rows_and_buy_bar():
     """Phase 4 · F6 (dải sản phẩm trang chủ bằng code) + F7 (thanh mua hàng mobile)."""
     _, home = get(SITE + "/")
-    rows = re.findall(r'<section class="kio-strip kio-product-row" data-category="([^"]+)">(.*?)</section>', home, re.S)
+    rows = re.findall(r'<section class="kio-strip kio-product-row" data-category="([^"]+)"[^>]*>(.*?)</section>', home, re.S)
     check("F6: trang chủ có 4 dải [kio_product_row]", [r[0] for r in rows] == ["dien-thoai", "laptop", "am-thanh", "phu-kien"],
           [r[0] for r in rows])
     laptop = dict(rows).get("laptop", "")
-    chips = re.findall(r'kio-strip__chip" href="([^"]+)">([^<]+)', laptop)
+    chips = re.findall(r'kio-strip__chip" href="([^"]+)" data-brand="[1-9]\d*">([^<]+)', laptop)
     check("F6: chip thương hiệu dải Laptop tự sinh (Apple, ASUS, Lenovo)",
           sorted(n for _, n in chips) == ["ASUS", "Apple", "Lenovo"], [n for _, n in chips])
     apple = next((html.unescape(u) for u, n in chips if n == "Apple"), "")
@@ -511,6 +511,304 @@ def check_checkout_and_coupons():
           sorted(x["code"] for x in c.get("coupons", [])) == ["freeship", "kio10"], c.get("message", ""))
 
 
+def check_product_card():
+    """Phase 4.5: thẻ sản phẩm (khung ảnh, nhãn gộp, giá "Từ X", đã bán, số ưu đãi)."""
+    _, cat = get(SITE + "/danh-muc-san-pham/dien-thoai/")
+    flip = product_card(cat, "Samsung Galaxy Z Flip7")
+
+    media = flip[flip.find('class="kio-card-media"'):flip.find("woocommerce-loop-product__title")]
+    check("Thẻ: nhãn giảm giá nằm trong khung ảnh", "kio-badge--sale" in media, flip[:160])
+    check("Thẻ: chỉ một nhãn giảm giá", flip.count("kio-badge--sale") == 1, str(flip.count("kio-badge--sale")))
+    check("Thẻ: giá biến thể hiện 'Từ X' thay cho khoảng giá",
+          'kio-price-now">Từ ' in flip and "Khoảng giá" not in flip)
+    check("Thẻ: giá gạch ngang đi cùng giá rẻ nhất", "<del" in flip)
+    check("Thẻ: nhãn trả góp tách riêng", 'kio-installment__tag">Trả góp 0%</span>' in flip)
+    check("Thẻ: có 'Đã bán'", "Đã bán " in flip)
+    check("Thẻ: có số ưu đãi", re.search(r'kio-card-offers">\+\d+ ưu đãi', flip) is not None)
+
+    _, single = get(SITE + "/san-pham/samsung-galaxy-z-flip7/")
+    summary = single[single.find('class="summary'):]
+    check("Trang sản phẩm: giá đầu trang vẫn là khoảng giá", "Khoảng giá" in summary[:4000])
+
+    out = wp_eval(
+        "$GLOBALS['product'] = wc_get_product(wc_get_product_id_by_sku('JBL-T520BT'));"
+        "ob_start(); kio_child_card_media_open(); kio_store_render_loop_badges(); kio_child_card_badges_close();"
+        "echo ob_get_clean();"
+    )
+    check("Thẻ: hết hàng chỉ có nhãn 'Hết hàng'", "kio-badge--out" in out and "kio-badge--sale" not in out, out[:160])
+
+    # Đếm số lần WP_Query chạy, không đếm query SQL: WordPress tự nhớ kết quả của query giống hệt
+    # nhau trong request nên số query SQL luôn là 0, dù hàm có gọi lại get_posts() mỗi thẻ hay không.
+    runs = wp_eval(
+        "$p = wc_get_product(wc_get_product_id_by_sku('APL-IP16E'));"
+        "kio_store_product_promotions($p); $n = 0;"
+        "add_action('pre_get_posts', function () use (&$n) { $n++; });"
+        "for ($i = 0; $i < 30; $i++) { kio_store_product_promotions($p); }"
+        "echo 'runs=' . $n;"
+    )
+    check("Thẻ: danh sách khuyến mãi chỉ lấy một lần mỗi request", runs.endswith("runs=0"), runs[-80:])
+
+
+def check_single_product():
+    """Phase 4.5: trang sản phẩm (chip phiên bản, bố cục). Hành vi JS của chip test bằng trình duyệt."""
+    _, page = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    form = page[page.find("<form class=\"variations_form"):page.find("</form>", page.find("variations_form"))]
+
+    check("Chip: select gốc của Woo vẫn nằm trong form", 'name="attribute_pa_dung-luong"' in form and "kio-variation-select" in form)
+    check("Chip: có radio cho mọi giá trị (2 dung lượng + 2 màu)", form.count('class="kio-chip"') == 4, str(form.count('class="kio-chip"')))
+    check("Chip: lựa chọn mặc định đã được đánh dấu", form.count("checked='checked'") == 2, str(form.count("checked='checked'")))
+    check("Chip: màu có ô tròn lấy từ kio_color_hex", re.search(r'kio-chip__swatch" style="background:#[0-9a-fA-F]{3,6}"', form) is not None)
+    check("Chip: dung lượng có chỗ cho giá, màu thì không", form.count("kio-chip__price") == 2, str(form.count("kio-chip__price")))
+    check("Chip: tắt JS thì hiện lại select", "<noscript><style>.kio-chips{display:none}" in page)
+    check("Chip: JS nạp ở sản phẩm biến thể, có defer",
+          re.search(r'<script[^>]*variation-chips\.js[^>]*defer|<script[^>]*defer[^>]*variation-chips\.js', page) is not None)
+
+    check("Bố cục: có khung ảnh + cột mua", 'class="kio-product-top"' in page)
+    check("Bố cục: khung đóng trước khối tab",
+          page.find('class="kio-product-top"') < page.find('class="summary') < page.find("woocommerce-tabs wc-tabs-wrapper"))
+    check("Bố cục: không còn sidebar", 'id="secondary"' not in page)
+    check("Bố cục: bỏ thẻ sản phẩm trước/sau", 'class="storefront-product-pagination"' not in page)
+    check("Bố cục: bỏ thanh mua dính của Storefront", 'class="storefront-sticky-add-to-cart"' not in page)
+    check("F3: bảng thông số trên trang sản phẩm", 'kio-spec-grid__value">Snapdragon' in page)
+
+    _, simple = get(SITE + "/san-pham/airpods-pro-3/")
+    check("Sản phẩm đơn: không có chip, không nạp JS chip", "kio-chips" not in simple.replace(".kio-chips{", "") and "variation-chips.js" not in simple)
+
+    _, home = get(SITE + "/")
+    check("CSS trang sản phẩm chỉ nạp ở trang sản phẩm", "single-product.css" not in home and "single-product.css" in page)
+
+
+def check_home_and_reels():
+    """Phase 4.5: trang chủ (băng chuyền, thanh đã bán, tải có điều kiện) và video reels."""
+    _, home = get(SITE + "/")
+
+    flash = home[home.find('class="kio-flash-sale"'):home.find("kio-product-row")]
+    check("Trang chủ: Flash Sale là băng chuyền", "data-kio-carousel" in flash)
+    percents = re.findall(r'kio-sold-bar__text">Đã bán (\d+)%', flash)
+    check("Trang chủ: thanh đã bán có số 0-100", bool(percents) and all(0 <= int(p) <= 100 for p in percents), str(percents))
+    row = home[home.find("kio-product-row"):]
+    check("Trang chủ: thanh đã bán chỉ có trong Flash Sale", "kio-sold-bar" not in row)
+    check("Trang chủ: nạp home.js + carousel.js có defer",
+          all(re.search(r'<script[^>]*' + name + r'[^>]*defer|<script[^>]*defer[^>]*' + name, home) for name in ("home\\.js", "carousel\\.js")))
+
+    _, category = get(SITE + "/danh-muc-san-pham/dien-thoai/")
+    check("home.css/home.js chỉ nạp ở trang chủ", "themes/kio-child/assets/js/home.js" not in category and "assets/css/home.css" not in category)
+
+    check("Reels: chưa có video thì không in khối, không nạp JS", 'class="kio-reels"' not in home and "video-reels.js" not in home)
+
+    parse = wp_eval(
+        "foreach (['https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=3', 'https://youtu.be/aqz-KE-bpKQ?si=x',"
+        "'https://www.youtube.com/shorts/aqz-KE-bpKQ', 'https://m.youtube.com/watch?v=aqz-KE-bpKQ',"
+        "'https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ', 'https://www.youtube.com/live/aqz-KE-bpKQ'] as $u)"
+        "{ echo kio_store_youtube_id($u) === 'aqz-KE-bpKQ' ? 'y' : 'n'; }"
+        "foreach (['https://vimeo.com/aqz-KE-bpKQ', 'https://evil.com/watch?v=aqz-KE-bpKQ', 'https://youtube.com.evil.com/watch?v=aqz-KE-bpKQ',"
+        "'https://youtu.be/short', 'javascript:alert(1)', 'https://youtu.be/aqz-KE-bpK\"'] as $u)"
+        "{ echo '' === kio_store_youtube_id($u) ? 'y' : 'n'; }"
+    )
+    check("Reels: nhận đúng link YouTube, từ chối link khác", parse.endswith("y" * 12), parse[-20:])
+
+    render = wp_eval(
+        "$p = wp_insert_post(['post_type'=>'kio_video','post_status'=>'publish','post_title'=>'Kiểm thử']);"
+        "update_post_meta($p, '_kio_video_id', 'aqz-KE-bpKQ');"
+        "$bad = wp_insert_post(['post_type'=>'kio_video','post_status'=>'publish','post_title'=>'Link sai']);"
+        "echo do_shortcode('[kio_video_reels]'); wp_delete_post($p, true); wp_delete_post($bad, true);"
+    )
+    check("Reels: có video thì in thẻ link YouTube", 'data-video="aqz-KE-bpKQ"' in render and "youtube.com/watch?v=aqz-KE-bpKQ" in render, render[:120])
+    check("Reels: không tạo iframe sẵn", "<iframe" not in render)
+    check("Reels: có cửa sổ xem <dialog>", "<dialog" in render)
+    check("Reels: video thiếu ID bị bỏ qua", render.count('class="kio-reels__card"') == 1, str(render.count('class="kio-reels__card"')))
+
+
+def check_row_tabs():
+    """Phase 4.5: chip thương hiệu đổi sản phẩm tại chỗ qua wc-ajax kio_product_row."""
+    _, home = get(SITE + "/")
+    row = home[home.find('data-category="dien-thoai"'):home.find('data-category="laptop"')]
+
+    check("Tab: có chip 'Tất cả' đang chọn", 'data-brand="0" aria-current="true"' in row, row[:160])
+    match = re.search(r'filter_product_brand=(\d+)"[^>]*data-brand="(\d+)"[^>]*>Samsung<', html.unescape(row))
+    check("Tab: chip vẫn là link thật tới trang đã lọc", match is not None and match.group(1) == match.group(2))
+    check("Tab: nạp JS có defer", re.search(r'<script[^>]*product-row\.js[^>]*defer|<script[^>]*defer[^>]*product-row\.js', home) is not None)
+    if not match:
+        return
+
+    url = SITE + "/?wc-ajax=kio_product_row&category=dien-thoai&limit=5&orderby=popularity&columns=5&brand="
+    status, body = get(url + match.group(2))
+    data = json.loads(body) if status == 200 else {}
+    cards = (data.get("data") or {}).get("html", "")
+    titles = product_titles(cards)
+    check("Tab: chỉ trả sản phẩm của hãng đã chọn", bool(titles) and all("Samsung" in t for t in titles), str(titles))
+
+    # Thẻ tải sau phải đủ như thẻ in cùng trang: đây là lý do dùng wc-ajax thay cho REST.
+    for name, needle in (("nhãn/khung ảnh", "kio-card-media"), ("giá 'Từ'", 'kio-price-now">Từ '), ("trả góp", "kio-installment"),
+                         ("thông số", "kio-specs"), ("ưu đãi", "kio-card-offers"), ("nút tim", "woosw-btn"), ("nút so sánh", "compare button")):
+        check("Tab: thẻ tải sau có " + name, needle in cards)
+
+    status, _ = get(SITE + "/?wc-ajax=kio_product_row&category=khong-co&brand=1")
+    check("Tab: danh mục sai trả 404", status == 404, str(status))
+    status, _ = get(SITE + "/?wc-ajax=kio_product_row&category=dien-thoai&brand=999999")
+    check("Tab: thương hiệu không có thật trả 404", status == 404, str(status))
+    junk = "rac" + uuid.uuid4().hex[:8]
+    before = wp_eval("global $wpdb; echo $wpdb->get_var(\"SELECT COUNT(*) FROM $wpdb->options WHERE option_name LIKE '\\_transient\\_kio\\_row\\_%'\");")
+    get(url.replace("orderby=popularity", "orderby=" + junk) + match.group(2))
+    after = wp_eval("global $wpdb; echo $wpdb->get_var(\"SELECT COUNT(*) FROM $wpdb->options WHERE option_name LIKE '\\_transient\\_kio\\_row\\_%'\");")
+    check("Tab: orderby rác không tạo thêm cache", before == after and before != "", before + " → " + after)
+
+    _, few = get(url.replace("limit=5", "limit=2") + match.group(2))
+    check("Tab: tham số limit có tác dụng", len(product_titles(json.loads(few)["data"]["html"])) == 2)
+
+
+def check_header():
+    """Phase 4.5: dữ liệu cho gợi ý tìm kiếm và phần header ở server. Hành vi JS test bằng trình duyệt."""
+    _, home = get(SITE + "/")
+    check("Header: nạp JS gợi ý có defer", re.search(r'<script[^>]*search-suggest\.js[^>]*defer|<script[^>]*defer[^>]*search-suggest\.js', home) is not None)
+    check("Header: truyền địa chỉ Store API cho JS", re.search(r'kioSearch\s*=\s*\{[^}]*wc[\\/]+store[\\/]+v1[\\/]+products', home) is not None)
+    check("Header: form tìm kiếm gốc vẫn còn", 'name="s"' in home and 'name="post_type" value="product"' in home)
+
+    fields = "&per_page=5&orderby=popularity&order=desc&_fields=id,name,permalink,images,prices"
+    status, body = get(SITE + "/wp-json/wc/store/v1/products?search=iphone" + fields)
+    items = json.loads(body) if status == 200 else []
+    check("Gợi ý: Store API trả kết quả", bool(items), str(status))
+    check("Gợi ý: điện thoại đứng trước phụ kiện", bool(items) and items[0]["name"].startswith("iPhone"), items[0]["name"] if items else "")
+    check("Gợi ý: đủ trường JS cần", bool(items) and all(k in items[0] for k in ("name", "permalink", "images", "prices")))
+    check("Gợi ý: có giá khoảng để hiện 'Từ X'", bool(items) and items[0]["prices"].get("price_range") is not None)
+    status, body = get(SITE + "/wp-json/wc/store/v1/products?search=khongcosanphamnay" + fields)
+    check("Gợi ý: không có kết quả trả danh sách rỗng", status == 200 and json.loads(body) == [])
+
+
+def check_ajax_add_to_cart():
+    """Phase 4.5: nút mua trang sản phẩm gửi form tới wc-ajax, Woo vẫn là bên kiểm tra."""
+    import http.cookiejar
+
+    _, product = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    check("Nút mua: nạp JS có defer", re.search(r'<script[^>]*ajax-add-to-cart\.js[^>]*defer|<script[^>]*defer[^>]*ajax-add-to-cart\.js', product) is not None)
+    _, home = get(SITE + "/")
+    check("Nút mua: chỉ nạp ở trang sản phẩm", "ajax-add-to-cart.js" not in home)
+
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    url = SITE + "/?wc-ajax=kio_add_to_cart"
+
+    def post(fields):
+        request = urllib.request.Request(url, urllib.parse.urlencode(fields).encode())
+        try:
+            with opener.open(request, timeout=30) as response:
+                return response.status, json.loads(response.read().decode())
+        except urllib.error.HTTPError as error:
+            return error.code, json.loads(error.read().decode())
+
+    product_id = wp_eval("echo wc_get_product_id_by_sku('SS-S26');").strip().splitlines()[-1]
+    variation_id = wp_eval("echo wc_get_product_id_by_sku('SS-S26-256GB-DEN');").strip().splitlines()[-1]
+    base = {"add-to-cart": product_id, "product_id": product_id, "quantity": 1}
+
+    _, missing = post(base)
+    check("Nút mua: thiếu phiên bản thì Woo báo lỗi, không thêm", missing.get("success") is False and bool(missing["data"]["messages"]), str(missing)[:120])
+
+    status, _ = post({"quantity": 1})
+    check("Nút mua: thiếu add-to-cart trả 400", status == 400, str(status))
+
+    _, added = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den"})
+    count = (added.get("fragments") or {}).get("em.kio-cart-count", "")
+    check("Nút mua: thêm đúng biến thể, trả số giỏ mới", 'data-count="1"' in count, count or str(added)[:120])
+
+    stock = wp_eval("echo wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN'))->get_stock_quantity();").strip().splitlines()[-1]
+    _, over = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den", "quantity": int(stock) + 1})
+    messages = (over.get("data") or {}).get("messages") or [""]
+    check("Nút mua: vượt tồn kho thì Woo báo lỗi", over.get("success") is False and bool(messages[0]), str(over)[:120])
+    check("Nút mua: thông báo lỗi không dính chữ của link", "Xem giỏ hàng" not in messages[0] and "<" not in messages[0], messages[0])
+
+    with opener.open(SITE + "/gio-hang/", timeout=30) as response:
+        cart = response.read().decode()
+    check("Nút mua: giỏ có đúng sản phẩm", "Samsung Galaxy S26" in cart and "cart_item" in cart)
+    check("Nút mua: không để lại thông báo cũ ở trang sau", "woocommerce-message" not in cart)
+
+
+def check_archive():
+    """Phase 4.5: chip lọc nhanh, nút sắp xếp, "Xem thêm". Hành vi không tải lại trang test bằng trình duyệt."""
+    cat = SITE + "/danh-muc-san-pham/dien-thoai/"
+    _, page = get(cat)
+
+    check("Danh mục: có chip lọc nhanh", 'class="kio-quick-filters"' in page)
+    check("Danh mục: bỏ ô chọn sắp xếp cũ", 'class="orderby"' not in page)
+    check("Danh mục: có đủ 4 nút sắp xếp", page.count('kio-sort__item kio-archive-link') == 4, str(page.count('kio-sort__item kio-archive-link')))
+    check("Danh mục: 'Nổi bật' đang chọn", re.search(r'aria-current="true">Nổi bật<', page) is not None)
+    check("Danh mục: chỉ hiện khoảng giá có sản phẩm", "Dưới 5 triệu" not in page and "5 - 10 triệu" in page)
+    check("Danh mục: nút bộ lọc mobile vẫn còn", "kio-filter-toggle" in page)
+
+    chips = re.findall(r'class="kio-filter-chip kio-archive-link" href="([^"]+)"[^>]*>([^<]+)<', page)
+    href = next((html.unescape(u) for u, name in chips if name == "Samsung"), "")
+    check("Chip: Samsung dùng đúng tham số của Woo", "filter_product_brand=" in href and "filtering=1" in href, href)
+    _, samsung = get(href)
+    titles = product_titles(samsung)
+    check("Chip: lọc đúng hãng", bool(titles) and all("Samsung" in t for t in titles), str(titles))
+    active = re.search(r'kio-filter-chip kio-archive-link is-active" href="([^"]+)"[^>]*>Samsung', samsung)
+    check("Chip: đang chọn có link bỏ lọc", active is not None and "filter_product_brand" not in html.unescape(active.group(1)))
+    check("Chip: có 'Xoá lọc'", "kio-filter-clear" in samsung)
+
+    second = next((html.unescape(u) for u, name in re.findall(r'class="kio-filter-chip kio-archive-link" href="([^"]+)"[^>]*>([^<]+)<', samsung) if name == "Xiaomi"), "")
+    check("Chip: chọn thêm hãng thứ hai", bool(re.search(r"filter_product_brand=\d+(,|%2C)\d+", second)), second)
+    _, two = get(second)
+    both = product_titles(two)
+    check("Chip: hai hãng ra cả hai", any("Samsung" in t for t in both) and any("Xiaomi" in t for t in both), str(both))
+
+    band = next((html.unescape(u) for u, name in chips if name == "5 - 10 triệu"), "")
+    _, mid = get(band)
+    prices = re.findall(r'kio-filter-chip kio-archive-link is-active"[^>]*>5 - 10 triệu', mid)
+    check("Chip giá: lọc được và đánh dấu đang chọn", bool(prices) and bool(product_titles(mid)))
+
+    _, cheap = get(cat + "?orderby=price")
+    first = product_titles(cheap)[:1]
+    check("Sắp xếp: giá thấp trước", first == ["Xiaomi Redmi Note 15 Pro 5G"], str(first))
+    check("Sắp xếp: nút đang chọn đúng", re.search(r'aria-current="true">Giá thấp<', cheap) is not None)
+
+    _, empty = get(cat + "?min_price=1&max_price=2")
+    check("Không có kết quả: vẫn còn link bỏ lọc", "woocommerce-no-products-found" in empty and "kio-filter-clear" in empty)
+
+    _, shop = get(SITE + "/cua-hang/")
+    check("Cửa hàng: 10 sản phẩm mỗi trang", len(product_titles(shop)) == 10, str(len(product_titles(shop))))
+    more = re.search(r'kio-load-more__button" href="([^"]+)" rel="next" data-total="(\d+)">Xem thêm (\d+) sản phẩm', shop)
+    check("Xem thêm: là link thật, số còn lại đúng", more is not None and int(more.group(3)) == int(more.group(2)) - 10, more.group(0)[:100] if more else "")
+    check("Xem thêm: phân trang gốc vẫn in cho SEO", "woocommerce-pagination" in shop)
+    if more:
+        status, nxt = get(html.unescape(more.group(1)))
+        check("Xem thêm: trang kế tiếp có sản phẩm khác", status == 200 and not set(product_titles(nxt)) & set(product_titles(shop)))
+
+    _, home = get(SITE + "/")
+    check("JS/CSS danh mục không nạp ở trang chủ", "category-filter.js" not in home and "css/category.css" not in home)
+
+
+def check_cart_checkout_ui():
+    """Phase 4.5: thanh bước, thông báo gọn, tóm tắt đơn. Hành vi JS test bằng trình duyệt."""
+    import http.cookiejar
+
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    product_id = wp_eval("echo wc_get_product_id_by_sku('APL-AIRPODS-PRO3') ?: wc_get_products(['limit'=>1,'type'=>'simple','stock_status'=>'instock','return'=>'ids'])[0];").strip().splitlines()[-1]
+    opener.open(SITE + "/?add-to-cart=" + product_id, timeout=30).read()
+
+    cart = opener.open(SITE + "/gio-hang/", timeout=30).read().decode()
+    check("Giỏ: có sản phẩm để kiểm tra", "cart_item" in cart)
+    check("Giỏ: thanh bước ở bước 1", re.search(r'kio-steps__item is-current" aria-current="step"><span class="kio-steps__number">1<', cart) is not None)
+    check("Giỏ: không còn chữ Shipment", "Shipment" not in cart)
+    check("Giỏ: không còn ô tính phí vận chuyển", "shipping-calculator-button" not in cart)
+    check("Giỏ: nút cập nhật gốc vẫn còn cho khi tắt JS", 'name="update_cart"' in cart)
+    check("Giỏ: dùng hết chiều rộng", 'id="secondary"' not in cart and "storefront-full-width-content" in cart)
+    check("Giỏ: nạp cart.js có defer", re.search(r'<script[^>]*kio-child/assets/js/cart\.js[^>]*defer|<script[^>]*defer[^>]*kio-child/assets/js/cart\.js', cart) is not None)
+
+    checkout = opener.open(SITE + "/thanh-toan/", timeout=30).read().decode()
+    check("Thanh toán: thanh bước ở bước 2, bước 1 là link", 'kio-steps__item is-done"><a href=' in checkout and 'aria-current="step"><span class="kio-steps__number">2<' in checkout)
+    check("Thanh toán: giữ class để Woo mở form", 'class="showlogin"' in checkout and 'class="showcoupon"' in checkout)
+    check("Thanh toán: câu chữ gọn", "Có mã giảm giá?" in checkout and "Đã có tài khoản?" in checkout)
+    side = checkout.find('class="kio-order-side"')
+    check("Thanh toán: tiêu đề và bảng đơn cùng khung dính", 0 < side < checkout.find('id="order_review_heading"') < checkout.find('id="order_review"'))
+
+    check("Thanh toán: nạp JS gom lỗi có defer", re.search(r'<script[^>]*kio-child/assets/js/checkout\.js[^>]*defer|<script[^>]*defer[^>]*kio-child/assets/js/checkout\.js', checkout) is not None)
+
+    notice = wp_eval("echo apply_filters('woocommerce_add_success', __('Cart updated.', 'woocommerce')) === '' ? 'an' : 'con';"
+                     "echo '|' . apply_filters('woocommerce_add_success', 'Thông báo khác');")
+    check("Giỏ: chỉ bỏ đúng thông báo 'đã cập nhật'", notice.endswith("an|Thông báo khác"), notice[-40:])
+
+    _, home = get(SITE + "/")
+    check("CSS giỏ hàng không nạp ở trang chủ", "css/checkout.css" not in home)
+
+
 def check_php_log():
     log = subprocess.run(
         ["docker", "compose", "exec", "-T", "wordpress", "sh", "-c", "cat wp-content/debug.log 2>/dev/null || true"],
@@ -538,7 +836,15 @@ def main():
     section("12. Hồi quy sau review Phase 4", check_phase4_review)
     section("13. Dải sản phẩm + thanh mua hàng (Phase 4 · F6, F7)", check_rows_and_buy_bar)
     section("14. Thanh toán VN + coupon tối đa (Phase 4 · F8, F9)", check_checkout_and_coupons)
-    section("15. Log lỗi PHP", check_php_log)
+    section("15. Thẻ sản phẩm (Phase 4.5)", check_product_card)
+    section("16. Trang sản phẩm (Phase 4.5)", check_single_product)
+    section("17. Trang chủ + video reels (Phase 4.5)", check_home_and_reels)
+    section("18. Chip thương hiệu dạng tab (Phase 4.5)", check_row_tabs)
+    section("19. Header + gợi ý tìm kiếm (Phase 4.5)", check_header)
+    section("20. Nút mua không tải lại trang (Phase 4.5)", check_ajax_add_to_cart)
+    section("21. Trang danh mục (Phase 4.5)", check_archive)
+    section("22. Giỏ hàng + thanh toán (Phase 4.5)", check_cart_checkout_ui)
+    section("23. Log lỗi PHP", check_php_log)
 
     print()
     if failures:

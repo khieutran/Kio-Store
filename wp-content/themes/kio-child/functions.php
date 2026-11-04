@@ -17,6 +17,10 @@ define( 'KIO_CHILD_DIR', get_stylesheet_directory() );
 define( 'KIO_CHILD_URI', get_stylesheet_directory_uri() );
 
 require_once KIO_CHILD_DIR . '/inc/class-kio-child-category-menu-walker.php';
+require_once KIO_CHILD_DIR . '/inc/product-card.php';
+require_once KIO_CHILD_DIR . '/inc/single-product.php';
+require_once KIO_CHILD_DIR . '/inc/product-archive.php';
+require_once KIO_CHILD_DIR . '/inc/checkout.php';
 
 /**
  * Thiết lập theme: đăng ký vị trí menu, hỗ trợ logo.
@@ -77,6 +81,114 @@ function kio_child_enqueue_assets() {
 		(string) filemtime( $main_js ),
 		true
 	);
+
+	wp_enqueue_script(
+		'kio-child-search',
+		KIO_CHILD_URI . '/assets/js/search-suggest.js',
+		array(),
+		(string) filemtime( KIO_CHILD_DIR . '/assets/js/search-suggest.js' ),
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+	wp_localize_script( 'kio-child-search', 'kioSearch', array( 'endpoint' => rest_url( 'wc/store/v1/products' ) ) );
+
+	if ( is_front_page() ) {
+		wp_enqueue_style(
+			'kio-child-home',
+			KIO_CHILD_URI . '/assets/css/home.css',
+			array( 'kio-child-main' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/css/home.css' )
+		);
+		wp_enqueue_script(
+			'kio-child-home',
+			KIO_CHILD_URI . '/assets/js/home.js',
+			array(),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/js/home.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
+
+	if ( function_exists( 'is_cart' ) && ( is_cart() || is_checkout() ) ) {
+		wp_enqueue_style(
+			'kio-child-checkout',
+			KIO_CHILD_URI . '/assets/css/checkout.css',
+			array( 'kio-child-main' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/css/checkout.css' )
+		);
+	}
+
+	if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_order_received_page() ) {
+		wp_enqueue_script(
+			'kio-child-checkout',
+			KIO_CHILD_URI . '/assets/js/checkout.js',
+			array( 'jquery', 'wc-checkout' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/js/checkout.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
+
+	if ( function_exists( 'is_cart' ) && is_cart() ) {
+		wp_enqueue_script(
+			'kio-child-cart',
+			KIO_CHILD_URI . '/assets/js/cart.js',
+			array( 'jquery', 'wc-cart' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/js/cart.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
+
+	if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) {
+		wp_enqueue_style(
+			'kio-child-category',
+			KIO_CHILD_URI . '/assets/css/category.css',
+			array( 'kio-child-main' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/css/category.css' )
+		);
+		wp_enqueue_script(
+			'kio-child-category',
+			KIO_CHILD_URI . '/assets/js/category-filter.js',
+			array( 'jquery' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/js/category-filter.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
+
+	if ( function_exists( 'is_product' ) && is_product() ) {
+		wp_enqueue_style(
+			'kio-child-single-product',
+			KIO_CHILD_URI . '/assets/css/single-product.css',
+			array( 'kio-child-main' ),
+			(string) filemtime( KIO_CHILD_DIR . '/assets/css/single-product.css' )
+		);
+
+		$product = wc_get_product( get_queried_object_id() );
+		if ( $product && $product->is_type( 'variable' ) ) {
+			wp_enqueue_script(
+				'kio-child-variation-chips',
+				KIO_CHILD_URI . '/assets/js/variation-chips.js',
+				array( 'jquery', 'wc-add-to-cart-variation' ),
+				(string) filemtime( KIO_CHILD_DIR . '/assets/js/variation-chips.js' ),
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
+		}
+	}
 }
 add_action( 'wp_enqueue_scripts', 'kio_child_enqueue_assets', 40 );
 
@@ -295,7 +407,6 @@ function kio_child_filter_toggle() {
 		esc_html__( 'Bộ lọc', 'kio-child' )
 	);
 }
-add_action( 'woocommerce_before_shop_loop', 'kio_child_filter_toggle', 25 );
 
 /**
  * Nút "Danh mục" + mega menu. Menu do script tạo, lưu ở vị trí kio-categories.

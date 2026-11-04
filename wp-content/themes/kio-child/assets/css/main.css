@@ -32,6 +32,175 @@ body {
 	box-sizing: border-box;
 }
 
+/* button/input không kế thừa font của trang theo mặc định. */
+button,
+input,
+select,
+textarea {
+	font-family: var(--kio-font);
+}
+
+/* Khung focus. Storefront vẽ viền tím cho a/button/input:focus, tức cả khi bấm chuột: mỗi cú bấm hiện
+   một khung quanh thẻ. :focus-visible là lúc trình duyệt xác định người dùng cần thấy focus (dùng
+   phím, hoặc đang gõ vào ô nhập), nên chỉ giữ viền trong trường hợp đó. Đừng xoá hẳn outline: người
+   dùng bàn phím không biết mình đang ở đâu. */
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+/* Rule a:hover chung đổi chữ sang xanh đậm: trên nền xanh của thanh danh mục là mất chữ. */
+@media (min-width: 768px) {
+	.kio-nav .kio-mega__link:hover,
+	.kio-nav .kio-mega__link:focus {
+		color: #fff;
+	}
+}
+
+/* Nền tối: viền xanh không nhìn thấy. */
+.kio-nav a:focus-visible,
+.kio-nav button:focus-visible,
+.kio-utility a:focus-visible,
+.site-footer a:focus-visible {
+	outline-color: #fff;
+	outline-offset: -2px;
+}
+
+/* tabindex="-1": JS chuyển focus tới đây để trình đọc màn hình đọc, không phải chỗ khách thao tác. */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible {
+	outline: none;
+}
+
+/* Thông báo của Woo: một kiểu chung, nền nhạt, viền trái, chữ đậm màu. Storefront dùng nền đậm chữ
+   trắng, hộp thông tin chỉ đạt 3:1. body để mạnh hơn CSS của Storefront, vẫn nhẹ hơn các chỗ ghi đè riêng. */
+body .woocommerce-message,
+body .woocommerce-info,
+body .woocommerce-error,
+body .woocommerce-noreviews,
+body p.no-comments {
+	margin: 0 0 16px;
+	padding: 12px 16px;
+	border: 0;
+	border-left: 4px solid;
+	border-radius: var(--kio-radius-sm);
+	font-size: var(--kio-text-sm);
+	line-height: 1.5;
+	list-style: none;
+}
+
+body .woocommerce-message {
+	border-left-color: #16a34a;
+	background: #ecfdf3;
+	color: #166534;
+}
+
+body .woocommerce-info,
+body .woocommerce-noreviews,
+body p.no-comments {
+	border-left-color: var(--kio-brand);
+	background: var(--kio-brand-soft);
+	color: var(--kio-brand);
+}
+
+body .woocommerce-error {
+	border-left-color: var(--kio-danger);
+	background: #fef2f2;
+	color: #991b1b;
+}
+
+body .woocommerce-message::before,
+body .woocommerce-info::before,
+body .woocommerce-error::before,
+body .woocommerce-noreviews::before,
+body p.no-comments::before {
+	content: none;
+}
+
+/* !important: Storefront gạch chân link trong nội dung bằng selector rất mạnh (nhiều :not). */
+body .woocommerce-message a,
+body .woocommerce-info a,
+body .woocommerce-error a {
+	color: inherit;
+	font-weight: 700;
+	text-decoration: none !important;
+}
+
+body .woocommerce-message a:hover,
+body .woocommerce-info a:hover,
+body .woocommerce-error a:hover {
+	color: inherit;
+	text-decoration: underline !important;
+}
+
+/* Link "Xem giỏ hàng" trong thông báo: Storefront vẽ thành nút trắng trên nền đậm. */
+body .woocommerce-message .button,
+body .woocommerce-info .button,
+body .woocommerce-error .button {
+	float: right;
+	margin: 0 0 0 12px;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	color: inherit;
+}
+
+/* Màu Storefront và plugin để sẵn dưới mức đạt */
+del {
+	color: var(--kio-muted);
+	opacity: 1;
+}
+
+.required,
+abbr.required {
+	color: var(--kio-danger);
+	text-decoration: none;
+}
+
+.woocommerce-account .input-text,
+.fluentform .ff-el-form-control {
+	border: 1px solid var(--kio-input-border);
+	background: #fff;
+	box-shadow: none;
+}
+
+.fluentform .ff-el-form-control::placeholder {
+	color: var(--kio-muted);
+	opacity: 1;
+}
+
+/* !important: plugin in màu nút theo từng form ngay trong trang. */
+body .fluentform .ff-btn-submit:not(.ff_btn_no_style) {
+	background-color: var(--kio-brand) !important;
+}
+
+/* Storefront để lề dưới breadcrumb gần 60px: quá xa nội dung. */
+.storefront-breadcrumb {
+	margin-bottom: 8px;
+	padding: 12px 0;
+}
+
+/* Đủ rộng thì bỏ lề trong: nội dung header/footer thẳng mép với thân trang. */
+@media (min-width: 1328px) {
+	.kio-container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+html {
+	scroll-padding-top: calc(var(--kio-header-h, 0px) + 16px);
+}
+
 a {
 	color: var(--kio-brand);
 	text-decoration: none;
@@ -121,6 +290,7 @@ a:hover {
 
 .kio-header__search .woocommerce-product-search {
 	display: flex;
+	margin: 0;
 	border: 2px solid var(--kio-brand);
 	border-radius: var(--kio-radius);
 	overflow: hidden;
@@ -134,6 +304,11 @@ a:hover {
 	font-size: 14px;
 	min-width: 0;
 	outline: none;
+}
+
+/* Ô nhập đã tắt outline vì nằm trong khung có viền: dùng phím thì đậm viền khung lên để thấy focus. */
+.kio-header__search .woocommerce-product-search:focus-within {
+	box-shadow: 0 0 0 2px var(--kio-brand);
 }
 
 .kio-header__search .woocommerce-product-search button {
@@ -196,7 +371,7 @@ a:hover {
 	position: absolute;
 	top: -6px;
 	right: -8px;
-	background: var(--kio-accent);
+	background: var(--kio-price); /* chữ trắng trên cam chỉ đạt 2,9:1 */
 	color: #fff;
 	border-radius: 999px;
 	min-width: 18px;
@@ -217,6 +392,245 @@ a:hover {
 
 .kio-nav {
 	background: var(--kio-brand);
+}
+
+/* Header dính từ tablet trở lên. #masthead chỉ cao bằng phần chính; thanh danh mục treo bên dưới
+   (absolute, chừa chỗ bằng margin) nên trượt lên giấu đi mà chiều cao trang không đổi.
+   z-index âm: nằm sau nền của .kio-header. Mobile đã có thanh dưới đáy với tìm kiếm + giỏ hàng. */
+@media (min-width: 768px) {
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 1000;
+		margin-bottom: var(--kio-nav-h, 46px) !important; /* thanh danh mục có thể xuống 2 dòng ở tablet */
+		border-bottom: 0;
+	}
+
+	.admin-bar .site-header {
+		top: 32px;
+	}
+
+	.kio-header {
+		background: #fff;
+	}
+
+	.kio-nav {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		left: 0;
+		z-index: -1;
+		transition: transform var(--kio-dur-base) var(--kio-ease-out);
+	}
+
+	.site-header.is-compact .kio-nav {
+		visibility: hidden;
+		transform: translateY(-100%);
+		transition: transform var(--kio-dur-base) var(--kio-ease-in), visibility 0s linear var(--kio-dur-base);
+	}
+}
+
+/* Gợi ý tìm kiếm */
+.kio-suggest-host {
+	position: relative;
+}
+
+.kio-suggest {
+	position: absolute;
+	top: calc(100% + 6px);
+	right: 0;
+	left: 0;
+	z-index: 1001;
+	max-height: min(70vh, 480px);
+	overflow-y: auto;
+	border-radius: var(--kio-radius);
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow-hover);
+	text-align: left;
+}
+
+.storefront-handheld-footer-bar .kio-suggest {
+	top: auto;
+	bottom: calc(100% + 6px);
+}
+
+/* Storefront định dạng mọi ul/li/a trong thanh đáy (chia cột, giấu chữ để hiện icon): đặt lại cho
+   danh sách gợi ý nằm trong đó. */
+.storefront-handheld-footer-bar ul.kio-suggest__list {
+	display: block;
+}
+
+.storefront-handheld-footer-bar ul.kio-suggest__list li {
+	display: block;
+	float: none;
+	width: 100%;
+	border: 0;
+	text-align: left;
+}
+
+.storefront-handheld-footer-bar ul.kio-suggest__list li > a.kio-suggest__item {
+	display: flex;
+	height: auto;
+	padding: 6px 8px;
+	overflow: visible;
+	color: var(--kio-text);
+	text-decoration: none;
+	text-indent: 0;
+}
+
+.storefront-handheld-footer-bar ul.kio-suggest__list li > a.kio-suggest__item::before {
+	content: none;
+}
+
+.kio-suggest__list {
+	margin: 0;
+	padding: 4px;
+	list-style: none;
+}
+
+.kio-suggest__list li {
+	margin: 0;
+}
+
+.kio-suggest__item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 8px;
+	border-radius: var(--kio-radius-sm);
+	color: var(--kio-text);
+	text-decoration: none;
+}
+
+.kio-suggest__item:hover,
+[aria-selected="true"] > .kio-suggest__item {
+	background: var(--kio-brand-soft);
+	color: var(--kio-text);
+}
+
+.kio-suggest__item img {
+	flex: 0 0 auto;
+	width: 48px;
+	height: 48px;
+	border-radius: var(--kio-radius-sm);
+	background: #eef1f4;
+}
+
+.kio-suggest__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.kio-suggest__name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.kio-suggest__name mark {
+	background: none;
+	color: inherit;
+	font-weight: 700;
+}
+
+.kio-suggest__price {
+	color: var(--kio-price);
+	font-weight: 700;
+}
+
+.kio-suggest__status {
+	margin: 0;
+	padding: 14px 16px;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-sm);
+}
+
+/* Storefront định dạng mọi button, nên đặt lại toàn bộ cho nút dạng link này. */
+.kio-header__search .kio-suggest__all,
+.kio-suggest__all {
+	display: block;
+	width: 100%;
+	min-height: 44px;
+	padding: 10px 16px;
+	border: 0;
+	border-top: 1px solid var(--kio-border);
+	background: none;
+	color: var(--kio-brand);
+	font-size: 13px;
+	font-weight: 700;
+	text-align: left;
+	cursor: pointer;
+}
+
+.kio-suggest__all:hover {
+	background: var(--kio-brand-soft);
+	color: var(--kio-brand);
+}
+
+/* Thông báo đã thêm vào giỏ */
+.kio-toast {
+	position: fixed;
+	right: 16px;
+	bottom: 16px;
+	z-index: 10002;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	max-width: min(380px, calc(100vw - 32px));
+	padding: 12px 16px;
+	border-radius: var(--kio-radius);
+	background: #111827;
+	box-shadow: var(--kio-shadow-hover);
+	color: #fff;
+	font-size: var(--kio-text-sm);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(12px);
+	transition: opacity var(--kio-dur-base) var(--kio-ease-in), transform var(--kio-dur-base) var(--kio-ease-in), visibility 0s linear var(--kio-dur-base);
+}
+
+.kio-toast.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	transition: opacity var(--kio-dur-base) var(--kio-ease-out), transform var(--kio-dur-base) var(--kio-ease-out);
+}
+
+.kio-toast.is-error {
+	background: #991b1b;
+}
+
+.kio-toast.is-error .kio-toast__link {
+	display: none;
+}
+
+.kio-toast__link {
+	flex: 0 0 auto;
+	color: #ffd2b3;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.kio-toast__link:hover {
+	color: #fff;
+}
+
+/* Mobile: nằm trên thanh công cụ dưới đáy. */
+@media (max-width: 767px) {
+	.kio-toast {
+		right: 16px;
+		bottom: 76px;
+		left: 16px;
+		max-width: none;
+	}
+
+	/* Thanh mua F7 đang hiện thì đứng trên nó. */
+	.kio-buy-bar-visible .kio-toast {
+		bottom: 148px;
+	}
 }
 
 .kio-nav .kio-container {
@@ -343,7 +757,7 @@ a:hover {
 	max-width: 340px;
 }
 
-.kio-footer__title {
+.site-footer .kio-footer__title {
 	color: #fff;
 	font-size: 15px;
 	margin: 0 0 14px;
@@ -359,12 +773,12 @@ a:hover {
 	margin-bottom: 8px;
 }
 
-.kio-footer__menu a {
+.site-footer .kio-footer__menu a:not(.button):not(.components-button) {
 	color: #b9c7da;
 	font-size: 13px;
 }
 
-.kio-footer__menu a:hover {
+.site-footer .kio-footer__menu a:not(.button):not(.components-button):hover {
 	color: #fff;
 }
 
@@ -389,7 +803,7 @@ a:hover {
 	padding: 0;
 }
 
-.kio-social__link {
+.site-footer .kio-social__link:not(.button):not(.components-button) {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -400,7 +814,7 @@ a:hover {
 	color: #fff;
 }
 
-.kio-social__link:hover {
+.site-footer .kio-social__link:not(.button):not(.components-button):hover {
 	background: var(--kio-brand);
 	color: #fff;
 }
@@ -585,17 +999,19 @@ a:hover {
 
 .kio-flash-sale__head {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	gap: 12px;
+	gap: 8px 12px;
 	margin-bottom: 16px;
 }
 
 .kio-flash-sale__title {
 	font-size: 22px;
 	font-weight: 700;
-	color: var(--kio-accent);
+	color: var(--kio-accent-strong);
 	margin: 0;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 
 .kio-flash-sale__timer {
@@ -611,9 +1027,9 @@ a:hover {
 }
 
 .kio-flash-sale__timer-label {
+	white-space: nowrap;
 	font-weight: 400;
 	font-size: 12px;
-	opacity: 0.9;
 }
 
 .kio-flash-sale__countdown {
@@ -624,7 +1040,7 @@ a:hover {
 }
 
 .kio-flash-sale__unit {
-	background: rgba(255, 255, 255, 0.22);
+	background: #a80013;
 	padding: 2px 5px;
 	border-radius: 3px;
 }
@@ -632,7 +1048,162 @@ a:hover {
 .kio-flash-sale__sep {
 	margin: 0 2px;
 	font-weight: 400;
-	opacity: 0.9;
+}
+
+/* Số đồng hồ lật quanh trục ngang: cần inline-block thì transform mới có tác dụng. */
+.kio-flash-sale__unit {
+	display: inline-block;
+	min-width: 1.6em;
+	text-align: center;
+}
+
+/* Thanh đã bán: "Đã bán 214" ở dòng thẻ trùng ý nên ẩn trong Flash Sale. */
+.kio-flash-sale .kio-card-meta__sold {
+	display: none;
+}
+
+.kio-sold-bar {
+	margin-top: 6px;
+}
+
+.kio-sold-bar__text {
+	display: block;
+	color: var(--kio-accent-text);
+	font-size: var(--kio-text-xs);
+	font-weight: 700;
+	line-height: 1.5;
+}
+
+.kio-sold-bar__track {
+	display: block;
+	height: 6px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--kio-accent-soft);
+}
+
+.kio-sold-bar__fill {
+	display: block;
+	height: 100%;
+	background: var(--kio-accent);
+	transform: scaleX(var(--kio-sold, 0));
+	transform-origin: left;
+}
+
+/* Băng chuyền dùng chung (Flash Sale, reels): carousel.js của kio-store thêm nút.
+   Khoảng đệm + lề âm: vùng cuộn cắt mọi thứ tràn ra, cần chừa chỗ cho bóng và thẻ nhấc khi hover. */
+[data-kio-carousel] {
+	position: relative;
+}
+
+[data-kio-carousel] ul.products,
+.kio-carousel__track {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: none;
+	gap: 12px;
+	margin: -6px -6px -10px !important;
+	padding: 6px 6px 10px;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scroll-padding-left: 6px;
+	scrollbar-width: none;
+}
+
+[data-kio-carousel] ul.products::-webkit-scrollbar,
+.kio-carousel__track::-webkit-scrollbar {
+	display: none;
+}
+
+[data-kio-carousel] ul.products {
+	grid-auto-columns: 44%;
+}
+
+[data-kio-carousel] ul.products > li.product {
+	scroll-snap-align: start;
+}
+
+.kio-carousel__track:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-carousel__nav {
+	position: absolute;
+	top: 40%;
+	z-index: 3;
+	display: none;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow-hover);
+	color: var(--kio-text);
+	cursor: pointer;
+	transition: opacity var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-carousel__nav::before {
+	content: "";
+	position: absolute;
+	top: 16px;
+	left: 14px;
+	width: 11px;
+	height: 11px;
+	border-top: 2px solid currentColor;
+	border-right: 2px solid currentColor;
+	transform: rotate(45deg);
+}
+
+.kio-carousel__nav--prev {
+	left: -10px;
+}
+
+.kio-carousel__nav--prev::before {
+	left: 18px;
+	transform: rotate(-135deg);
+}
+
+.kio-carousel__nav--next {
+	right: -10px;
+}
+
+/* visibility thay vì chỉ opacity: Storefront có style riêng cho button:disabled, và nút ẩn cũng
+   không nên nhận focus. */
+.kio-carousel .kio-carousel__nav:disabled {
+	visibility: hidden;
+}
+
+.kio-carousel__nav:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+/* Màn hình cảm ứng nhỏ vuốt là đủ, chỉ hiện nút từ tablet trở lên và khi thật sự có phần tràn. */
+@media (min-width: 768px) {
+	.kio-carousel.has-overflow .kio-carousel__nav {
+		display: block;
+	}
+
+	[data-kio-carousel] ul.products {
+		grid-auto-columns: calc((100% - 2 * 16px) / 3);
+		gap: 16px;
+	}
+}
+
+@media (min-width: 1024px) {
+	[data-kio-carousel] ul.products {
+		grid-auto-columns: calc((100% - 3 * 16px) / 4);
+	}
+}
+
+@media (min-width: 1280px) {
+	[data-kio-carousel] ul.products {
+		grid-auto-columns: calc((100% - 4 * 16px) / 5);
+	}
 }
 
 /* ==========================================================================
@@ -683,6 +1254,31 @@ a:hover {
 .kio-strip__chip:hover {
 	border-color: var(--kio-brand);
 	color: var(--kio-brand);
+}
+
+.kio-strip__chip[aria-current] {
+	border-color: var(--kio-brand);
+	background: var(--kio-brand);
+	color: #fff;
+}
+
+.kio-strip__chip[aria-current]:hover {
+	color: #fff;
+}
+
+.kio-strip__chip:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+/* Đang tải: thẻ cũ giữ nguyên chỗ và mờ đi, không để khung trống làm trang nhảy. */
+.kio-product-row ul.products {
+	transition: opacity var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-product-row.is-loading ul.products {
+	opacity: 0.5;
+	pointer-events: none;
 }
 
 .kio-strip__more {
@@ -751,13 +1347,23 @@ a:hover {
 	color: var(--kio-brand);
 }
 
+/* Storefront đặt overflow-x: hidden ở đây, trục còn lại bị ép thành auto nên 2 phần tử thành khung
+   cuộn riêng và position: sticky của con không bám theo màn hình. clip vẫn cắt phần tràn ngang
+   nhưng không tạo khung cuộn. */
+html body,
+#page.site {
+	overflow-x: clip;
+}
+
 /* ==========================================================================
    11. Thẻ sản phẩm (trang danh mục + shortcode [products])
    ========================================================================== */
 
+/* minmax(0, 1fr) thay vì 1fr: "1fr" có mức tối thiểu ngầm là auto, nên dòng nowrap dài (thông số
+   chip) ép cột của nó rộng ra và các thẻ trong cùng hàng lệch nhau. */
 ul.products {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 12px;
 	margin: 0 !important;
 }
@@ -767,13 +1373,16 @@ ul.products::after {
 	content: none !important;
 }
 
+/* Thẻ là cột flex, phần link chiếm hết chỗ thừa: các nút luôn nằm sát đáy thẻ. */
 ul.products li.product {
+	display: flex;
+	flex-direction: column;
 	background: var(--kio-card);
 	border-radius: var(--kio-radius);
 	box-shadow: var(--kio-shadow);
 	padding: 12px !important;
 	position: relative;
-	transition: box-shadow 0.15s ease, transform 0.15s ease;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
 	margin: 0 !important;
 	float: none !important;
 	width: auto !important;
@@ -781,116 +1390,273 @@ ul.products li.product {
 	text-align: left;
 }
 
-ul.products li.product:hover {
+/* Bóng đậm nằm sẵn ở lớp phủ, hover chỉ đổi opacity: rẻ hơn animate box-shadow (phải vẽ lại). */
+ul.products li.product::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
 	box-shadow: var(--kio-shadow-hover);
-	transform: translateY(-3px);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--kio-dur-fast) var(--kio-ease-out);
 }
 
-ul.products li.product img {
-	border-radius: var(--kio-radius-sm);
+/* (hover: hover): chỉ thiết bị có chuột. Trên cảm ứng, :hover bị "dính" sau khi chạm. */
+@media (hover: hover) {
+	ul.products li.product:hover {
+		transform: translateY(-3px);
+	}
+
+	ul.products li.product:hover::after {
+		opacity: 1;
+	}
+
+	ul.products li.product:hover .kio-card-media img {
+		transform: scale(1.04);
+	}
+}
+
+ul.products li.product a:focus-visible,
+ul.products li.product button:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+ul.products li.product .woocommerce-LoopProduct-link {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	min-width: 0;
+	color: var(--kio-text);
+}
+
+/* Khung ảnh: giữ sẵn tỉ lệ 1:1 nên ảnh tải xong không làm giật trang, là mốc định vị của nhãn,
+   và cắt phần ảnh phóng to khi hover. */
+.kio-card-media {
+	position: relative;
+	aspect-ratio: 1;
 	margin-bottom: 10px;
+	overflow: hidden;
+	border-radius: var(--kio-radius-sm);
+	background: #eef1f4;
+}
+
+/* Skeleton: vệt sáng chạy qua khung cho tới khi ảnh tải xong (main.js thêm .is-loaded). */
+.kio-card-media::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.7) 50%, transparent 70%);
+	animation: kio-shimmer 1.2s linear infinite;
+}
+
+.kio-card-media.is-loaded::before {
+	display: none;
+}
+
+@keyframes kio-shimmer {
+	from {
+		transform: translateX(-100%);
+	}
+
+	to {
+		transform: translateX(100%);
+	}
+}
+
+ul.products li.product .kio-card-media img {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	border-radius: 0;
+	object-fit: contain;
+	transition: transform var(--kio-dur-base) var(--kio-ease-out);
 }
 
 ul.products li.product .woocommerce-loop-product__title {
-	font-size: 14px;
-	font-weight: 400;
+	font-size: var(--kio-text-sm);
+	font-weight: 700;
 	line-height: 1.4;
 	min-height: 2.8em;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+	margin: 0;
 	padding: 0 !important;
 }
 
+/* Giá: dòng giá hiện tại ở trên, giá gạch ngang ở dưới. Luôn giữ chỗ 2 dòng để phần dưới của mọi
+   thẻ trong hàng thẳng nhau, dù thẻ đó có giá gạch ngang hay không. */
 ul.products li.product .price {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 2px;
-	font-size: 15px;
+	min-height: 42px;
+	margin: 8px 0 0;
+	color: var(--kio-price);
+	font-size: var(--kio-text-md);
+	font-weight: 700;
+	line-height: 1.3;
 }
 
 ul.products li.product .price ins {
 	order: -1;
-	font-weight: 700;
 	color: var(--kio-price);
-	font-size: 16px;
+	font-weight: 700;
 	text-decoration: none;
 }
 
 ul.products li.product .price del {
 	color: var(--kio-muted);
 	font-size: 13px;
+	font-weight: 400;
+	opacity: 1;
 }
 
-ul.products li.product .button {
-	display: inline-block;
+ul.products li.product .kio-price-now {
+	white-space: nowrap;
+}
+
+ul.products li.product .kio-price-now .woocommerce-Price-amount {
+	font-weight: 700;
+}
+
+@media (max-width: 479px) {
+	ul.products li.product .price {
+		font-size: 15px;
+	}
+}
+
+/* Nút chính rộng hết thẻ, cao 44px (vùng chạm tối thiểu). */
+ul.products li.product .button:not(.compare) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
 	margin-top: 10px;
 	background: var(--kio-brand);
 	color: #fff;
 	border-radius: var(--kio-radius-sm);
 	font-weight: 700;
 	font-size: 13px;
-	padding: 8px 14px;
+	padding: 8px 12px;
+	text-align: center;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
 }
 
-ul.products li.product .button:hover {
+ul.products li.product .button:not(.compare):hover {
 	background: var(--kio-brand-dark);
 }
 
+ul.products li.product .button:not(.compare):active {
+	transform: scale(0.97);
+}
+
+/* Link "Xem giỏ hàng" Woo chèn sau khi thêm bằng AJAX: đã có trong thông báo, ẩn để thẻ không cao lên. */
+ul.products li.product .added_to_cart {
+	display: none;
+}
+
+/* Dòng sao + đã bán */
+.kio-card-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px 8px;
+	margin-top: 6px;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-xs);
+	line-height: 1.4;
+}
+
+.kio-card-meta__rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	color: var(--kio-text);
+}
+
+.kio-card-meta__rating::before {
+	content: "";
+	width: 13px;
+	height: 13px;
+	background: var(--kio-accent);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.6 6.8-.8z'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.6 6.8-.8z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Dòng "+2 ưu đãi" */
+.kio-card-offers {
+	display: inline-flex;
+	align-items: center;
+	align-self: flex-start;
+	gap: 4px;
+	margin-top: 6px;
+	padding: 2px 8px 2px 6px;
+	border-radius: 999px;
+	background: var(--kio-accent-soft);
+	color: var(--kio-accent-text);
+	font-size: var(--kio-text-xs);
+	font-weight: 700;
+	line-height: 1.5;
+}
+
+.kio-card-offers::before {
+	content: "";
+	width: 13px;
+	height: 13px;
+	background: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 8h-2.2A3 3 0 0 0 12 5.4 3 3 0 0 0 6.2 8H4a1 1 0 0 0-1 1v3h8V8h2v4h8V9a1 1 0 0 0-1-1zM9 8a1 1 0 1 1 1-1v1zm6 0h-1V7a1 1 0 1 1 1 1zM4 14v6a1 1 0 0 0 1 1h6v-7zm9 0v7h6a1 1 0 0 0 1-1v-6z'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 8h-2.2A3 3 0 0 0 12 5.4 3 3 0 0 0 6.2 8H4a1 1 0 0 0-1 1v3h8V8h2v4h8V9a1 1 0 0 0-1-1zM9 8a1 1 0 1 1 1-1v1zm6 0h-1V7a1 1 0 1 1 1 1zM4 14v6a1 1 0 0 0 1 1h6v-7zm9 0v7h6a1 1 0 0 0 1-1v-6z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* ==========================================================================
-   11b. Nhãn trên thẻ sản phẩm (Phase 4 · F1): -x%, Mới, Hết hàng
+   11b. Nhãn trên ảnh thẻ sản phẩm (Phase 4 · F1): giảm giá, Mới, Hết hàng
    ========================================================================== */
 
-/* Nhãn chung: đè lên góc trên bên trái của ảnh thẻ sản phẩm.
-   li.product đã có position: relative nên dùng nó làm khung định vị. */
-ul.products li.product .kio-badge {
+/* Một nhóm duy nhất ở góc trái ảnh, các nhãn tự xếp chồng: không cần tính vị trí từng nhãn. */
+.kio-card-badges {
 	position: absolute;
-	top: 12px;
-	left: 12px;
-	z-index: 2;
-	padding: 4px 7px;
-	border-radius: 5px;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 1;
-	color: #fff;
-}
-
-/* Nhãn giảm giá: Storefront in .onsale nằm SAU tiêu đề trong DOM (hook
-   woocommerce_after_shop_loop_item_title), CSS đưa nó quay lại góc trái của ảnh. */
-ul.products li.product .onsale.kio-badge {
-	background: var(--kio-price);
-	border: 0;
-	margin: 0;
-	text-transform: none;
-	display: block;
-}
-
-/* Nhóm nhãn "Mới"/"Hết hàng": in trước <img> (hook woocommerce_before_shop_loop_item_title). */
-ul.products li.product .kio-badges {
-	position: absolute;
-	top: 12px;
-	left: 12px;
+	top: 6px;
+	left: 6px;
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	gap: 4px;
 }
 
-/* Thẻ vừa có nhãn giảm giá vừa có nhãn "Mới" (vd. Galaxy S26): đẩy "Mới" xuống dưới
-   nhãn giảm giá để không bị đè lên nhau. Nhãn cao ~20px + gap 4px + lề 12px. */
-ul.products li.product:has(.onsale.kio-badge) .kio-badges {
-	top: 44px;
+/* .kio-badges do F1 in; bỏ khung của nó để nhãn bên trong xếp chung với nhãn giảm giá. */
+.kio-card-badges .kio-badges {
+	display: contents;
+}
+
+ul.products li.product .kio-badge {
+	display: block;
+	margin: 0;
+	padding: 4px 7px;
+	border: 0;
+	border-radius: 5px;
+	font-size: var(--kio-text-xs);
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-transform: none;
+}
+
+ul.products li.product .onsale.kio-badge {
+	background: var(--kio-price);
 }
 
 ul.products li.product .kio-badge--new {
-	background: var(--kio-success);
+	background: #15803d; /* --kio-success làm chữ trắng chỉ đạt 3.3:1, bản đậm hơn đạt 5:1 */
 }
 
 ul.products li.product .kio-badge--out {
-	background: var(--kio-muted);
+	background: #4b5563;
 }
 
 /* Trang chi tiết sản phẩm: chỉ có nhãn giảm giá (do filter in), đổi thành badge đỏ
@@ -909,17 +1675,26 @@ ul.products li.product .kio-badge--out {
    11c. Dòng "Trả góp 0%" (Phase 4 · F2)
    ========================================================================== */
 
-/* Trên thẻ sản phẩm: dòng nhỏ, màu nhạt ngay dưới giá. */
+/* Trên thẻ sản phẩm: nhãn "Trả góp 0%" cùng kiểu với các nhãn khác, số tiền ngay cạnh. */
 ul.products li.product .kio-installment {
-	font-size: 12px;
+	margin-top: 6px;
 	color: var(--kio-muted);
-	margin-top: 4px;
-	line-height: 1.3;
+	font-size: var(--kio-text-xs);
+	line-height: 1.5;
+}
+
+ul.products li.product .kio-installment__tag {
+	display: inline-block;
+	padding: 1px 6px;
+	border-radius: 5px;
+	background: var(--kio-brand-soft);
+	color: var(--kio-brand);
+	font-weight: 700;
 }
 
 ul.products li.product .kio-installment__amount {
 	color: var(--kio-text);
-	font-weight: 600;
+	font-weight: 700;
 }
 
 /* Trang chi tiết sản phẩm: gần giá, dễ đọc hơn. */
@@ -938,12 +1713,20 @@ ul.products li.product .kio-installment__amount {
    11d. Thông số nổi bật trên thẻ sản phẩm (Phase 4 · F3)
    ========================================================================== */
 
+/* Giữ chỗ đủ 3 dòng: thẻ ít thông số không làm giá của nó nhảy lên so với thẻ bên cạnh. */
 ul.products li.product .kio-specs {
 	display: block;
-	margin: 8px 0 0;
-	font-size: 12px;
+	min-height: calc(3 * 1.6em);
+	margin: 6px 0 0;
+	font-size: var(--kio-text-xs);
 	line-height: 1.6;
 	color: var(--kio-text);
+}
+
+/* Thẻ không có thông số (không có .kio-specs nên giá đứng ngay sau tiêu đề) nằm chung danh sách
+   với thẻ có thông số: chừa đúng chỗ đó để giá thẳng hàng. Danh sách toàn phụ kiện thì không chừa. */
+ul.products:has(.kio-specs) li.product .woocommerce-loop-product__title + .price {
+	margin-top: calc(14px + 3 * 1.6 * var(--kio-text-xs));
 }
 
 ul.products li.product .kio-specs__item {
@@ -1030,13 +1813,8 @@ ul.products li.product .kio-specs__label {
 }
 
 /* ==========================================================================
-   13. Trang sản phẩm — biến thể hết hàng
+   13. Trang sản phẩm (phần còn lại ở assets/css/single-product.css)
    ========================================================================== */
-
-select option.kio-out-of-stock {
-	color: #c4c9d2;
-	font-style: italic;
-}
 
 .single-product div.product .price {
 	color: var(--kio-price);
@@ -1179,20 +1957,20 @@ select option.kio-out-of-stock {
 /* Số cột sản phẩm tăng dần theo màn hình: 2 (mobile) → 3 → 4 → 5. */
 @media (min-width: 768px) {
 	ul.products {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 16px;
 	}
 }
 
 @media (min-width: 1024px) {
 	ul.products {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
 
 @media (min-width: 1280px) {
 	ul.products {
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(5, minmax(0, 1fr));
 	}
 }
 
@@ -1201,21 +1979,6 @@ select option.kio-out-of-stock {
    Phase 3 — Giao diện cho bộ lọc và plugin (yêu thích, so sánh)
    Chỉ chỉnh để gọn và đúng màu; đợt "sinh động hơn" làm sau Phase 4.
    ========================================================================== */
-
-/* Giá dạng khoảng (sản phẩm có biến thể: "giá – giá") nằm trên một dòng.
-   Phase 2 xếp .price thành cột (giá sale ở trên, giá gốc gạch ngang ở dưới); khoảng giá không có
-   giá gạch ngang (<del>) nên chỉ đổi sang hàng ngang cho trường hợp đó. */
-ul.products li.product .price:not(:has(del)) {
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: baseline;
-	column-gap: 4px;
-}
-
-/* Thẻ sản phẩm là mốc định vị cho nút trái tim */
-ul.products li.product {
-	position: relative;
-}
 
 /* Yêu thích (WPC Smart Wishlist): nút tròn hình trái tim ở góc trên ảnh */
 ul.products li.product .woosw-btn {
@@ -1233,6 +1996,12 @@ ul.products li.product .woosw-btn {
 	font-size: 0; /* ẩn chữ nhưng trình đọc màn hình vẫn đọc aria-label "Yêu thích" */
 	color: var(--kio-muted);
 	cursor: pointer;
+}
+/* Nút hiển thị 36px nhưng vùng chạm 44px. */
+ul.products li.product .woosw-btn::after {
+	content: "";
+	position: absolute;
+	inset: -4px;
 }
 ul.products li.product .woosw-btn::before {
 	content: "";
@@ -1252,16 +2021,18 @@ ul.products li.product .woosw-btn.woosw-btn-added {
 
 /* So sánh (YITH Compare): link nhỏ có icon, không phải nút to */
 ul.products li.product a.compare.button {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 4px;
-	margin: 8px 0 0;
+	min-height: 32px;
+	margin: 4px 0 0;
 	padding: 0;
 	background: none;
 	border: 0;
 	box-shadow: none;
 	color: var(--kio-muted);
-	font-size: 0.85rem;
+	font-size: 13px;
 	font-weight: 500;
 }
 ul.products li.product a.compare.button::before {
@@ -1361,7 +2132,30 @@ ul.products li.product a.compare.button.added {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	#secondary {
+	#secondary,
+	.kio-nav,
+	.site-header.is-compact .kio-nav,
+	.kio-toast,
+	.kio-toast.is-visible,
+	.kio-carousel__nav,
+	.kio-product-row ul.products,
+	ul.products li.product,
+	ul.products li.product::after,
+	ul.products li.product .button,
+	ul.products li.product .kio-card-media img {
 		transition: none;
+	}
+
+	.kio-toast {
+		transform: none;
+	}
+
+	.kio-card-media::before {
+		animation: none;
+	}
+
+	ul.products li.product:hover,
+	ul.products li.product:hover .kio-card-media img {
+		transform: none;
 	}
 }

@@ -1,0 +1,223 @@
+/*
+ * Trang danh sách sản phẩm (Phase 4.5). Chỉ nạp ở trang danh mục, cửa hàng, thương hiệu, tìm kiếm.
+ */
+
+.woocommerce-products-header {
+	padding: 0 0 12px;
+}
+
+.archive.woocommerce-page .content-area {
+	padding-top: 0;
+}
+
+.kio-archive-bar {
+	margin-bottom: 16px;
+	outline: 0;
+	scroll-margin-top: calc(var(--kio-header-h, 0px) + 16px);
+}
+
+.kio-quick-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+/* position: relative: chữ ẩn cho trình đọc màn hình bên trong chip là absolute. Không có mốc này nó
+   thoát khỏi vùng cuộn ngang và kéo giãn cả trang trên mobile. */
+.kio-filter-chip,
+.hentry .kio-filter-chip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 36px;
+	padding: 6px 12px;
+	border: 1px solid var(--kio-border);
+	border-radius: 999px;
+	background: var(--kio-card);
+	color: var(--kio-text);
+	font-size: 13px;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-filter-chip:hover {
+	border-color: var(--kio-brand);
+	color: var(--kio-brand);
+}
+
+.kio-filter-chip:active {
+	transform: scale(0.96);
+}
+
+/* Chip đang chọn lên đầu hàng: trên mobile hàng cuộn ngang, không để nó nằm khuất. */
+.kio-filter-chip.is-active {
+	order: -1;
+}
+
+.kio-filter-chip.is-active,
+.kio-filter-chip.is-active:hover {
+	border-color: var(--kio-brand);
+	background: var(--kio-brand);
+	color: #fff;
+}
+
+.kio-filter-chip__x {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.kio-filter-clear {
+	display: inline-flex;
+	align-items: center;
+	min-height: 36px;
+	padding: 6px 4px;
+	color: var(--kio-brand);
+	font-size: 13px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.kio-archive-bar__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+}
+
+.kio-sort {
+	display: flex;
+	gap: 4px;
+	padding: 3px;
+	border-radius: var(--kio-radius-sm);
+	background: #e8ebef;
+}
+
+.kio-sort__item {
+	display: inline-flex;
+	align-items: center;
+	min-height: 36px;
+	padding: 4px 12px;
+	border-radius: 6px;
+	color: var(--kio-text);
+	font-size: 13px;
+	white-space: nowrap;
+}
+
+.kio-sort__item:hover {
+	color: var(--kio-brand);
+}
+
+.kio-sort__item[aria-current] {
+	background: var(--kio-card);
+	box-shadow: var(--kio-shadow);
+	color: var(--kio-brand);
+	font-weight: 700;
+}
+
+.kio-filter-chip:focus-visible,
+.kio-filter-clear:focus-visible,
+.kio-sort__item:focus-visible,
+.kio-load-more__button:focus-visible {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-archive-bar .woocommerce-result-count {
+	float: none;
+	margin: 0;
+}
+
+/* Đang tải: nội dung cũ giữ nguyên chỗ và mờ đi, trang không nhảy. */
+#main {
+	transition: opacity var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+/* Vẫn bấm được: khách đổi ý giữa chừng thì yêu cầu cũ bị huỷ. */
+#main.is-loading {
+	opacity: 0.5;
+}
+
+.kio-load-more {
+	margin: 24px 0;
+	text-align: center;
+}
+
+.kio-load-more__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 8px 24px;
+	border: 1px solid var(--kio-brand);
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-card);
+	color: var(--kio-brand);
+	font-size: var(--kio-text-sm);
+	font-weight: 700;
+	transition: transform var(--kio-dur-fast) var(--kio-ease-out);
+}
+
+.kio-load-more__button:hover {
+	background: var(--kio-brand-soft);
+}
+
+.kio-load-more__button:active {
+	transform: scale(0.98);
+}
+
+.kio-load-more__button.is-loading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+/* Có JS thì "Xem thêm" thay cho phân trang; tắt JS thì phân trang vẫn hiện. */
+.woocommerce-js .woocommerce-pagination {
+	display: none;
+}
+
+/* Mobile: chip và nút sắp xếp cuộn ngang một hàng */
+@media (max-width: 767px) {
+	.kio-quick-filters,
+	.kio-sort {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+
+	.kio-quick-filters::-webkit-scrollbar,
+	.kio-sort::-webkit-scrollbar {
+		display: none;
+	}
+
+	.kio-filter-chip,
+	.kio-filter-clear {
+		flex: 0 0 auto;
+		min-height: 44px;
+	}
+
+	.kio-sort {
+		width: 100%;
+	}
+
+	.kio-sort__item {
+		flex: 1 0 auto;
+		justify-content: center;
+		min-height: 44px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#main,
+	.kio-filter-chip,
+	.kio-load-more__button {
+		transition: none;
+	}
+
+	.kio-filter-chip:active,
+	.kio-load-more__button:active {
+		transform: none;
+	}
+}
