@@ -47,7 +47,7 @@ jobs:
 
       # Python của runner (giống môi trường chạy smoke-test.py ở job sau)
       - name: Cú pháp Python
-        run: python3 -m py_compile scripts/smoke-test.py
+        run: python3 -m py_compile scripts/smoke-test.py scripts/security-check.py
 
       # Chạy shellcheck bằng image cố định phiên bản, giống hệt lệnh chạy ở máy dev (README).
       # Không dùng bản cài sẵn trên runner vì phiên bản khác nhau → kết quả khác nhau.
@@ -70,6 +70,10 @@ jobs:
 
       - name: Kiểm tra như khách hàng (smoke-test.py)
         run: python3 scripts/smoke-test.py
+
+      # Sau smoke: phép thử gửi tham số rác, smoke đọc log lỗi PHP nên phải chạy trước.
+      - name: Thử tấn công (security-check.py)
+        run: python3 scripts/security-check.py
 
       - name: In log khi thất bại
         if: failure()

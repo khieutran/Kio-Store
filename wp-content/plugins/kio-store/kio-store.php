@@ -52,3 +52,4 @@ require_once KIO_STORE_DIR . 'includes/video-reels.php';
 require_once KIO_STORE_DIR . 'includes/ajax-add-to-cart.php';
 require_once KIO_STORE_DIR . 'includes/performance.php';
 require_once KIO_STORE_DIR . 'includes/page-cache.php';
+require_once KIO_STORE_DIR . 'includes/security.php';

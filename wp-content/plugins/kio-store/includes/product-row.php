@@ -250,7 +250,9 @@ function kio_store_product_row_shortcode( $atts ): string {
  */
 function kio_store_product_row_ajax(): void {
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- chỉ đọc, xem chú thích trên.
-	$category = get_term_by( 'slug', sanitize_title( wp_unslash( $_GET['category'] ?? '' ) ), 'product_cat' );
+	// category[]=a là mảng, sanitize_title() chỉ nhận chuỗi: không kiểm tra thì khách gây được HTTP 500.
+	$slug     = is_string( $_GET['category'] ?? null ) ? sanitize_title( wp_unslash( $_GET['category'] ) ) : '';
+	$category = get_term_by( 'slug', $slug, 'product_cat' );
 	$brand    = absint( $_GET['brand'] ?? 0 );
 	$limit    = max( 1, min( 20, absint( $_GET['limit'] ?? 5 ) ) );
 	$columns  = max( 1, min( 6, absint( $_GET['columns'] ?? 5 ) ) );

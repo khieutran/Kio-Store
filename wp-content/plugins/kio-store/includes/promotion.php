@@ -57,6 +57,8 @@ function kio_store_register_promotion_cpt(): void {
 			'show_in_menu'  => true,
 			'menu_icon'     => 'dashicons-megaphone',
 			'menu_position' => 56,
+			'capabilities'  => kio_store_shop_post_type_caps(),
+			'map_meta_cap'  => true,
 			'supports'      => array( 'title', 'editor' ),
 			'rewrite'       => false,
 		)

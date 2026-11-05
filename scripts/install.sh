@@ -84,6 +84,9 @@ wp eval-file /scripts/plugins-settings.php
 step "Nội dung theme (trang chủ, menu, footer, Customizer)"
 wp eval-file /scripts/setup-theme-content.php
 
+step "Cấu hình bảo mật"
+wp eval-file /scripts/security-settings.php
+
 echo
 echo "Xong."
 echo "  Cửa hàng:   $WP_URL/cua-hang/"
