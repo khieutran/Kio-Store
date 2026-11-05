@@ -12,15 +12,16 @@ Text Domain: kio-child
 */
 
 /*
- * Font "Be Vietnam Pro" (giấy phép SIL OFL 1.1) tự host trong assets/fonts/,
- * không gọi Google Fonts. TTF dùng được trên mọi trình duyệt hiện đại.
+ * Font "Be Vietnam Pro" (giấy phép SIL OFL 1.1) tự host trong assets/fonts/, không gọi Google Fonts.
+ * WOFF2 chỉ giữ bộ ký tự Latin + tiếng Việt: 273 KB TTF còn 60 KB. Muốn thêm ký tự thì tạo lại từ
+ * data/fonts/ bằng pyftsubset.
  */
 @font-face {
 	font-family: "Be Vietnam Pro";
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
-	src: url("assets/fonts/BeVietnamPro-Regular.ttf") format("truetype");
+	src: url("assets/fonts/BeVietnamPro-Regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -28,7 +29,16 @@ Text Domain: kio-child
 	font-style: normal;
 	font-weight: 700;
 	font-display: swap;
-	src: url("assets/fonts/BeVietnamPro-Bold.ttf") format("truetype");
+	src: url("assets/fonts/BeVietnamPro-Bold.woff2") format("woff2");
+}
+
+/* Icon của Storefront và Woo (vẽ bằng font trong CSS). Chỉ khai báo font, xem functions.php. */
+@font-face {
+	font-family: "Font Awesome 5 Free";
+	font-style: normal;
+	font-weight: 900;
+	font-display: swap;
+	src: url("../storefront/assets/fonts/fa-solid-900.woff2") format("woff2");
 }
 
 /*

@@ -25,7 +25,7 @@ function kio_store_register_carousel(): void {
 		'kio-store-carousel',
 		KIO_STORE_URL . 'assets/js/carousel.js',
 		array(),
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/carousel.js' ),
 		array(
 			'in_footer' => true,
 			'strategy'  => 'defer',

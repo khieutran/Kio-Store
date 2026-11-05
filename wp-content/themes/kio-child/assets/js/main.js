@@ -251,7 +251,22 @@
 		} );
 	}
 
+	/**
+	 * Đánh dấu khách có dữ liệu riêng để bỏ qua page cache.
+	 *
+	 * Plugin yêu thích đặt cookie woosw_key cho mọi khách nên không dùng nó để phân biệt được. Trạng
+	 * thái tim in sẵn trong HTML: khách đã thả tim phải xem trang thật, không phải bản cache chung.
+	 */
+	function setupPersonalCookie() {
+		document.addEventListener( 'click', function ( event ) {
+			if ( event.target.closest( '.woosw-btn' ) ) {
+				document.cookie = 'kio_personal=1; path=/; max-age=2592000; SameSite=Lax';
+			}
+		}, true );
+	}
+
 	document.addEventListener( 'DOMContentLoaded', function () {
+		setupPersonalCookie();
 		setupStickyHeader();
 		setupCartFeedback();
 		setupCardMedia();

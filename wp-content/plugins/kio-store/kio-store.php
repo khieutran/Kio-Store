@@ -19,9 +19,21 @@
 // Chặn truy cập trực tiếp file qua URL (chỉ cho chạy khi WordPress nạp plugin).
 defined( 'ABSPATH' ) || exit;
 
-define( 'KIO_STORE_VERSION', '0.1.0' );
 define( 'KIO_STORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KIO_STORE_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Version của file CSS/JS theo thời gian sửa file.
+ *
+ * Trình duyệt giữ CSS/JS tới 1 năm (docker/apache/kio-performance.conf), nên URL phải đổi mỗi khi
+ * file đổi. Số phiên bản cố định sẽ khiến khách chạy mãi bản cũ sau khi sửa code.
+ *
+ * @param string $path Đường dẫn file, tính từ thư mục plugin.
+ * @return string
+ */
+function kio_store_asset_version( string $path ): string {
+	return (string) filemtime( KIO_STORE_DIR . $path );
+}
 
 // Mỗi tính năng một file trong includes/.
 require_once KIO_STORE_DIR . 'includes/local-mail.php';
@@ -38,3 +50,5 @@ require_once KIO_STORE_DIR . 'includes/checkout-vn.php';
 require_once KIO_STORE_DIR . 'includes/coupon-max-discount.php';
 require_once KIO_STORE_DIR . 'includes/video-reels.php';
 require_once KIO_STORE_DIR . 'includes/ajax-add-to-cart.php';
+require_once KIO_STORE_DIR . 'includes/performance.php';
+require_once KIO_STORE_DIR . 'includes/page-cache.php';

@@ -53,6 +53,26 @@ function kio_store_spec_labels(): array {
 }
 
 /**
+ * Giá trị một thuộc tính toàn cục của sản phẩm.
+ *
+ * Không dùng $product->get_attribute(): hàm đó qua wc_get_product_terms() chạy một query riêng cho
+ * từng thuộc tính của từng thẻ (đo được 30 query ở trang danh mục, 49 ở trang chủ). get_the_terms()
+ * đọc cache term mà vòng lặp đã nạp gộp cho cả danh sách, nên không tốn thêm query.
+ *
+ * @param WC_Product $product Sản phẩm.
+ * @param string     $key     Tên thuộc tính, không có tiền tố pa_.
+ * @return string Các giá trị nối bằng dấu phẩy; rỗng nếu không có.
+ */
+function kio_store_product_attribute_text( WC_Product $product, string $key ): string {
+	$terms = get_the_terms( $product->get_id(), 'pa_' . $key );
+	if ( ! is_array( $terms ) ) {
+		return '';
+	}
+
+	return trim( implode( ', ', wp_list_pluck( $terms, 'name' ) ) );
+}
+
+/**
  * Danh sách thông số (nhãn → giá trị) của một sản phẩm theo danh mục của nó.
  *
  * @param WC_Product $product Sản phẩm cần lấy thông số.
@@ -77,7 +97,7 @@ function kio_store_product_specs( WC_Product $product ): array {
 
 	$specs = array();
 	foreach ( $keys as $key ) {
-		$value = trim( $product->get_attribute( $key ) );
+		$value = kio_store_product_attribute_text( $product, $key );
 		if ( '' !== $value ) {
 			$specs[] = array( $labels[ $key ] ?? ucfirst( $key ), $value );
 		}

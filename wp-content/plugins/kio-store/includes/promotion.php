@@ -379,7 +379,7 @@ function kio_store_promotions_enqueue_script(): void {
 		'kio-store-promotions',
 		KIO_STORE_URL . 'assets/js/promotions.js',
 		array(),
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/promotions.js' ),
 		true
 	);
 }

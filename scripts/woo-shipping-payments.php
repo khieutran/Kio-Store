@@ -109,3 +109,6 @@ update_option( 'woocommerce_bacs_accounts', [ [
 ] ] );
 
 kio_gateway( 'cheque', [ 'enabled' => 'no' ] );
+
+// Đoạn trên sửa thẳng bảng của Woo: xoá object cache để không còn giá trị cũ (khi đã bật Redis).
+wp_cache_flush();

@@ -255,12 +255,12 @@ function kio_store_video_reels_html( array $videos, string $title ): string {
 		return '';
 	}
 
-	wp_enqueue_style( 'kio-store-video-reels', KIO_STORE_URL . 'assets/css/video-reels.css', array(), KIO_STORE_VERSION );
+	wp_enqueue_style( 'kio-store-video-reels', KIO_STORE_URL . 'assets/css/video-reels.css', array(), kio_store_asset_version( 'assets/css/video-reels.css' ) );
 	wp_enqueue_script(
 		'kio-store-video-reels',
 		KIO_STORE_URL . 'assets/js/video-reels.js',
 		array( 'kio-store-carousel' ),
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/video-reels.js' ),
 		array(
 			'in_footer' => true,
 			'strategy'  => 'defer',

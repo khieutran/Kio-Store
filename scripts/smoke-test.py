@@ -51,7 +51,10 @@ def get(url):
         def redirect_request(self, *args, **kwargs):
             return None
     try:
-        with urllib.request.build_opener(NoRedirect).open(url, timeout=30) as r:
+        # Accept rõ ràng: Cache Enabler chỉ bỏ qua cache khi Accept không có text/html. Smoke test cần
+        # đọc dữ liệu mới nhất; riêng check_page_cache() gửi text/html như trình duyệt.
+        request = urllib.request.Request(url, headers={"Accept": "*/*"})
+        with urllib.request.build_opener(NoRedirect).open(request, timeout=30) as r:
             return r.status, r.read().decode()
     except urllib.error.HTTPError as e:
         return e.code, e.read().decode(errors="replace")
@@ -809,6 +812,94 @@ def check_cart_checkout_ui():
     check("CSS giỏ hàng không nạp ở trang chủ", "css/checkout.css" not in home)
 
 
+def check_browser_cache():
+    """Phase 5: cache trình duyệt cho file tĩnh, HTML không bị giữ, URL đổi theo file."""
+    def cache_control(path):
+        request = urllib.request.Request(SITE + path, method="HEAD")
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return response.headers.get("Cache-Control", "")
+
+    _, home = get(SITE + "/")
+    plugin_js = re.search(r'src="' + re.escape(SITE) + r'(/wp-content/plugins/kio-store/[^"]+\.js\?ver=([^"&]+))', home)
+    theme_css = re.search(r"href='" + re.escape(SITE) + r"(/wp-content/themes/kio-child/assets/css/main\.css[^']*)'", home)
+    image = re.search(re.escape(SITE) + r'(/wp-content/uploads/[^"\s]+\.(?:png|webp))', home)
+
+    check("Cache: CSS giữ 1 năm", bool(theme_css) and "max-age=31536000" in cache_control(html.unescape(theme_css.group(1))))
+    check("Cache: JS plugin giữ 1 năm", bool(plugin_js) and "max-age=31536000" in cache_control(html.unescape(plugin_js.group(1))))
+    check("Cache: font giữ 1 năm", "max-age=31536000" in cache_control("/wp-content/themes/kio-child/assets/fonts/BeVietnamPro-Bold.woff2"))
+    check("Cache: ảnh giữ 30 ngày", bool(image) and "max-age=2592000" in cache_control(image.group(1)))
+    check("Cache: version file kio-store đổi theo file", bool(plugin_js) and plugin_js.group(2).isdigit() and int(plugin_js.group(2)) > 1000000000,
+          plugin_js.group(2) if plugin_js else "")
+    for path in ("/", "/gio-hang/", "/san-pham/samsung-galaxy-s26/"):
+        check("Cache: HTML không giữ dài " + path, "max-age=31536000" not in cache_control(path) and "max-age=2592000" not in cache_control(path))
+
+
+def check_page_cache():
+    """Phase 5: page cache chỉ phục vụ khách chưa có dữ liệu riêng, xoá đúng lúc dữ liệu đổi."""
+    import http.cookiejar
+
+    def visit(path, cookie="", opener=None):
+        headers = {"Accept": "text/html"}  # Cache Enabler chỉ phục vụ request như trình duyệt
+        if cookie:
+            headers["Cookie"] = cookie
+        request = urllib.request.Request(SITE + path, headers=headers)
+        with (opener.open(request, timeout=30) if opener else urllib.request.urlopen(request, timeout=30)) as response:
+            return response.headers.get("X-Cache-Handler", ""), response.read().decode()
+
+    def cached(path, cookie=""):
+        visit(path, cookie)
+        return "cache-enabler" in visit(path, cookie)[0]
+
+    product = "/san-pham/samsung-galaxy-s26/"
+    for path in ("/", "/danh-muc-san-pham/dien-thoai/", product):
+        check("Cache trang: khách mới được cache " + path, cached(path))
+
+    for path in ("/gio-hang/", "/tai-khoan/", "/lien-he/", "/danh-muc-san-pham/dien-thoai/?orderby=price",
+                 "/danh-muc-san-pham/dien-thoai/?filtering=1&filter_product_brand=23", "/?wc-ajax=kio_product_row&category=dien-thoai"):
+        check("Cache trang: không cache " + path, not cached(path))
+
+    check("Cache trang: có giỏ hàng thì bỏ qua", not cached("/", "woocommerce_items_in_cart=1"))
+    check("Cache trang: đã thả tim thì bỏ qua", not cached("/", "kio_personal=1"))
+    check("Cache trang: có so sánh thì bỏ qua", not cached("/", "YITH_WooCompare_Products_List=1"))
+    check("Cache trang: cookie woosw_key của mọi khách không bỏ qua cache", cached("/", "woosw_key=ABC"))
+
+    buyer = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    simple = json.loads(get(SITE + "/wp-json/wc/store/v1/products?type=simple&stock_status=instock&per_page=1")[1])[0]["id"]
+    buyer.open(f"{SITE}/?add-to-cart={simple}", timeout=30).read()
+    _, mine = visit("/", opener=buyer)
+    _, other = visit("/")
+    check("Cache trang: khách A thấy giỏ của mình", 'data-count="1"' in mine)
+    check("Cache trang: khách B không thấy giỏ của A", 'data-count="0"' in other and 'data-count="1"' not in other)
+
+    def changed(code):
+        visit(product)
+        visit(product)
+        wp_eval(code)
+        return "cache-enabler" not in visit(product)[0]
+
+    variation = "wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN'))"
+    check("Cache trang: lưu biến thể thì xoá cache", changed(f"$v = {variation}; $v->save();"))
+    check("Cache trang: đổi tồn kho thì xoá cache", changed(f"$v = {variation}; $n = $v->get_stock_quantity(); wc_update_product_stock($v, $n + 1); wc_update_product_stock({variation}, $n);"))
+
+    scheduled = wp_eval("$d = kio_store_flash_sale_data(); echo wp_next_scheduled('kio_store_flash_sale_ended', [(int) $d['ends_at']]) ? 'co' : 'khong';")
+    check("Cache trang: hẹn xoá cache lúc Flash Sale kết thúc", scheduled.endswith("co"), scheduled[-20:])
+
+
+def check_object_cache():
+    """Phase 5: Redis nối được, query trang không cache giảm mạnh."""
+    status = subprocess.run(["docker", "compose", "run", "--rm", "-T", "wpcli", "redis", "status"], capture_output=True, text=True).stdout
+    check("Redis: đã kết nối", "Status: Connected" in status, status[:120])
+    check("Redis: drop-in hợp lệ", "Drop-in: Valid" in status)
+
+    get(SITE + "/danh-muc-san-pham/dien-thoai/")
+    _, page = get(SITE + "/danh-muc-san-pham/dien-thoai/")
+    match = re.search(r"kio-metrics queries=(\d+)", page)
+    check("Redis: trang danh mục còn dưới 20 query", bool(match) and int(match.group(1)) < 20, match.group(1) if match else "")
+
+    value = wp_eval("wp_cache_set('kio_smoke', 'ok', 'kio', 60); echo wp_cache_get('kio_smoke', 'kio');")
+    check("Redis: đọc ghi được", value.endswith("ok"), value[-20:])
+
+
 def check_php_log():
     log = subprocess.run(
         ["docker", "compose", "exec", "-T", "wordpress", "sh", "-c", "cat wp-content/debug.log 2>/dev/null || true"],
@@ -844,7 +935,10 @@ def main():
     section("20. Nút mua không tải lại trang (Phase 4.5)", check_ajax_add_to_cart)
     section("21. Trang danh mục (Phase 4.5)", check_archive)
     section("22. Giỏ hàng + thanh toán (Phase 4.5)", check_cart_checkout_ui)
-    section("23. Log lỗi PHP", check_php_log)
+    section("23. Cache trình duyệt (Phase 5)", check_browser_cache)
+    section("24. Page cache (Phase 5)", check_page_cache)
+    section("25. Object cache (Phase 5)", check_object_cache)
+    section("26. Log lỗi PHP", check_php_log)
 
     print()
     if failures:

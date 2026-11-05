@@ -129,6 +129,8 @@ kio_merge_option(
 		'empty_notice'    => 'Danh sách yêu thích đang trống.',
 	]
 );
+// Danh sách yêu thích ngắn, thanh cuộn của trình duyệt là đủ: bớt thư viện perfect-scrollbar ở mọi trang.
+kio_merge_option( 'woosw_settings', [ 'perfect_scrollbar' => 'no' ] );
 $wishlist_settings = get_option( 'woosw_settings', array() );
 kio_rename_page( (int) ( $wishlist_settings['page_id'] ?? get_page_by_path( 'wishlist' )->ID ?? 0 ), 'Sản phẩm yêu thích', 'yeu-thich' );
 
@@ -250,5 +252,36 @@ wpFluent()->table( 'fluentform_forms' )->where( 'title', 'Subscription Form' )->
 update_option( 'kio_contact_form_id', (int) $form->id );
 WP_CLI::log( "    Fluent Forms: form #{$form->id} \"Liên hệ Kio Mobile\" + email thông báo; đã xoá form mẫu không dùng" );
 
+// --- 7. Page cache: Cache Enabler (Phase 5) ---------------------------------------------
+// Chỉ cache cho khách chưa có dữ liệu riêng. Số giỏ hàng, tim, so sánh in sẵn trong HTML, nên khách
+// có các cookie dưới đây đi thẳng vào PHP. kio_personal do main.js đặt khi thả tim, vì woosw_key của
+// plugin yêu thích có ở mọi khách. Trang có query string (lọc, sắp xếp) mặc định không cache.
+// Hết hạn 6 giờ: ngắn hơn nonce (12–24 giờ), form trong trang cache không bị hết hạn.
+update_option(
+	'cache_enabler',
+	array_merge(
+		(array) get_option( 'cache_enabler', [] ),
+		[
+			'cache_expires'                      => 1,
+			'cache_expiry_time'                  => 6,
+			'clear_site_cache_on_saved_post'     => 1,
+			'clear_site_cache_on_saved_comment'  => 1,
+			'clear_site_cache_on_saved_term'     => 1,
+			'clear_site_cache_on_changed_plugin' => 1,
+			'compress_cache'                     => 1,
+			'excluded_page_paths'                => '/^\/(gio-hang|thanh-toan|tai-khoan|tra-cuu-don-hang|lien-he|so-sanh|yeu-thich)(\/|$)/',
+			'excluded_cookies'                   => '/^(wp-postpass|wordpress_logged_in|comment_author|woocommerce_items_in_cart|wp_woocommerce_session|YITH_WooCompare_Products_List|kio_personal)/',
+		]
+	)
+);
+Cache_Enabler::update_backend();
+WP_CLI::log( '    Cache Enabler: cache 6 giờ cho khách chưa có dữ liệu riêng' );
+
+// --- 8. Object cache: Redis (Phase 5) ---------------------------------------------------
+// Tạo drop-in wp-content/object-cache.php. Từ đây dữ liệu nằm cả ở Redis: script nào sửa thẳng DB
+// phải gọi wp_cache_flush(), nếu không site vẫn đọc giá trị cũ.
+WP_CLI::runcommand( 'redis enable', [ 'return' => true, 'exit_error' => false ] );
+WP_CLI::log( '    Redis Object Cache: đã bật drop-in' );
+
 flush_rewrite_rules();   // slug trang đổi, sitemap của Rank Math
-WP_CLI::success( 'Đã cấu hình 6 chức năng Phase 3.' );
+WP_CLI::success( 'Đã cấu hình 8 chức năng Phase 3 và Phase 5.' );

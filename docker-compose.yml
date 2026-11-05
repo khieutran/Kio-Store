@@ -24,6 +24,15 @@ x-wp-env: &wp_env
     // Không tự cập nhật core/plugin/bản dịch: mọi phiên bản đã cố định trong repo, nâng cấp bằng
     // cách đổi số phiên bản rồi chạy CI. (WP-Cron chạy được thì WordPress sẽ tự cập nhật nếu để mặc định.)
     define('AUTOMATIC_UPDATER_DISABLED', true);
+    // Việc nền do service "cron" chạy mỗi phút, không chạy kèm request của khách.
+    define('DISABLE_WP_CRON', true);
+    // Page cache (Cache Enabler) nạp advanced-cache.php trước khi WordPress khởi động.
+    define('WP_CACHE', true);
+    // Object cache (Redis). Redis tắt thì site vẫn chạy, chỉ chậm đi.
+    define('WP_REDIS_HOST', 'redis');
+    define('WP_REDIS_PREFIX', 'kio');
+    define('WP_REDIS_GRACEFUL', true);
+    define('WP_REDIS_CLIENT', 'predis'); // phpredis không nhanh hơn rõ rệt, không đáng tự build image
     // Plugin kio-store đọc 2 hằng số này để gửi mọi email vào Mailpit
     define('KIO_SMTP_HOST', 'mailpit');
     define('KIO_SMTP_PORT', 1025);
@@ -59,6 +68,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     ports:
       - "8080:80"
     environment: *wp_env
@@ -70,6 +81,21 @@ services:
       - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
       # Apache nghe thêm cổng 8080 để WordPress tự gọi lại chính nó được (WP-Cron, Action Scheduler)
       - ./docker/apache/kio-loopback.conf:/etc/apache2/conf-enabled/kio-loopback.conf:ro
+      # Cache trình duyệt cho CSS/JS/ảnh/font
+      - ./docker/apache/kio-performance.conf:/etc/apache2/conf-enabled/kio-performance.conf:ro
+
+  # ---------------------------------------------------------------
+  # Redis: object cache. Giữ kết quả query và option trong RAM giữa các request, giúp những trang
+  # page cache không giúp được (giỏ hàng, thanh toán, admin). Dữ liệu chỉ là cache nên không lưu xuống đĩa.
+  # ---------------------------------------------------------------
+  redis:
+    image: redis:7.4.5-alpine
+    command: ["redis-server", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   # ---------------------------------------------------------------
   # Mailpit: hộp thư giả. Bắt mọi email WordPress gửi đi (SMTP cổng 1025
@@ -121,6 +147,25 @@ services:
       - ./scripts:/scripts:ro
       - ./data:/data:ro
     entrypoint: ["wp"]
+
+  # ---------------------------------------------------------------
+  # Cron hệ thống: chạy việc nền của WordPress mỗi phút (giá sale hẹn giờ, Action Scheduler…),
+  # giống crontab trên server thật. WP-Cron mặc định chỉ chạy khi có khách vào trang.
+  # ---------------------------------------------------------------
+  cron:
+    image: wordpress:cli-2.12.0-php8.3
+    user: "33:33"
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *wp_env
+    volumes:
+      - wp_data:/var/www/html
+      - ./wp-content/themes/kio-child:/var/www/html/wp-content/themes/kio-child
+      - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
+    # "|| true": lúc đang cài, WordPress chưa sẵn sàng thì bỏ qua lượt đó.
+    entrypoint: ["sh", "-c", "while true; do wp cron event run --due-now --quiet 2>/dev/null || true; sleep 60; done"]
 
 volumes:
   db_data:

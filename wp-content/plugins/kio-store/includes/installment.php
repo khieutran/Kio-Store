@@ -312,7 +312,7 @@ function kio_store_installment_enqueue_script(): void {
 		'kio-store-installment',
 		KIO_STORE_URL . 'assets/js/installment.js',
 		array( 'jquery' ),
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/installment.js' ),
 		true
 	);
 }

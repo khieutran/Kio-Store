@@ -18,7 +18,7 @@
 require_once __DIR__ . '/product-image.php';
 
 // Đổi khi sửa cách vẽ banner để buộc tạo lại ảnh (tách khỏi version của ảnh sản phẩm).
-const KIO_BANNER_VERSION = 'v1';
+const KIO_BANNER_VERSION = 'v2';
 
 /**
  * Vẽ banner và upload, trả về attachment ID. Chạy lặp lại được (key = thông số vẽ).
@@ -56,13 +56,13 @@ function kio_banner_image( array $spec ): int {
 		return (int) $existing[0];
 	}
 
-	$file = kio_render_banner( $spec, sys_get_temp_dir() . "/kio-$key.png" );
+	$file = kio_render_banner( $spec, sys_get_temp_dir() . "/kio-$key.webp" );
 
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
-	$name = sanitize_title( $spec['title'] ? $spec['title'] : 'banner' ) . '.png';
+	$name = sanitize_title( $spec['title'] ? $spec['title'] : 'banner' ) . '.webp';
 	$id   = media_handle_sideload(
 		[ 'name' => $name, 'tmp_name' => $file ],
 		0,
@@ -119,7 +119,7 @@ function kio_render_banner( array $spec, string $path ): string {
 	// Nhãn demo, góc dưới trái (chừa góc dưới phải cho nút điều hướng slider).
 	imagettftext( $im, 16 * $scale, 0, (int) ( 60 * $scale ), (int) ( $h - 30 * $scale ), kio_color( $im, '#a9c1ea' ), KIO_FONT_REGULAR, 'KIO MOBILE · ẢNH DEMO' );
 
-	imagepng( $im, $path, 9 );
+	imagewebp( $im, $path, 85 ); // banner là ảnh LCP của trang chủ: WebP nhẹ hơn PNG nhiều.
 	imagedestroy( $im );
 	return $path;
 }
