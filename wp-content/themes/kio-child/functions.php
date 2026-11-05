@@ -58,6 +58,17 @@ function kio_child_enqueue_assets() {
 	// Storefront tự nạp child style.css với version theo version theme; ta nạp lại
 	// với version = thời gian sửa file để khi sửa CSS không phải hard-refresh.
 	wp_dequeue_style( 'storefront-child-style' );
+
+	// Storefront tải Source Sans Pro từ Google ở mọi trang. Site tự host Be Vietnam Pro nên font này
+	// không dùng tới, mà còn thêm một request ra ngoài chặn hiển thị.
+	wp_dequeue_style( 'storefront-fonts' );
+	// CSS cho block của Storefront: các trang của site không dùng (41 KB chặn hiển thị).
+	wp_dequeue_style( 'storefront-gutenberg-blocks' );
+	// Bộ class Font Awesome đầy đủ (78 KB). Storefront chỉ dùng font qua CSS, không dùng class .fa nên
+	// giữ @font-face trong style.css là đủ. CSS Woo của Storefront khai báo phụ thuộc vào handle này
+	// nên dequeue không gỡ được: đăng ký lại thành handle rỗng.
+	wp_deregister_style( 'storefront-icons' );
+	wp_register_style( 'storefront-icons', false, array(), '1' );
 	wp_enqueue_style(
 		'kio-child-style',
 		get_stylesheet_uri(),
@@ -79,7 +90,10 @@ function kio_child_enqueue_assets() {
 		KIO_CHILD_URI . '/assets/js/main.js',
 		array(),
 		(string) filemtime( $main_js ),
-		true
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
 	);
 
 	wp_enqueue_script(
@@ -191,6 +205,20 @@ function kio_child_enqueue_assets() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'kio_child_enqueue_assets', 40 );
+
+/**
+ * Báo trình duyệt tải font ngay, không đợi đọc xong CSS mới phát hiện cần font.
+ * Tải muộn thì chữ đổi font khi trang đã hiện, xuống dòng khác đi và làm layout giật.
+ */
+function kio_child_preload_fonts() {
+	foreach ( array( 'Regular', 'Bold' ) as $weight ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( KIO_CHILD_URI . '/assets/fonts/BeVietnamPro-' . $weight . '.woff2' )
+		);
+	}
+}
+add_action( 'wp_head', 'kio_child_preload_fonts', 1 );
 
 /**
  * Header: gỡ toàn bộ thành phần mặc định của Storefront, thay bằng header tự dựng.
@@ -547,6 +575,11 @@ function kio_child_logo_svg() {
  * @return string SVG đã lọc qua wp_kses; chuỗi rỗng nếu không có file.
  */
 function kio_child_icon( string $name ): string {
+	static $cache = array(); // cùng một icon được in nhiều lần trong một trang: đọc file một lần.
+	if ( isset( $cache[ $name ] ) ) {
+		return $cache[ $name ];
+	}
+
 	$file = KIO_CHILD_DIR . '/assets/icons/' . $name . '.svg';
 	if ( ! is_file( $file ) ) {
 		return '';
@@ -613,6 +646,7 @@ function kio_child_icon( string $name ): string {
 		),
 	);
 
-	$svg = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- đọc file SVG tự vẽ, cần nội dung thô.
-	return wp_kses( $svg, $allowed );
+	$svg            = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- đọc file SVG tự vẽ, cần nội dung thô.
+	$cache[ $name ] = wp_kses( $svg, $allowed );
+	return $cache[ $name ];
 }

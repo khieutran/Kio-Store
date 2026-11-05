@@ -103,6 +103,7 @@ function kio_store_flash_sale_data(): array {
 		$ttl = max( 1, min( $ttl, $data['ends_at'] - time() ) );
 	}
 	set_transient( 'kio_flash_sale', $data, $ttl );
+	kio_store_schedule_flash_sale_cache_clear( (int) $data['ends_at'] );
 
 	return $data;
 }
@@ -190,8 +191,11 @@ function kio_store_flash_sale_render( array $atts ): string {
 		'kio-store-flash-sale',
 		KIO_STORE_URL . 'assets/js/flash-sale.js',
 		array(),
-		KIO_STORE_VERSION,
-		true
+		kio_store_asset_version( 'assets/js/flash-sale.js' ),
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
 	);
 	wp_enqueue_script( 'kio-store-carousel' );
 

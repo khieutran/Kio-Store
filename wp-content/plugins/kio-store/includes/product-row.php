@@ -201,7 +201,7 @@ function kio_store_product_row_shortcode( $atts ): string {
 			'kio-store-product-row',
 			KIO_STORE_URL . 'assets/js/product-row.js',
 			array(),
-			KIO_STORE_VERSION,
+			kio_store_asset_version( 'assets/js/product-row.js' ),
 			array(
 				'in_footer' => true,
 				'strategy'  => 'defer',

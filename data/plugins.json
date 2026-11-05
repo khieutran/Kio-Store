@@ -29,5 +29,15 @@
     "slug": "fluentform",
     "version": "6.2.17",
     "why": "Form liên hệ. Không nạp CSS/JS ở trang không có form, lưu lần gửi vào DB. Phương án loại: Contact Form 7 (nạp JS/CSS mọi trang), WPForms (+32ms, quảng cáo Pro)."
+  },
+  {
+    "slug": "cache-enabler",
+    "version": "1.8.17",
+    "why": "Page cache. Nhẹ (252 KB), cấu hình bằng option nên dựng lại được bằng script, có loại trừ theo cookie."
+  },
+  {
+    "slug": "redis-cache",
+    "version": "3.0.0",
+    "why": "Object cache qua Redis: query giảm ~97%, chịu tải tốt hơn ~13%. Dùng client Predis có sẵn trong plugin."
   }
 ]

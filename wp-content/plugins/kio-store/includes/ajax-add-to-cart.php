@@ -31,7 +31,7 @@ function kio_store_ajax_add_to_cart_assets(): void {
 		'kio-store-ajax-add-to-cart',
 		KIO_STORE_URL . 'assets/js/ajax-add-to-cart.js',
 		array( 'jquery' ),
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/ajax-add-to-cart.js' ),
 		array(
 			'in_footer' => true,
 			'strategy'  => 'defer',

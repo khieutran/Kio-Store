@@ -40,12 +40,12 @@ function kio_store_sticky_buy_bar_assets(): void {
 		return;
 	}
 
-	wp_enqueue_style( 'kio-store-sticky-buy-bar', KIO_STORE_URL . 'assets/css/sticky-buy-bar.css', array(), KIO_STORE_VERSION );
+	wp_enqueue_style( 'kio-store-sticky-buy-bar', KIO_STORE_URL . 'assets/css/sticky-buy-bar.css', array(), kio_store_asset_version( 'assets/css/sticky-buy-bar.css' ) );
 	wp_enqueue_script(
 		'kio-store-sticky-buy-bar',
 		KIO_STORE_URL . 'assets/js/sticky-buy-bar.js',
 		array( 'jquery' ), // nghe sự kiện found_variation / reset_data của Woo (jQuery).
-		KIO_STORE_VERSION,
+		kio_store_asset_version( 'assets/js/sticky-buy-bar.js' ),
 		array(
 			'in_footer' => true,
 			'strategy'  => 'defer',
