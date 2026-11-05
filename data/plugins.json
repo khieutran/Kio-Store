@@ -39,5 +39,20 @@
     "slug": "redis-cache",
     "version": "3.0.0",
     "why": "Object cache qua Redis: query giảm ~97%, chịu tải tốt hơn ~13%. Dùng client Predis có sẵn trong plugin."
+  },
+  {
+    "slug": "limit-login-attempts-reloaded",
+    "version": "3.4.0",
+    "why": "Khoá tạm khi đăng nhập sai nhiều lần, chặn cả form tài khoản của Woo. Phương án loại: tự viết (tự chịu trách nhiệm code bảo mật), Wordfence (nặng, thừa tính năng)."
+  },
+  {
+    "slug": "two-factor",
+    "version": "0.17.0",
+    "why": "2FA bằng app tạo mã và mã dự phòng. Nhẹ, không gọi dịch vụ ngoài, không tính năng trả phí. Phương án loại: WP 2FA (nhiều tính năng site này không cần)."
+  },
+  {
+    "slug": "wpvulnerability",
+    "version": "5.1.6",
+    "why": "So phiên bản core, plugin, theme với kho lỗ hổng đã biết. Nhẹ, không chặn tấn công, không quét mã độc. Phương án loại: Wordfence (đánh giá ở docs/phase6/security.md)."
   }
 ]

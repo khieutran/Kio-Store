@@ -21,6 +21,8 @@ x-wp-env: &wp_env
     define('WP_DEBUG_LOG', true);
     define('WP_DEBUG_DISPLAY', false);
     define('WP_ENVIRONMENT_TYPE', 'local');
+    // Mất tài khoản admin cũng không sửa được PHP trong wp-admin. Chưa đặt DISALLOW_FILE_MODS: script cài plugin cần.
+    define('DISALLOW_FILE_EDIT', true);
     // Không tự cập nhật core/plugin/bản dịch: mọi phiên bản đã cố định trong repo, nâng cấp bằng
     // cách đổi số phiên bản rồi chạy CI. (WP-Cron chạy được thì WordPress sẽ tự cập nhật nếu để mặc định.)
     define('AUTOMATIC_UPDATER_DISABLED', true);
@@ -71,7 +73,8 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - "8080:80"
+      # 127.0.0.1: chỉ máy này vào được, máy khác cùng Wi-Fi thì không.
+      - "127.0.0.1:8080:80"
     environment: *wp_env
     volumes:
       # Toàn bộ file WordPress nằm trong volume Docker (không lẫn vào repo)
@@ -83,6 +86,10 @@ services:
       - ./docker/apache/kio-loopback.conf:/etc/apache2/conf-enabled/kio-loopback.conf:ro
       # Cache trình duyệt cho CSS/JS/ảnh/font
       - ./docker/apache/kio-performance.conf:/etc/apache2/conf-enabled/kio-performance.conf:ro
+      # Chặn file nhạy cảm, PHP trong uploads, thêm header bảo mật. Tên zz-: xem đầu file.
+      - ./docker/apache/kio-security.conf:/etc/apache2/conf-enabled/zz-kio-security.conf:ro
+      # Không tin X-Forwarded-For do khách tự gửi
+      - ./docker/apache/remoteip.conf:/etc/apache2/conf-available/remoteip.conf:ro
 
   # ---------------------------------------------------------------
   # Redis: object cache. Giữ kết quả query và option trong RAM giữa các request, giúp những trang
@@ -106,7 +113,7 @@ services:
     image: axllent/mailpit:v1.33.0
     restart: unless-stopped
     ports:
-      - "8025:8025"
+      - "127.0.0.1:8025:8025"
 
   # ---------------------------------------------------------------
   # phpMyAdmin: xem database bằng giao diện web
@@ -118,7 +125,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
     environment:
       PMA_HOST: db
       PMA_USER: ${DB_USER}
@@ -166,6 +173,36 @@ services:
       - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
     # "|| true": lúc đang cài, WordPress chưa sẵn sàng thì bỏ qua lượt đó.
     entrypoint: ["sh", "-c", "while true; do wp cron event run --due-now --quiet 2>/dev/null || true; sleep 60; done"]
+
+  # ---------------------------------------------------------------
+  # Sao lưu tự động vào ./backups. Cùng image với db: mysqldump đúng phiên bản.
+  # Không hẹn giờ cố định: máy dev hay ngủ sẽ lỡ lượt. Mỗi giờ kiểm tra, bản gần nhất quá 24 giờ thì chạy.
+  # Sao lưu hỏng thì container "unhealthy" (xem bằng docker compose ps).
+  # ---------------------------------------------------------------
+  backup:
+    image: mysql:8.4.13
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      MYSQL_PWD: ${DB_PASSWORD}
+      BACKUP_KEEP: 7
+      BACKUP_EVERY_HOURS: 24
+    volumes:
+      - wp_data:/wp:ro
+      - ./backups:/backups
+      # Mount cả thư mục: mount từng file thì editor lưu file mới, container vẫn thấy file cũ.
+      - ./scripts:/scripts:ro
+    entrypoint: ["bash", "-c", "while true; do sleep 3600; bash /scripts/backup.sh --if-due || true; done"]
+    healthcheck:
+      test: ["CMD", "bash", "/scripts/backup.sh", "--health"]
+      interval: 15s
+      timeout: 5s
+      retries: 1
 
 volumes:
   db_data:

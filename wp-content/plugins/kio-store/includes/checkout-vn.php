@@ -24,6 +24,7 @@ add_filter( 'woocommerce_states', 'kio_store_vn_states' );
 add_filter( 'woocommerce_get_country_locale', 'kio_store_vn_locale' );
 add_filter( 'woocommerce_default_address_fields', 'kio_store_single_name_field' );
 add_action( 'woocommerce_after_checkout_validation', 'kio_store_validate_vn_phone', 10, 2 );
+add_action( 'woocommerce_store_api_checkout_update_order_from_request', 'kio_store_validate_vn_phone_store_api' );
 
 /**
  * Danh sách tỉnh/thành: mã → tên (đọc từ file dữ liệu đi kèm plugin, cache trong request).
@@ -154,4 +155,27 @@ function kio_store_validate_vn_phone( array $data, WP_Error $errors ): void {
 			array( 'id' => 'billing_phone' )
 		);
 	}
+}
+
+/**
+ * ACTION woocommerce_store_api_checkout_update_order_from_request: cùng quy tắc cho Store API.
+ *
+ * Trang thanh toán của site là shortcode, nhưng endpoint /wc/store/v1/checkout vẫn công khai và không
+ * đi qua woocommerce_after_checkout_validation. Kiểm tra chỉ ở một đường thì đường kia tạo được đơn sai.
+ *
+ * @param WC_Order $order Đơn hàng đang tạo.
+ * @return void
+ * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Số điện thoại sai định dạng.
+ */
+function kio_store_validate_vn_phone_store_api( WC_Order $order ): void {
+	$phone = $order->get_billing_phone();
+	if ( 'VN' !== $order->get_billing_country() || '' === $phone || kio_store_is_vn_phone( $phone ) ) {
+		return;
+	}
+
+	throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
+		'kio_invalid_phone',
+		esc_html__( 'Số điện thoại không hợp lệ. Vui lòng nhập số Việt Nam, ví dụ 0901234567.', 'kio-store' ),
+		400
+	);
 }

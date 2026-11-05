@@ -45,6 +45,8 @@ function kio_store_register_video_cpt(): void {
 			'show_in_menu'  => true,
 			'menu_icon'     => 'dashicons-video-alt3',
 			'menu_position' => 57,
+			'capabilities'  => kio_store_shop_post_type_caps(),
+			'map_meta_cap'  => true,
 			'supports'      => array( 'title', 'thumbnail', 'page-attributes' ),
 			'rewrite'       => false,
 		)
