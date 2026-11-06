@@ -67,9 +67,9 @@ function kio_store_card_image_sizes( array $attr, $attachment, $size ): array { 
 }
 
 /**
- * Bảng so sánh chỉ có ở trang So sánh: CSS và thư viện bảng không cần ở trang khác.
+ * Bỏ thư viện bảng của YITH ngoài trang So sánh. Bảng trong popup cuộn bằng CSS (main.css).
  *
- * JS chính của YITH vẫn giữ vì nút "So sánh" trên thẻ cần nó, chỉ bỏ các thư viện nó khai báo phụ thuộc.
+ * Giữ compare.css: popup và thanh chọn sản phẩm cần nó. JS chính cũng giữ vì nút "So sánh" trên thẻ cần.
  *
  * @return void
  */
@@ -78,7 +78,6 @@ function kio_store_trim_compare_assets(): void {
 		return;
 	}
 
-	wp_dequeue_style( 'yith_woocompare_page' );
 	wp_dequeue_style( 'jquery-fixedheadertable-style' );
 
 	$main = wp_scripts()->query( 'yith-woocompare-main' );

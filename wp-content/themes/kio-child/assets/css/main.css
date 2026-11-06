@@ -312,7 +312,7 @@ a:hover {
 }
 
 .kio-header__search .woocommerce-product-search button {
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 	color: #fff;
 	border: 0;
 	padding: 0 24px;
@@ -391,7 +391,7 @@ a:hover {
    ========================================================================== */
 
 .kio-nav {
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 }
 
 /* Header dính từ tablet trở lên. #masthead chỉ cao bằng phần chính; thanh danh mục treo bên dưới
@@ -447,6 +447,31 @@ a:hover {
 	background: var(--kio-card);
 	box-shadow: var(--kio-shadow-hover);
 	text-align: left;
+}
+
+/* Thanh đáy mobile: icon của Storefront nằm trong icons.css đã gỡ (functions.php), vẽ lại bằng SVG. */
+.storefront-handheld-footer-bar > ul > li > a::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	width: 24px;
+	height: 24px;
+	margin: auto;
+	background: var(--kio-brand-dark);
+	-webkit-mask: var(--kio-bar-icon) center / contain no-repeat;
+	mask: var(--kio-bar-icon) center / contain no-repeat;
+}
+
+.storefront-handheld-footer-bar > ul > li.my-account > a {
+	--kio-bar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7'/%3E%3C/svg%3E");
+}
+
+.storefront-handheld-footer-bar > ul > li.search > a {
+	--kio-bar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.5-4.5'/%3E%3C/svg%3E");
+}
+
+.storefront-handheld-footer-bar > ul > li.cart > a {
+	--kio-bar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='20' r='1.5'/%3E%3Ccircle cx='18' cy='20' r='1.5'/%3E%3Cpath d='M2 3h3l2.6 12.5h11L21 7H6'/%3E%3C/svg%3E");
 }
 
 .storefront-handheld-footer-bar .kio-suggest {
@@ -815,7 +840,7 @@ a:hover {
 }
 
 .site-footer .kio-social__link:not(.button):not(.components-button):hover {
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 	color: #fff;
 }
 
@@ -1258,7 +1283,7 @@ a:hover {
 
 .kio-strip__chip[aria-current] {
 	border-color: var(--kio-brand);
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 	color: #fff;
 }
 
@@ -1538,7 +1563,7 @@ ul.products li.product .button:not(.compare) {
 	justify-content: center;
 	min-height: 44px;
 	margin-top: 10px;
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 	color: #fff;
 	border-radius: var(--kio-radius-sm);
 	font-weight: 700;
@@ -1635,7 +1660,7 @@ ul.products li.product .added_to_cart {
 }
 
 .kio-badge--360 {
-	background: var(--kio-brand);
+	background: var(--kio-brand-dark);
 	color: #fff;
 }
 
@@ -2162,5 +2187,32 @@ ul.products li.product a.compare.button.added {
 	ul.products li.product:hover,
 	ul.products li.product:hover .kio-card-media img {
 		transform: none;
+	}
+}
+
+/* Popup so sánh trên mobile: cột nhãn hẹp, dính trái, cột sản phẩm cuộn ngang. Selector phải có ID như compare.css. */
+@media (max-width: 768px) {
+	#yith-woocompare table.compare-list {
+		width: max-content;
+		min-width: 100%;
+	}
+
+	#yith-woocompare table.compare-list tbody th:not(.filler) {
+		position: sticky;
+		left: 0;
+		z-index: 1;
+		width: 96px;
+		min-width: 96px;
+		max-width: 96px;
+		padding: 8px;
+		background: var(--kio-card);
+		white-space: normal;
+	}
+
+	#yith-woocompare table.compare-list td:not(.filler) {
+		width: 150px;
+		min-width: 150px;
+		max-width: 150px;
+		padding: 8px;
 	}
 }

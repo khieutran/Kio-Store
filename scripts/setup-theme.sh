@@ -20,6 +20,9 @@ fi
 step "Kích hoạt child theme kio-child"
 wp theme activate kio-child
 
+# Chữ của Storefront (thanh đáy mobile...). Không có thì site hiện tiếng Anh.
+wp language theme install storefront vi
+
 # --- 3. Xoá theme mặc định không dùng -------------------------------------------
 step "Xoá theme mặc định không dùng"
 for t in twentytwentyfive twentytwentyfour twentytwentythree twentytwentytwo twentytwentyone twentytwenty; do
