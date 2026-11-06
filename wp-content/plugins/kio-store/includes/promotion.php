@@ -27,7 +27,8 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'init', 'kio_store_register_promotion_cpt' );
 add_action( 'add_meta_boxes', 'kio_store_promotion_add_meta_box' );
 add_action( 'save_post_kio_promotion', 'kio_store_promotion_save', 10, 1 );
-add_action( 'woocommerce_single_product_summary', 'kio_store_render_promotions', 25 );
+// Sau nút mua (30): khách chọn phiên bản và thấy nút mua ngay, không phải cuộn qua khuyến mãi.
+add_action( 'woocommerce_single_product_summary', 'kio_store_render_promotions', 35 );
 add_action( 'wp_enqueue_scripts', 'kio_store_promotions_enqueue_script' );
 
 /**

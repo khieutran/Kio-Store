@@ -38,9 +38,8 @@ function kio_rename_page( int $page_id, string $title, string $slug ): void {
 // Thay 5 widget mặc định của WordPress (tìm kiếm, bài viết mới…) trong sidebar-1.
 
 $filter_widgets = [
-	'woocommerce_layered_nav_filters' => [ 1 => [ 'title' => 'Đang lọc theo' ] ],
 	'woocommerce_brand_nav'           => [ 1 => [ 'title' => 'Thương hiệu', 'display_type' => 'list' ] ],
-	'woocommerce_price_filter'        => [ 1 => [ 'title' => 'Khoảng giá' ] ],
+	'kio_price_bands'                 => [ 1 => [ 'title' => 'Khoảng giá' ] ],
 	'woocommerce_layered_nav'         => [
 		1 => [ 'title' => 'Dung lượng', 'attribute' => 'dung-luong', 'display_type' => 'list', 'query_type' => 'or' ],
 		2 => [ 'title' => 'RAM', 'attribute' => 'ram', 'display_type' => 'list', 'query_type' => 'or' ],

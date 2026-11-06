@@ -1,0 +1,85 @@
+/*
+ * Xem 360° trong khung ảnh sản phẩm. Chỉ nạp ở sản phẩm có mô hình.
+ */
+
+.kio-model-open {
+	position: absolute;
+	z-index: 5;
+	top: 60px;
+	right: 12px;
+	padding: 0.45rem 0.9rem;
+	border: 1px solid var(--kio-border);
+	border-radius: 999px;
+	background: var(--kio-card);
+	color: var(--kio-text);
+	font-size: var(--kio-text-sm);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.kio-model-open:hover {
+	border-color: var(--kio-brand);
+	color: var(--kio-brand);
+}
+
+.kio-model-stage {
+	position: absolute;
+	z-index: 6;
+	inset: 0;
+	border-radius: var(--kio-radius);
+	background: var(--kio-bg);
+	overflow: hidden;
+	opacity: 0;
+	transition: opacity var(--kio-dur-slow) var(--kio-ease-out);
+}
+
+.kio-model-stage.is-ready {
+	opacity: 1;
+}
+
+.kio-model-stage[hidden] {
+	display: none;
+}
+
+.kio-model-stage model-viewer {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Nút phóng to ảnh của Woo đè lên nút Đóng, và không có tác dụng với mô hình. */
+.woocommerce div.product div.images.kio-model-active .woocommerce-product-gallery__trigger {
+	display: none;
+}
+
+.kio-model-stage__close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	min-height: 40px;
+	padding: 0.35rem 0.9rem;
+	border: 1px solid var(--kio-border);
+	border-radius: 999px;
+	background: var(--kio-card);
+	color: var(--kio-text);
+	font-size: var(--kio-text-sm);
+	cursor: pointer;
+}
+
+.kio-model-stage__note {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	left: 0;
+	margin: 0;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-xs);
+	text-align: center;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kio-model-stage {
+		transition: none;
+	}
+}

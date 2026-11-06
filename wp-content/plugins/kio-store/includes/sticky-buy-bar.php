@@ -1,12 +1,12 @@
 <?php
 /**
- * F7 — Thanh mua hàng dính dưới màn hình (mobile, trang sản phẩm).
+ * F7 — Thanh mua hàng dính dưới màn hình (trang sản phẩm).
  *
  * Khi khách cuộn qua nút "Thêm vào giỏ" gốc, một thanh nhỏ hiện ở đáy màn hình: tên ngắn,
  * giá (đổi theo biến thể đang chọn), nút mua. Nút mua KHÔNG tự thêm vào giỏ mà bấm hộ nút gốc
  * của Woo → giữ nguyên mọi kiểm tra của Woo (chưa chọn biến thể, hết hàng, số lượng…).
  *
- * CSS + JS chỉ nạp trên trang sản phẩm (is_product), thanh chỉ hiện ở màn hình ≤ 768px.
+ * CSS + JS chỉ nạp trên trang sản phẩm (is_product). Mobile tràn ngang, desktop là khung nổi.
  *
  * @package KioStore
  */

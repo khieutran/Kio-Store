@@ -88,7 +88,7 @@ async page => {
 	const search = page.locator( '.kio-header__search input[type=search]' );
 	await search.fill( '' );
 	await search.pressSequentially( 'iphone', { delay: 30 } );
-	await page.waitForTimeout( 1300 );
+	await page.locator( '.kio-header__search .kio-suggest__name' ).first().waitFor( { timeout: 8000 } ).catch( () => {} );
 	const hints = await page.locator( '.kio-header__search .kio-suggest__name' ).allInnerTexts();
 	check( 'Gợi ý tìm kiếm: có kết quả, điện thoại đứng đầu', hints.length > 0 && hints[ 0 ].startsWith( 'iPhone' ), hints );
 	await page.keyboard.press( 'Escape' );
@@ -101,10 +101,10 @@ async page => {
 	await page.locator( '.kio-chip', { hasText: '512GB' } ).click();
 	await page.waitForTimeout( 500 );
 	check( 'Chip phiên bản: đổi giá', before !== await price() );
-	await page.locator( '.kio-chip', { hasText: 'Xanh dương' } ).click();
+	await page.locator( '.kio-chip', { hasText: 'Xanh Sky Blue' } ).click();
 	await page.waitForTimeout( 600 );
 	const thumb = await page.evaluate( () => document.querySelector( '.flex-control-thumbs img.flex-active' )?.src || '' );
-	check( 'Chip phiên bản: ảnh theo màu', thumb.includes( 'xanh-duong' ), thumb );
+	check( 'Chip phiên bản: ảnh theo màu', thumb.includes( 'xanh-sky-blue' ), thumb );
 	await page.click( '.single_add_to_cart_button' );
 	await page.waitForTimeout( 2000 );
 	check( 'Nút mua: không tải lại, số giỏ tăng', await same() && '1' === await cartCount() );
@@ -137,15 +137,98 @@ async page => {
 	await page.waitForURL( ( url ) => url.search.includes( 'filter_product_brand' ) );
 	await page.waitForTimeout( 500 );
 	check( 'Lọc: tại chỗ', await same() && ( await titles() ).every( ( t ) => t.includes( 'Samsung' ) ) );
-	check( 'Lọc: thanh trượt giá còn sau khi thay', 2 === await page.locator( '.price_slider .ui-slider-handle' ).count() );
+	check( 'Lọc: thanh kéo giá còn sau khi thay sidebar', 1 === await page.locator( '.kio-price-range' ).count() );
 	await page.goBack();
-	await page.waitForTimeout( 1500 );
+	await page.waitForFunction( () => 10 === document.querySelectorAll( 'ul.products li.product' ).length, null, { timeout: 8000 } ).catch( () => {} );
 	check( 'Lọc: nút Back', 10 === ( await titles() ).length, ( await titles() ).length );
 
 	await open( '/cua-hang/' );
 	await page.locator( '.kio-load-more__button' ).click();
-	await page.waitForTimeout( 1500 );
+	// Chờ theo điều kiện: ngay sau khi xoá cache trang tải chậm hơn, chờ cứng 1,5 giây thì lúc đạt lúc không.
+	await page.waitForFunction( () => document.querySelectorAll( 'ul.products li.product' ).length >= 20, null, { timeout: 8000 } ).catch( () => {} );
 	check( 'Xem thêm: nối thêm sản phẩm', 20 === ( await titles() ).length && await same(), ( await titles() ).length );
+
+	// Thanh kéo giá có mốc. Điện thoại có các mốc 5, 7, 10, 20 triệu và không giới hạn.
+	await open( '/danh-muc-san-pham/dien-thoai/' );
+	await page.locator( '.kio-price-range__input--min' ).fill( '2' );
+	await page.waitForFunction( () => location.search.includes( 'min_price=10000000' ), null, { timeout: 8000 } ).catch( () => {} );
+	await page.waitForTimeout( 800 );
+	check( 'Giá: kéo đầu trái lọc đúng mốc, giữ vị trí sau khi thay sidebar', '2' === await page.locator( '.kio-price-range__input--min' ).inputValue(), page.url() );
+	await page.locator( '.kio-price-range__input--max' ).fill( '3' );
+	await page.waitForFunction( () => location.search.includes( 'max_price=20000000' ), null, { timeout: 8000 } ).catch( () => {} );
+	await page.waitForTimeout( 800 );
+	check( 'Giá: kéo đầu phải, chip đang chọn khớp mốc', 1 === await page.locator( '.kio-filter-chip.is-active', { hasText: '10 - 20 triệu' } ).count(), page.url() );
+	await page.locator( '.kio-price-range__input--min' ).evaluate( ( e ) => {
+		e.value = '3';
+		e.dispatchEvent( new Event( 'input' ) );
+	} );
+	check( 'Giá: 2 đầu không vượt qua nhau', '2' === await page.locator( '.kio-price-range__input--min' ).inputValue() );
+
+	// Mô hình 3D: tự chuyển sang máy đang xoay, kéo được, đổi màu, dải ảnh nhỏ vẫn bấm được.
+	await open( '/san-pham/samsung-galaxy-s26/' );
+	await page.waitForFunction( () => document.querySelector( '.kio-model-stage.is-ready' ), null, { timeout: 30000 } ).catch( () => {} );
+	const spin = () => page.evaluate( () => document.querySelector( 'model-viewer' ).turntableRotation );
+	const spinBefore = await spin();
+	await page.waitForTimeout( 600 );
+	check( '3D: tự xoay khi vào trang', spinBefore !== await spin() );
+	await open( '/san-pham/iphone-17-pro-max/' );
+	await page.evaluate( () => window.scrollTo( 0, 1600 ) );
+	await page.waitForTimeout( 1800 );
+	check( '3D: khung ảnh ngoài màn hình thì chưa tải', 0 === await page.locator( 'model-viewer' ).count() );
+	await open( '/san-pham/samsung-galaxy-s26/' );
+	await page.waitForFunction( () => document.querySelector( '.kio-model-stage.is-ready' ), null, { timeout: 30000 } ).catch( () => {} );
+	const orbit = () => page.evaluate( () => document.querySelector( 'model-viewer' ).getCameraOrbit().theta );
+	const viewerBox = await page.locator( 'model-viewer' ).boundingBox();
+	const orbitBefore = await orbit();
+	await page.mouse.move( viewerBox.x + viewerBox.width / 2, viewerBox.y + viewerBox.height / 2 );
+	await page.mouse.down();
+	await page.mouse.move( viewerBox.x + viewerBox.width / 2 + 150, viewerBox.y + viewerBox.height / 2, { steps: 8 } );
+	await page.mouse.up();
+	await page.waitForTimeout( 900 );
+	check( '3D: kéo chuột xoay được, thôi tự xoay', 0.2 < Math.abs( await orbit() - orbitBefore ) && ! await page.evaluate( () => document.querySelector( 'model-viewer' ).hasAttribute( 'auto-rotate' ) ) );
+	await page.locator( '.kio-chip', { hasText: 'Xanh Sky Blue' } ).first().click();
+	await page.waitForTimeout( 500 );
+	check( '3D: đổi màu theo biến thể', await page.evaluate( () => {
+		const c = document.querySelector( 'model-viewer' ).model.getMaterialByName( 'back' ).pbrMetallicRoughness.baseColorFactor;
+		return c[ 2 ] > c[ 0 ];
+	} ) );
+	check( '3D: nút đóng không bị phần tử khác đè', await page.locator( '.kio-model-stage__close' ).evaluate( ( e ) => {
+		const box = e.getBoundingClientRect();
+		return [ box.left + 6, box.right - 6 ].every( ( x ) => document.elementFromPoint( x, box.top + box.height / 2 ) === e );
+	} ) );
+	await page.locator( '.flex-control-thumbs img' ).nth( 1 ).click();
+	await page.waitForTimeout( 400 );
+	check( '3D: bấm ảnh nhỏ thì về ảnh, còn nút xem lại', ! await page.locator( '.kio-model-stage' ).isVisible() && await page.locator( '.kio-model-open' ).isVisible() );
+	await page.locator( '.kio-model-open' ).click();
+	await page.waitForTimeout( 500 );
+	check( '3D: mở lại được', await page.locator( '.kio-model-stage' ).isVisible() );
+
+	// Thanh mua nổi trên desktop, câu hỏi thường gặp.
+	await open( '/san-pham/samsung-galaxy-s26/' );
+	check( 'Trang sản phẩm: nút mua trong màn hình đầu', await page.locator( '.single_add_to_cart_button' ).evaluate( ( e ) => e.getBoundingClientRect().bottom < innerHeight ) );
+	await page.evaluate( () => window.scrollTo( 0, 1400 ) );
+	await page.waitForTimeout( 500 );
+	check( 'Thanh mua: hiện trên desktop khi cuộn qua nút', await page.locator( '.kio-buy-bar.is-visible' ).evaluate( ( e ) => {
+		const box = e.getBoundingClientRect();
+		return box.bottom <= innerHeight && box.width < innerWidth;
+	} ) );
+	await page.locator( '.kio-faq summary' ).first().click();
+	check( 'Câu hỏi: mở được', await page.locator( '.kio-faq details' ).first().evaluate( ( e ) => e.open ) );
+
+	// Bảng thông số.
+	await open( '/san-pham/samsung-galaxy-s26/' );
+	const specMore = page.locator( '.kio-spec-table__more' );
+	await specMore.click();
+	check( 'Thông số: mở tại chỗ', await page.locator( '.kio-spec-table__full' ).isVisible() && ! await page.locator( '.kio-spec-table__summary' ).isVisible() );
+	check( 'Thông số: báo trạng thái mở', 'true' === await specMore.getAttribute( 'aria-expanded' ) );
+	await specMore.click();
+	await page.waitForTimeout( 300 );
+	check( 'Thông số: thu gọn về bảng rút gọn', await page.locator( '.kio-spec-table__summary' ).isVisible() && ! await page.locator( '.kio-spec-table__full' ).isVisible() );
+	check( 'Thông số: thu gọn quay về đầu mục', await page.locator( '.kio-spec-table' ).evaluate( ( e ) => {
+		// Không bị header dính che (cao khoảng 80px) và vẫn ở nửa trên màn hình.
+		const top = e.getBoundingClientRect().top;
+		return top >= 80 && top < innerHeight / 2;
+	} ) );
 
 	// Giỏ hàng.
 	await open( '/gio-hang/' );

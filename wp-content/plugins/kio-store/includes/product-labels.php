@@ -129,6 +129,10 @@ function kio_store_render_loop_badges(): void {
 		$badges[] = array( 'new', __( 'Mới', 'kio-store' ) );
 	}
 
+	if ( kio_store_product_model_path( $product ) ) {
+		$badges[] = array( '360', __( '360°', 'kio-store' ) );
+	}
+
 	if ( empty( $badges ) ) {
 		return;
 	}

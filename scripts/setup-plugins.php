@@ -37,10 +37,15 @@ foreach ( $plugins as $p ) {
 	}
 
 	if ( $installed !== $version ) {
-		WP_CLI::runcommand(
+		// Tự kiểm tra lỗi: 'return' giữ lại stderr nên exit_error làm script chết mà không in gì.
+		// Có plugin không giữ bản cũ trên WordPress.org: tác giả ra bản mới là bản đang ghim mất, phải nâng số.
+		$result = WP_CLI::runcommand(
 			sprintf( 'plugin install %s --version=%s --force', escapeshellarg( $slug ), escapeshellarg( $version ) ),
-			[ 'return' => true, 'exit_error' => true ]
+			[ 'return' => 'all', 'exit_error' => false ]
 		);
+		if ( 0 !== $result->return_code ) {
+			WP_CLI::error( sprintf( 'Không cài được %s %s: %s', $slug, $version, $result->stderr ) );
+		}
 		WP_CLI::log( sprintf( '    %-34s %s → %s', $slug, $installed ?? 'chưa cài', $version ) );
 	} else {
 		WP_CLI::log( sprintf( '    %-34s %s (đã đúng phiên bản)', $slug, $version ) );

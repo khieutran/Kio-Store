@@ -404,3 +404,14 @@
 		transform: none;
 	}
 }
+
+/* Ảnh vuông trong khung rộng hơn: canh giữa, không dạt về bên trái. */
+.woocommerce div.product div.images .woocommerce-product-gallery__image a {
+	display: block;
+}
+
+.woocommerce div.product div.images .woocommerce-product-gallery__image img {
+	width: auto;
+	max-width: 100%;
+	margin-inline: auto;
+}

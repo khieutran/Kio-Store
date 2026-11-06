@@ -249,12 +249,12 @@ def check_plugins():
 
     # Bộ lọc: widget có sẵn của Woo trong sidebar, lọc qua tham số URL
     check("Bộ lọc: sidebar có widget thương hiệu, khoảng giá, thuộc tính",
-          all(w in page for w in ["woocommerce_brand_nav-1", "woocommerce_price_filter-1", "woocommerce_layered_nav-1"]))
+          all(w in page for w in ["woocommerce_brand_nav-1", "kio_price_bands-1", "woocommerce_layered_nav-1"]))
     check("Bộ lọc: không còn widget mặc định của WordPress (tìm kiếm, bài viết…)",
           "wp-block-latest-posts" not in page and "wp-block-search" not in page)
     check("Bộ lọc: có nút 'Bộ lọc' cho mobile", 'class="kio-filter-toggle"' in page)
     n = len(product_titles(get(cat + "?filter_ram=8gb")[1]))
-    check("Lọc RAM 8GB trong Điện thoại → 4 sản phẩm", n == 4, f"có {n}")
+    check("Lọc RAM 8GB trong Điện thoại → 2 sản phẩm (Apple không công bố RAM)", n == 2, f"có {n}")
     m = re.search(r'filter_product_brand=(\d+)"[^>]*>Apple<', page)
     titles = product_titles(get(cat + f"?filtering=1&filter_product_brand={m.group(1)}")[1]) if m else []
     check("Lọc thương hiệu Apple → chỉ iPhone", len(titles) == 3 and all("iPhone" in t for t in titles), titles)
@@ -352,9 +352,12 @@ def check_specs():
     """Phase 4 · F3: thông số nổi bật trên thẻ sản phẩm (chip, RAM, màn hình, pin)."""
     _, phones = get(SITE + "/danh-muc-san-pham/dien-thoai/")
     s26 = product_card(phones, "Samsung Galaxy S26")
-    check("F3: điện thoại S26 hiện 3 thông số (Chip, RAM, Màn hình)",
-          all(x in s26 for x in ["Chip", "RAM", "Màn hình"]) and "Snapdragon 8 Elite Gen 5" in s26,
+    # Samsung Việt Nam không công bố tên chip nên thẻ S26 không có dòng Chip, không ghi thông số không có nguồn.
+    check("F3: điện thoại S26 hiện RAM, Màn hình và không ghi tên chip",
+          all(x in s26 for x in ["RAM", "Màn hình"]) and "Snapdragon" not in s26,
           s26[:140])
+    reno = product_card(phones, "OPPO Reno15 5G")
+    check("F3: thẻ hiện Chip khi hãng có công bố", "Chip" in reno and "Snapdragon 7 Gen 4" in reno, reno[:140])
 
     _, acc = get(SITE + "/danh-muc-san-pham/phu-kien/")
     pb = product_card(acc, "Sạc dự phòng Anker 10.000mAh 22.5W")
@@ -400,6 +403,23 @@ def check_flash_sale():
     check("F5: flash sale có 6 sản phẩm", len(titles) == 6, f"có {len(titles)}")
 
 
+def check_spec_table():
+    """Phase 6.5: bảng thông số 2 lớp, có nguồn, thay tab Thông tin bổ sung."""
+    status, page = get(SITE + "/san-pham/samsung-galaxy-s26/")
+    check("Thông số: có bảng rút gọn", 'class="kio-spec-table"' in page, f"HTTP {status}")
+    check("Thông số: có bảng đầy đủ", 'class="kio-spec-table__full"' in page)
+    check("Thông số: có link nguồn", "kio-spec-table__source" in page and "samsung.com" in page)
+    check("Thông số: bỏ tab Thông tin bổ sung", "additional_information_tab" not in page)
+    check("3D: có dữ liệu mô hình, chưa nạp thư viện lúc tải trang",
+          'class="kio-model-data"' in page and '<script' in page and 'model-viewer.min.js"' not in page.replace('data-viewer="', ''))
+    head = urllib.request.Request(SITE + "/wp-content/plugins/kio-store/assets/models/SS-S26.glb", method="HEAD")
+    with urllib.request.urlopen(head, timeout=30) as r:
+        check("3D: file mô hình tải được, đúng kiểu file",
+              r.status == 200 and r.headers.get("Content-Type") == "model/gltf-binary", r.headers.get("Content-Type"))
+    _, page = get(SITE + "/san-pham/xiaomi-pad-7/")
+    check("Thông số: sản phẩm chưa có dữ liệu vẫn giữ tab cũ", 'class="kio-spec-table"' not in page)
+
+
 def wp_eval(code):
     """Chạy một đoạn PHP trong WordPress qua WP-CLI, trả về chuỗi in ra."""
     return subprocess.run(["docker", "compose", "run", "--rm", "-T", "wpcli", "eval", code],
@@ -416,6 +436,16 @@ def check_phase4_review():
     skus = [p["sku"] for p in data.get("products", [])]
     check("F5: sale hẹn giờ CHƯA tới (iPad Air Xanh dương) không làm sai % giảm iPad",
           next((p["discount_percent"] for p in data.get("products", []) if p["sku"] == "APL-IPADAIR11"), None) == 12, skus)
+
+    # Sale demo hết hạn thì Woo bỏ ngày sale; việc nền phải đặt lại, nếu không site online mất flash sale.
+    out = wp_eval(
+        "$s = get_option('kio_demo_sales')[0]; $p = wc_get_product($s['id']);"
+        "$p->set_sale_price(''); $p->set_date_on_sale_from(null); $p->set_date_on_sale_to(null); $p->save();"
+        "do_action('kio_store_roll_demo_sales');"
+        "$p = wc_get_product($s['id']);"
+        "echo $p->get_sale_price() == $s['sale_price'] && $p->get_date_on_sale_to() ? 'rolled:ok' : 'rolled:no';"
+    )
+    check("F5: sale demo hết hạn được đặt lại", "rolled:ok" in out, out)
 
     out = wp_eval(
         # F5: lưu biến thể (việc Woo làm khi bật/tắt sale hẹn giờ) phải xoá cache flash sale
@@ -500,7 +530,7 @@ def check_checkout_and_coupons():
     # F9: coupon qua Store API
     s26 = by_sku.get("SS-S26", {})
     variation = next((v["id"] for v in s26.get("variations", [])
-                      if {a["value"] for a in v["attributes"]} == {"256gb", "den"}), None)
+                      if {a["value"] for a in v["attributes"]} == {"256gb", "den-classic"}), None)
     cart = Cart()
     cart.call("/cart/add-item", {"id": variation, "quantity": 1})
     cart.call("/cart/add-item", {"id": by_sku.get("ANK-SAC20W", {}).get("id"), "quantity": 1})
@@ -572,7 +602,11 @@ def check_single_product():
     check("Bố cục: không còn sidebar", 'id="secondary"' not in page)
     check("Bố cục: bỏ thẻ sản phẩm trước/sau", 'class="storefront-product-pagination"' not in page)
     check("Bố cục: bỏ thanh mua dính của Storefront", 'class="storefront-sticky-add-to-cart"' not in page)
-    check("F3: bảng thông số trên trang sản phẩm", 'kio-spec-grid__value">Snapdragon' in page)
+    check("Trang sản phẩm: có bảng thông số, vùng mua không lặp lưới thông số",
+          'class="kio-spec-table"' in page and "kio-spec-grid" not in page)
+    check("Trang sản phẩm: nút mua đứng trước khuyến mãi và cam kết",
+          0 < page.find("single_add_to_cart_button") < page.find("kio-promotions") < page.find("kio-assurance"))
+    check("Trang sản phẩm: có câu hỏi thường gặp", page.count("<summary>") >= 5, str(page.count("<summary>")))
 
     _, simple = get(SITE + "/san-pham/airpods-pro-3/")
     check("Sản phẩm đơn: không có chip, không nạp JS chip", "kio-chips" not in simple.replace(".kio-chips{", "") and "variation-chips.js" not in simple)
@@ -699,7 +733,7 @@ def check_ajax_add_to_cart():
             return error.code, json.loads(error.read().decode())
 
     product_id = wp_eval("echo wc_get_product_id_by_sku('SS-S26');").strip().splitlines()[-1]
-    variation_id = wp_eval("echo wc_get_product_id_by_sku('SS-S26-256GB-DEN');").strip().splitlines()[-1]
+    variation_id = wp_eval("echo wc_get_product_id_by_sku('SS-S26-256GB-DEN-CLASSIC');").strip().splitlines()[-1]
     base = {"add-to-cart": product_id, "product_id": product_id, "quantity": 1}
 
     _, missing = post(base)
@@ -708,12 +742,12 @@ def check_ajax_add_to_cart():
     status, _ = post({"quantity": 1})
     check("Nút mua: thiếu add-to-cart trả 400", status == 400, str(status))
 
-    _, added = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den"})
+    _, added = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den-classic"})
     count = (added.get("fragments") or {}).get("em.kio-cart-count", "")
     check("Nút mua: thêm đúng biến thể, trả số giỏ mới", 'data-count="1"' in count, count or str(added)[:120])
 
-    stock = wp_eval("echo wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN'))->get_stock_quantity();").strip().splitlines()[-1]
-    _, over = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den", "quantity": int(stock) + 1})
+    stock = wp_eval("echo wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN-CLASSIC'))->get_stock_quantity();").strip().splitlines()[-1]
+    _, over = post({**base, "variation_id": variation_id, "attribute_pa_dung-luong": "256gb", "attribute_pa_mau-sac": "den-classic", "quantity": int(stock) + 1})
     messages = (over.get("data") or {}).get("messages") or [""]
     check("Nút mua: vượt tồn kho thì Woo báo lỗi", over.get("success") is False and bool(messages[0]), str(over)[:120])
     check("Nút mua: thông báo lỗi không dính chữ của link", "Xem giỏ hàng" not in messages[0] and "<" not in messages[0], messages[0])
@@ -733,7 +767,10 @@ def check_archive():
     check("Danh mục: bỏ ô chọn sắp xếp cũ", 'class="orderby"' not in page)
     check("Danh mục: có đủ 4 nút sắp xếp", page.count('kio-sort__item kio-archive-link') == 4, str(page.count('kio-sort__item kio-archive-link')))
     check("Danh mục: 'Nổi bật' đang chọn", re.search(r'aria-current="true">Nổi bật<', page) is not None)
-    check("Danh mục: chỉ hiện khoảng giá có sản phẩm", "Dưới 5 triệu" not in page and "5 - 10 triệu" in page)
+    check("Danh mục: chỉ hiện nấc giá có sản phẩm", "Dưới 1 triệu" not in page and "10 - 20 triệu" in page)
+    check("Danh mục: thanh kéo giá có mốc, không còn thanh tự do của Woo",
+          'class="kio-price-range"' in page and "data-stops" in page and "price_slider" not in page)
+    check("Danh mục: bỏ mô tả, vẫn giữ h1", "term-description" not in page and "<h1" in page)
     check("Danh mục: nút bộ lọc mobile vẫn còn", "kio-filter-toggle" in page)
 
     chips = re.findall(r'class="kio-filter-chip kio-archive-link" href="([^"]+)"[^>]*>([^<]+)<', page)
@@ -752,9 +789,9 @@ def check_archive():
     both = product_titles(two)
     check("Chip: hai hãng ra cả hai", any("Samsung" in t for t in both) and any("Xiaomi" in t for t in both), str(both))
 
-    band = next((html.unescape(u) for u, name in chips if name == "5 - 10 triệu"), "")
+    band = next((html.unescape(u) for u, name in chips if name == "7 - 10 triệu"), "")
     _, mid = get(band)
-    prices = re.findall(r'kio-filter-chip kio-archive-link is-active"[^>]*>5 - 10 triệu', mid)
+    prices = re.findall(r'kio-filter-chip kio-archive-link is-active"[^>]*>7 - 10 triệu', mid)
     check("Chip giá: lọc được và đánh dấu đang chọn", bool(prices) and bool(product_titles(mid)))
 
     _, cheap = get(cat + "?orderby=price")
@@ -877,7 +914,7 @@ def check_page_cache():
         wp_eval(code)
         return "cache-enabler" not in visit(product)[0]
 
-    variation = "wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN'))"
+    variation = "wc_get_product(wc_get_product_id_by_sku('SS-S26-256GB-DEN-CLASSIC'))"
     check("Cache trang: lưu biến thể thì xoá cache", changed(f"$v = {variation}; $v->save();"))
     check("Cache trang: đổi tồn kho thì xoá cache", changed(f"$v = {variation}; $n = $v->get_stock_quantity(); wc_update_product_stock($v, $n + 1); wc_update_product_stock({variation}, $n);"))
 
@@ -924,6 +961,7 @@ def main():
     section("9. Thông số nổi bật (Phase 4 · F3)", check_specs)
     section("10. Khuyến mãi (Phase 4 · F4)", check_promotions)
     section("11. Flash sale (Phase 4 · F5)", check_flash_sale)
+    section("11b. Bảng thông số (Phase 6.5)", check_spec_table)
     section("12. Hồi quy sau review Phase 4", check_phase4_review)
     section("13. Dải sản phẩm + thanh mua hàng (Phase 4 · F6, F7)", check_rows_and_buy_bar)
     section("14. Thanh toán VN + coupon tối đa (Phase 4 · F8, F9)", check_checkout_and_coupons)

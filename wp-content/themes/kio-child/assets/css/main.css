@@ -1634,6 +1634,20 @@ ul.products li.product .added_to_cart {
 	display: contents;
 }
 
+.kio-badge--360 {
+	background: var(--kio-brand);
+	color: #fff;
+}
+
+.summary > .kio-badge--360 {
+	display: inline-block;
+	margin-bottom: 0.5rem;
+	padding: 0.15rem 0.6rem;
+	border-radius: 999px;
+	font-size: var(--kio-text-xs);
+	font-weight: 700;
+}
+
 ul.products li.product .kio-badge {
 	display: block;
 	margin: 0;
@@ -2042,15 +2056,6 @@ ul.products li.product a.compare.button::before {
 ul.products li.product a.compare.button:hover,
 ul.products li.product a.compare.button.added {
 	color: var(--kio-brand);
-}
-
-/* Thanh trượt giá: màu thương hiệu thay cho tím mặc định của WooCommerce */
-.widget_price_filter .ui-slider .ui-slider-range,
-.widget_price_filter .ui-slider .ui-slider-handle {
-	background-color: var(--kio-brand);
-}
-.widget_price_filter .price_slider_wrapper .ui-widget-content {
-	background-color: #dbe3f0;
 }
 
 /* Bộ lọc: tiêu đề nhóm gọn hơn */

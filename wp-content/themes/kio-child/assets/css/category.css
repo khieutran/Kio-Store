@@ -6,6 +6,137 @@
 	padding: 0 0 12px;
 }
 
+/* Trang danh mục vào thẳng bộ lọc: ẩn tiêu đề nhưng giữ h1 cho công cụ tìm kiếm và trình đọc màn hình.
+   Trang kết quả tìm kiếm giữ nguyên: khách cần thấy mình đang tìm gì. */
+body:not(.search) .woocommerce-products-header {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Thanh kéo giá có mốc. Tâm nút kéo chạy từ --kio-thumb/2 đến 100% - --kio-thumb/2, nên vạch mốc và
+   thanh màu đều thụt vào một nửa nút để khớp đúng vị trí. */
+.kio-price-range {
+	--kio-thumb: 22px;
+}
+
+.kio-price-range__slider {
+	position: relative;
+	height: var(--kio-thumb);
+}
+
+.kio-price-range__track {
+	position: absolute;
+	top: calc(50% - 2px);
+	right: calc(var(--kio-thumb) / 2);
+	left: calc(var(--kio-thumb) / 2);
+	height: 4px;
+	border-radius: 2px;
+	background: var(--kio-border);
+}
+
+.kio-price-range__fill {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	border-radius: 2px;
+	background: var(--kio-brand);
+}
+
+/* 2 input chồng nhau: chỉ nút kéo nhận chuột, phần còn lại cho sự kiện đi xuyên qua. */
+.kio-price-range__input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: var(--kio-thumb);
+	margin: 0;
+	background: none;
+	pointer-events: none;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+.kio-price-range__input::-webkit-slider-runnable-track {
+	background: none;
+}
+
+.kio-price-range__input::-moz-range-track {
+	background: none;
+}
+
+.kio-price-range__input::-webkit-slider-thumb {
+	width: var(--kio-thumb);
+	height: var(--kio-thumb);
+	border: 3px solid #fff;
+	border-radius: 50%;
+	background: var(--kio-brand);
+	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.3);
+	cursor: grab;
+	pointer-events: auto;
+	-webkit-appearance: none;
+}
+
+.kio-price-range__input::-moz-range-thumb {
+	box-sizing: border-box;
+	width: var(--kio-thumb);
+	height: var(--kio-thumb);
+	border: 3px solid #fff;
+	border-radius: 50%;
+	background: var(--kio-brand);
+	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.3);
+	cursor: grab;
+	pointer-events: auto;
+}
+
+.kio-price-range__input:focus-visible {
+	outline: 0;
+}
+
+.kio-price-range__input:focus-visible::-webkit-slider-thumb {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-price-range__input:focus-visible::-moz-range-thumb {
+	outline: 2px solid var(--kio-brand);
+	outline-offset: 2px;
+}
+
+.kio-price-range__marks {
+	position: relative;
+	height: 1.5rem;
+	margin-top: 0.15rem;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-xs);
+}
+
+.kio-price-range__marks span {
+	position: absolute;
+	top: 6px;
+	left: calc(var(--kio-thumb) / 2 + (100% - var(--kio-thumb)) * var(--kio-at));
+	transform: translateX(-50%);
+}
+
+.kio-price-range__marks span::before {
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	width: 1px;
+	height: 5px;
+	background: var(--kio-muted);
+	content: "";
+}
+
+.kio-price-range__value {
+	margin: 0.5rem 0 0;
+	font-size: var(--kio-text-sm);
+	font-weight: 600;
+}
+
 .archive.woocommerce-page .content-area {
 	padding-top: 0;
 }

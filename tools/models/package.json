@@ -1,0 +1,13 @@
+{
+  "name": "kio-product-models",
+  "private": true,
+  "type": "module",
+  "description": "Dựng mô hình 3D minh hoạ cho sản phẩm. Chạy ở máy dev, file GLB được commit vào plugin.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@google/model-viewer": "4.4.0",
+    "three": "0.183.0"
+  }
+}

@@ -12,7 +12,7 @@
   },
   {
     "slug": "woo-photo-reviews",
-    "version": "1.2.32",
+    "version": "1.2.33",
     "why": "Đánh giá có ảnh. Nhẹ (+1 query ngoài trang SP, không thêm CSS/JS ở trang chủ), gỡ sạch. Phương án loại: Customer Reviews (+147 KB CSS + 146 KB JS ở mọi trang)."
   },
   {

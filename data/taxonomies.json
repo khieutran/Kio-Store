@@ -150,7 +150,20 @@
         {
           "name": "Titan Trắng",
           "hex": "#eae8e3"
-        }
+        },
+        { "name": "Đen Classic", "hex": "#1d1e20" },
+        { "name": "Trắng Classic", "hex": "#efeeea" },
+        { "name": "Xanh Sky Blue", "hex": "#a7c7e3" },
+        { "name": "Đen Jet", "hex": "#17181a" },
+        { "name": "Xanh Navy", "hex": "#27344f" },
+        { "name": "Xám Khói", "hex": "#6f7277" },
+        { "name": "Xanh Băng", "hex": "#bcd7e3" },
+        { "name": "Đen Bóng", "hex": "#141416" },
+        { "name": "Vàng Hồng", "hex": "#e6c3b8" },
+        { "name": "Ánh Sao", "hex": "#e6dfd2" },
+        { "name": "Đêm Xanh Thẳm", "hex": "#2c3347" },
+        { "name": "Đen Không Gian", "hex": "#2e3035" },
+        { "name": "Neutral Black", "hex": "#2b2c2f" }
       ]
     },
     {

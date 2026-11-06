@@ -1,0 +1,39 @@
+# Cấu hình cho VM nhỏ (1 GiB RAM). Dùng chồng lên file chính:
+#   docker compose -f docker-compose.yml -f docker-compose.vm.yml up -d
+#
+# Mặc định MySQL 8.4 chiếm ~540 MiB chỉ vì các bộ đệm và performance_schema, site này không cần tới.
+# Các con số mem_limit dùng để giả lập trên máy dev và chặn một service ăn hết RAM của cả VM.
+services:
+  db:
+    command:
+      - --performance-schema=OFF
+      - --innodb-buffer-pool-size=64M
+      - --innodb-log-buffer-size=8M
+      - --max-connections=30
+      - --table-open-cache=200
+      - --tmp-table-size=16M
+      - --max-heap-table-size=16M
+      - --key-buffer-size=8M
+    mem_limit: 300m
+
+  wordpress:
+    mem_limit: 320m
+    volumes:
+      - ./docker/apache/kio-lowmem.conf:/etc/apache2/conf-enabled/zz-kio-lowmem.conf:ro
+
+  redis:
+    command: ["redis-server", "--maxmemory", "32mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+    mem_limit: 48m
+
+  cron:
+    mem_limit: 200m
+
+  backup:
+    mem_limit: 96m
+
+  # Công cụ dev, không chạy trên server.
+  mailpit:
+    profiles: ["dev"]
+
+  phpmyadmin:
+    profiles: ["dev"]

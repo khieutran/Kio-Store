@@ -15,6 +15,12 @@ const KIO_CHILD_PRODUCTS_PER_PAGE = 10; // Bội của 5 cột: không để l�
 
 add_action( 'init', 'kio_child_archive_hooks' );
 add_filter( 'loop_shop_per_page', 'kio_child_products_per_page', 20 );
+add_action(
+	'widgets_init',
+	static function (): void {
+		register_widget( 'Kio_Child_Price_Bands_Widget' );
+	}
+);
 
 /**
  * Thay thanh sắp xếp của Storefront bằng thanh công cụ riêng.
@@ -29,6 +35,10 @@ function kio_child_archive_hooks(): void {
 		remove_action( $hook, 'storefront_sorting_wrapper_close', 31 );
 	}
 	remove_action( 'woocommerce_before_shop_loop', 'storefront_woocommerce_pagination', 30 );
+
+	// Trang danh mục vào thẳng bộ lọc và sản phẩm. Thẻ h1 vẫn còn, chỉ ẩn bằng CSS (assets/css/category.css).
+	remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+	remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
 
 	add_action( 'woocommerce_before_shop_loop', 'kio_child_archive_toolbar', 20 );
 	add_action( 'woocommerce_after_shop_loop', 'kio_child_load_more', 25 );
@@ -81,28 +91,65 @@ function kio_child_archive_filter_keys(): array {
  * @return array<int,array{label:string,min:int,max:int}> max = 0 nghĩa là không giới hạn trên.
  */
 function kio_child_price_bands(): array {
-	return array(
-		array(
-			'label' => __( 'Dưới 5 triệu', 'kio-child' ),
-			'min'   => 0,
-			'max'   => 5000000,
-		),
-		array(
-			'label' => __( '5 - 10 triệu', 'kio-child' ),
-			'min'   => 5000000,
-			'max'   => 10000000,
-		),
-		array(
-			'label' => __( '10 - 20 triệu', 'kio-child' ),
-			'min'   => 10000000,
-			'max'   => 20000000,
-		),
-		array(
-			'label' => __( 'Trên 20 triệu', 'kio-child' ),
-			'min'   => 20000000,
-			'max'   => 0,
-		),
+	$million = 1000000;
+	$bands   = array(
+		array( __( 'Dưới 1 triệu', 'kio-child' ), 0, 1 ),
+		array( __( '1 - 3 triệu', 'kio-child' ), 1, 3 ),
+		array( __( '3 - 5 triệu', 'kio-child' ), 3, 5 ),
+		array( __( '5 - 7 triệu', 'kio-child' ), 5, 7 ),
+		array( __( '7 - 10 triệu', 'kio-child' ), 7, 10 ),
+		array( __( '10 - 20 triệu', 'kio-child' ), 10, 20 ),
+		array( __( 'Trên 20 triệu', 'kio-child' ), 20, 0 ),
 	);
+
+	return array_map(
+		static function ( array $band ) use ( $million ): array {
+			return array(
+				'label' => $band[0],
+				'min'   => $band[1] * $million,
+				'max'   => $band[2] * $million,
+			);
+		},
+		$bands
+	);
+}
+
+/**
+ * Các nấc giá dùng được ở trang hiện tại: chỉ nấc có sản phẩm, kèm link và trạng thái đang chọn.
+ *
+ * Dùng chung cho chip lọc nhanh và widget ở sidebar, để 2 nơi luôn khớp nhau.
+ *
+ * @return array<int,array{label:string,url:string,active:bool}>
+ */
+function kio_child_price_band_links(): array {
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- chỉ đọc bộ lọc đang áp dụng để dựng link.
+	$min = isset( $_GET['min_price'] ) ? absint( $_GET['min_price'] ) : null;
+	$max = isset( $_GET['max_price'] ) ? absint( $_GET['max_price'] ) : null;
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+	$available = kio_child_available_bands( is_product_category() ? get_queried_object()->slug : '' );
+	$links     = array();
+
+	foreach ( kio_child_price_bands() as $index => $band ) {
+		$active = null !== $min && $min === $band['min'] && ( 0 === $band['max'] ? null === $max : $max === $band['max'] );
+
+		if ( ! $active && ! in_array( $index, $available, true ) ) {
+			continue;
+		}
+
+		$set = array( 'min_price' => (string) $band['min'] );
+		if ( $band['max'] > 0 ) {
+			$set['max_price'] = (string) $band['max'];
+		}
+
+		$links[] = array(
+			'label'  => $band['label'],
+			'url'    => $active ? kio_child_archive_url( array(), array( 'min_price', 'max_price' ) ) : kio_child_archive_url( $set, array( 'max_price' ) ),
+			'active' => $active,
+		);
+	}
+
+	return $links;
 }
 
 /**
@@ -143,6 +190,44 @@ function kio_child_available_bands( string $category ): array {
 	set_transient( $key, $found, DAY_IN_SECONDS );
 
 	return $found;
+}
+
+/**
+ * Các mốc của thanh kéo giá: từ nấc thấp nhất đến nấc cao nhất có sản phẩm trong danh mục.
+ *
+ * @return int[] Giá từng mốc. Mốc cuối bằng 0 nghĩa là không giới hạn trên.
+ */
+function kio_child_price_stops(): array {
+	$available = kio_child_available_bands( is_product_category() ? get_queried_object()->slug : '' );
+	if ( ! $available ) {
+		return array();
+	}
+
+	$bands = array_slice( kio_child_price_bands(), min( $available ), max( $available ) - min( $available ) + 1 );
+	$stops = array_column( $bands, 'min' );
+
+	$stops[] = end( $bands )['max'];
+
+	return $stops;
+}
+
+/**
+ * Tên ngắn của một khoảng giá, cho chip khi khoảng đó không trùng nấc nào.
+ *
+ * @param int|null $min Giá thấp nhất.
+ * @param int|null $max Giá cao nhất; null = không giới hạn.
+ * @return string
+ */
+function kio_child_price_range_label( ?int $min, ?int $max ): string {
+	$million = static fn( int $price ): string => number_format_i18n( $price / 1000000, 0 === $price % 1000000 ? 0 : 1 );
+
+	if ( ! $max ) {
+		/* translators: %s: giá, đơn vị triệu. */
+		return sprintf( __( 'Từ %s triệu', 'kio-child' ), $million( (int) $min ) );
+	}
+
+	/* translators: 1: giá thấp, 2: giá cao, đơn vị triệu. */
+	return sprintf( __( '%1$s - %2$s triệu', 'kio-child' ), $million( (int) $min ), $million( $max ) );
 }
 
 /**
@@ -227,31 +312,15 @@ function kio_child_quick_filters(): void {
 		$chips .= kio_child_filter_chip( $brand['name'], $url, $active );
 	}
 
-	$category  = is_product_category() ? get_queried_object()->slug : '';
-	$available = kio_child_available_bands( $category );
 	$is_preset = false;
-
-	foreach ( kio_child_price_bands() as $index => $band ) {
-		$active     = null !== $min && $min === $band['min'] && ( 0 === $band['max'] ? null === $max : $max === $band['max'] );
-		$is_preset  = $is_preset || $active;
-		$remove_all = array( 'min_price', 'max_price' );
-
-		if ( ! $active && ! in_array( $index, $available, true ) ) {
-			continue;
-		}
-
-		$set = array( 'min_price' => (string) $band['min'] );
-		if ( $band['max'] > 0 ) {
-			$set['max_price'] = (string) $band['max'];
-		}
-		$url    = $active ? kio_child_archive_url( array(), $remove_all ) : kio_child_archive_url( $set, array( 'max_price' ) );
-		$chips .= kio_child_filter_chip( $band['label'], $url, $active );
+	foreach ( kio_child_price_band_links() as $band ) {
+		$is_preset = $is_preset || $band['active'];
+		$chips    .= kio_child_filter_chip( $band['label'], $band['url'], $band['active'] );
 	}
 
-	// Khoảng giá kéo bằng thanh trượt ở sidebar, không trùng chip nào.
+	// Khoảng kéo qua nhiều nấc: vẫn hiện chip để khách bỏ lọc được.
 	if ( ! $is_preset && ( null !== $min || null !== $max ) ) {
-		$label  = sprintf( '%s - %s', wp_strip_all_tags( wc_price( (float) $min ) ), wp_strip_all_tags( wc_price( (float) $max ) ) );
-		$chips .= kio_child_filter_chip( $label, kio_child_archive_url( array(), array( 'min_price', 'max_price' ) ), true );
+		$chips .= kio_child_filter_chip( kio_child_price_range_label( $min, $max ), kio_child_archive_url( array(), array( 'min_price', 'max_price' ) ), true );
 	}
 
 	// Bộ lọc bật từ sidebar (dung lượng, RAM, màu): hiện ở đây để bỏ được mà không phải mở sidebar.

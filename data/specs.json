@@ -1,0 +1,1171 @@
+{
+  "SS-S26": {
+    "source": "https://www.samsung.com/vn/smartphones/galaxy-s26/specs/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "CPU", "value": "10 nhân, 3.8GHz, 3.26GHz, 2.76GHz", "main": true },
+        { "label": "RAM", "value": "12GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "Android" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.3 inch hình chữ nhật hoàn chỉnh, 6.1 inch tính đến các góc tròn", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Dynamic AMOLED 2X", "main": true },
+        { "label": "Độ phân giải", "value": "2340 x 1080 (FHD+)" },
+        { "label": "Tần số quét", "value": "120 Hz", "main": true },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "50MP + 10MP + 12MP", "main": true },
+        { "label": "Khẩu độ", "value": "F1.8, F2.4, F2.2" },
+        { "label": "Chống rung OIS", "value": "Có" },
+        { "label": "Zoom", "value": "Zoom quang học 3x, zoom kỹ thuật số đến 30x" },
+        { "label": "Quay video", "value": "8K (7680 x 4320) 30fps" },
+        { "label": "Quay chậm", "value": "240fps FHD, 120fps FHD, 120fps UHD" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "12MP", "main": true },
+        { "label": "Khẩu độ", "value": "F2.2" },
+        { "label": "Tự động lấy nét", "value": "Có" }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "4300 mAh (điển hình), 4175 mAh (định mức)", "main": true },
+        { "label": "Phát video", "value": "Lên tới 30 giờ" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "2G, 3G, 4G, 5G" },
+        { "label": "SIM", "value": "2 SIM: Nano SIM và eSIM", "main": true },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n/ac/ax/be, 2.4GHz, 5GHz, 6GHz" },
+        { "label": "Bluetooth", "value": "5.4" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, USB 3.2 Gen 1" },
+        { "label": "Định vị", "value": "GPS, Glonass, Beidou, Galileo, QZSS" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "149.6 x 71.7 x 7.2 mm" },
+        { "label": "Trọng lượng", "value": "167 g", "main": true },
+        { "label": "Cập nhật bảo mật", "value": "Đến 28/02/2033" }
+      ] }
+    ]
+  },
+  "APL-IP17PM": {
+    "source": "https://support.apple.com/vi-vn/125091",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple A19 Pro", "main": true },
+        { "label": "CPU", "value": "6 lõi: 2 lõi hiệu năng, 4 lõi tiết kiệm điện" },
+        { "label": "GPU", "value": "6 lõi, có Neural Accelerators" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.9 inch, OLED toàn phần", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Super Retina XDR, Dynamic Island, Màn hình Luôn Bật", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2868 x 1320, 460 ppi" },
+        { "label": "Tần số quét", "value": "ProMotion, đến 120Hz", "main": true },
+        { "label": "Độ sáng", "value": "1000 nit (tiêu chuẩn), 1600 nit (đỉnh HDR), 3000 nit (đỉnh ngoài trời)" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "48MP Fusion Main + 48MP Fusion Ultra Wide + 48MP Fusion Telephoto", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.78, ƒ/2.2, ƒ/2.8" },
+        { "label": "Zoom", "value": "Tele 4x (100 mm), 8x chất lượng quang học (200 mm), kỹ thuật số đến 40x" },
+        { "label": "Quay video", "value": "4K Dolby Vision đến 120 fps, ProRes RAW" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "18MP Center Stage", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.9" },
+        { "label": "Quay video", "value": "4K Dolby Vision đến 60 fps" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời lượng", "short": "Pin", "value": "Xem video đến 37 giờ, video trực tuyến đến 33 giờ", "main": true },
+        { "label": "Sạc nhanh", "value": "Đến 50% trong 20 phút với bộ tiếp hợp 40W trở lên (bán riêng)" },
+        { "label": "Sạc không dây", "value": "MagSafe và Qi2, đến 25W" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "5G (sub-6 GHz), LTE Gigabit" },
+        { "label": "SIM", "value": "2 SIM: nano SIM và eSIM, hỗ trợ eSIM kép", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 7 (802.11be)" },
+        { "label": "Bluetooth", "value": "6" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "Cổng kết nối", "value": "USB-C, USB 3 (đến 10Gb/s), DisplayPort", "main": true },
+        { "label": "Định vị", "value": "GPS tần số kép, GLONASS, Galileo, QZSS, BeiDou, NavIC" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Chất liệu", "value": "Nguyên khối nhôm, mặt trước Ceramic Shield 2, mặt sau Ceramic Shield" },
+        { "label": "Kích thước", "value": "163.4 x 78.0 x 8.75 mm" },
+        { "label": "Trọng lượng", "value": "231 g", "main": true },
+        { "label": "Kháng nước, bụi", "value": "IP68 (sâu tối đa 6 m trong tối đa 30 phút)" },
+        { "label": "Bảo mật", "value": "Face ID" }
+      ] }
+    ]
+  },
+  "APL-IP17": {
+    "source": "https://support.apple.com/vi-vn/125089",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple A19", "main": true },
+        { "label": "CPU", "value": "6 lõi: 2 lõi hiệu năng, 4 lõi tiết kiệm điện" },
+        { "label": "GPU", "value": "5 lõi, có Neural Accelerator" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.3 inch, OLED toàn phần", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Super Retina XDR, Dynamic Island, Màn hình Luôn Bật", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2622 x 1206, 460 ppi" },
+        { "label": "Tần số quét", "value": "ProMotion, đến 120Hz", "main": true },
+        { "label": "Độ sáng", "value": "1000 nit (tiêu chuẩn), 1600 nit (đỉnh HDR), 3000 nit (đỉnh ngoài trời)" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "48MP Fusion Main + 48MP Fusion Ultra Wide", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.6, ƒ/2.2" },
+        { "label": "Zoom", "value": "Phóng đại quang học 2x, thu nhỏ quang học 2x, kỹ thuật số đến 10x" },
+        { "label": "Quay video", "value": "4K Dolby Vision đến 60 fps" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "18MP Center Stage", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.9" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời lượng", "short": "Pin", "value": "Xem video đến 30 giờ, video trực tuyến đến 27 giờ", "main": true },
+        { "label": "Sạc nhanh", "value": "Đến 50% trong 20 phút với bộ tiếp hợp 40W trở lên (bán riêng)" },
+        { "label": "Sạc không dây", "value": "MagSafe và Qi2, đến 25W" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "5G (sub-6 GHz), LTE Gigabit" },
+        { "label": "SIM", "value": "2 SIM: nano SIM và eSIM, hỗ trợ eSIM kép", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 7 (802.11be)" },
+        { "label": "Bluetooth", "value": "6" },
+        { "label": "Cổng kết nối", "value": "USB-C, USB 2 (đến 480Mb/s)", "main": true },
+        { "label": "Định vị", "value": "GPS tần số kép, GLONASS, Galileo, QZSS, BeiDou, NavIC" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Chất liệu", "value": "Nhôm, mặt trước Ceramic Shield 2" },
+        { "label": "Kích thước", "value": "149.6 x 71.5 x 7.95 mm" },
+        { "label": "Trọng lượng", "value": "177 g", "main": true },
+        { "label": "Kháng nước, bụi", "value": "IP68 (sâu tối đa 6 m trong tối đa 30 phút)" },
+        { "label": "Bảo mật", "value": "Face ID" }
+      ] }
+    ]
+  },
+  "APL-IP16E": {
+    "source": "https://support.apple.com/vi-vn/122208",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple A18", "main": true },
+        { "label": "CPU", "value": "6 lõi: 2 lõi hiệu năng, 4 lõi tiết kiệm điện" },
+        { "label": "GPU", "value": "4 lõi" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "Bộ nhớ trong", "value": "128GB hoặc 256GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.1 inch, OLED toàn phần", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Super Retina XDR", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2532 x 1170, 460 ppi" },
+        { "label": "Độ sáng", "value": "800 nit (tiêu chuẩn), 1200 nit (đỉnh HDR)" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "48MP Fusion Main, hỗ trợ Telephoto 2x 12MP", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.6" },
+        { "label": "Zoom", "value": "Kỹ thuật số đến 10x" },
+        { "label": "Quay video", "value": "4K Dolby Vision đến 60 fps" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "12MP TrueDepth", "main": true },
+        { "label": "Khẩu độ", "value": "ƒ/1.9" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời lượng", "short": "Pin", "value": "Xem video đến 26 giờ, video trực tuyến đến 21 giờ, nghe nhạc đến 90 giờ", "main": true },
+        { "label": "Sạc nhanh", "value": "Đến 50% trong 30 phút với bộ tiếp hợp 20W trở lên (bán riêng)" },
+        { "label": "Sạc không dây", "value": "Tương thích bộ sạc Qi" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Modem", "value": "Apple C1, 5G (sub-6 GHz)" },
+        { "label": "SIM", "value": "2 SIM: nano-SIM và eSIM, hỗ trợ eSIM kép", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6 (802.11ax)" },
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "Cổng kết nối", "value": "USB-C, USB 2 (đến 480Mb/s)", "main": true },
+        { "label": "Định vị", "value": "GPS, GLONASS, Galileo, QZSS, BeiDou, NavIC" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Chất liệu", "value": "Nhôm, mặt trước Ceramic Shield, mặt sau bằng kính" },
+        { "label": "Kích thước", "value": "146.7 x 71.5 x 7.80 mm" },
+        { "label": "Trọng lượng", "value": "167 g", "main": true },
+        { "label": "Kháng nước, bụi", "value": "IP68 (sâu tối đa 6 m trong tối đa 30 phút)", "main": true },
+        { "label": "Nút Tác Vụ", "value": "Có" },
+        { "label": "Bảo mật", "value": "Face ID" }
+      ] }
+    ]
+  },
+  "SS-S26U": {
+    "source": "https://www.samsung.com/vn/smartphones/galaxy-s26-ultra/specs/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Snapdragon 8 Elite Gen 5 dành cho Galaxy", "main": true },
+        { "label": "CPU", "value": "8 nhân, 4.74GHz, 3.6GHz" },
+        { "label": "RAM", "value": "12GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "Android" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.9 inch hình chữ nhật hoàn chỉnh, 6.7 inch tính đến các góc bo tròn", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Dynamic AMOLED 2X", "main": true },
+        { "label": "Độ phân giải", "value": "3120 x 1440 (Quad HD+)" },
+        { "label": "Tần số quét", "value": "120 Hz", "main": true },
+        { "label": "Độ sáng tối đa", "value": "2600 nits" },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" },
+        { "label": "Chống nhìn trộm", "value": "Privacy Display tích hợp trên màn hình" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "200MP + 50MP + 50MP + 10MP", "main": true },
+        { "label": "Khẩu độ", "value": "F1.4, F2.9, F1.9, F2.4" },
+        { "label": "Chống rung OIS", "value": "Có" },
+        { "label": "Zoom", "value": "Zoom quang học 3x và 5x, zoom chất lượng quang học 2x và 10x, zoom kỹ thuật số đến 100x" },
+        { "label": "Quay video", "value": "8K (7680 x 4320) 30fps" },
+        { "label": "Quay chậm", "value": "240fps FHD, 120fps FHD, 120fps UHD" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "12MP", "main": true },
+        { "label": "Khẩu độ", "value": "F2.2" },
+        { "label": "Tự động lấy nét", "value": "Có" }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "5000 mAh (điển hình), 4855 mAh (định mức)", "main": true },
+        { "label": "Phát video", "value": "Lên tới 31 giờ" },
+        { "label": "Sạc nhanh", "value": "60W Super Fast Charging 3.0, đến 75% trong khoảng 30 phút", "main": true }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "2G, 3G, 4G, 5G" },
+        { "label": "SIM", "value": "2 SIM: Nano SIM và eSIM" },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n/ac/ax/be, 2.4GHz, 5GHz, 6GHz" },
+        { "label": "Bluetooth", "value": "6.0" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "UWB", "value": "Có" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, USB 3.2 Gen 1" },
+        { "label": "Định vị", "value": "GPS, Glonass, Beidou, Galileo, QZSS" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "163.6 x 78.1 x 7.9 mm" },
+        { "label": "Trọng lượng", "value": "214 g", "main": true },
+        { "label": "Khung", "value": "Armor Aluminum" },
+        { "label": "Mặt kính", "value": "Corning Gorilla Armor 2 mặt trước, Corning Gorilla Glass Victus 2 mặt sau" },
+        { "label": "Kháng nước, bụi", "value": "IP68" },
+        { "label": "S Pen", "value": "Tích hợp" },
+        { "label": "Cập nhật bảo mật", "value": "Đến 28/02/2033" }
+      ] }
+    ]
+  },
+  "SS-ZFLIP7": {
+    "source": "https://www.samsung.com/vn/smartphones/galaxy-z-flip7/specs/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "CPU", "value": "10 nhân, 3.3GHz, 2.74GHz, 2.36GHz, 1.8GHz", "main": true },
+        { "label": "RAM", "value": "12GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "Android" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Màn hình chính", "value": "6.9 inch hình chữ nhật hoàn chỉnh, 6.8 inch tính đến các góc bo tròn", "main": true },
+        { "label": "Công nghệ màn hình chính", "value": "Dynamic AMOLED 2X", "main": true },
+        { "label": "Độ phân giải màn hình chính", "value": "2520 x 1080 (FHD+)" },
+        { "label": "Tần số quét màn hình chính", "value": "120 Hz", "main": true },
+        { "label": "Màn hình phụ", "value": "4.1 inch hình chữ nhật hoàn chỉnh, 4.0 inch tính đến các góc bo tròn", "main": true },
+        { "label": "Công nghệ màn hình phụ", "value": "Super AMOLED" },
+        { "label": "Độ phân giải màn hình phụ", "value": "1048 x 948" },
+        { "label": "Tần số quét màn hình phụ", "value": "Đến 120 Hz" },
+        { "label": "Độ sáng tối đa", "value": "2600 nits trên cả hai màn hình" },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "50MP + 12MP", "main": true },
+        { "label": "Khẩu độ", "value": "F1.8, F2.2" },
+        { "label": "Chống rung OIS", "value": "Có" },
+        { "label": "Zoom", "value": "Zoom chất lượng quang học 2x, zoom kỹ thuật số đến 10x" },
+        { "label": "Quay video", "value": "4K (3840 x 2160) 60fps" },
+        { "label": "Quay chậm", "value": "240fps FHD, 120fps FHD" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "10MP", "main": true },
+        { "label": "Khẩu độ", "value": "F2.2" },
+        { "label": "Tự động lấy nét", "value": "Không" }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "4300 mAh (điển hình), 4174 mAh (định mức)", "main": true },
+        { "label": "Phát video", "value": "Lên tới 31 giờ" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "2G, 3G, 4G, 5G" },
+        { "label": "SIM", "value": "2 SIM: Nano SIM và eSIM" },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n/ac/ax/be, 2.4GHz, 5GHz, 6GHz" },
+        { "label": "Bluetooth", "value": "5.4" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, USB 3.2 Gen 1" },
+        { "label": "Định vị", "value": "GPS, Glonass, Beidou, Galileo, QZSS" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước khi mở", "value": "166.7 x 75.2 x 6.5 mm" },
+        { "label": "Kích thước khi gập", "value": "85.5 x 75.2 x 13.7 mm" },
+        { "label": "Trọng lượng", "value": "188 g", "main": true },
+        { "label": "Khung", "value": "Armor Aluminum" },
+        { "label": "Bản lề", "value": "Armor FlexHinge" },
+        { "label": "Mặt kính", "value": "Corning Gorilla Glass Victus 2 mặt trước và mặt sau" },
+        { "label": "Trong hộp", "value": "Máy, cáp USB-C, que chọc SIM" },
+        { "label": "Cập nhật bảo mật", "value": "Đến 31/07/2032" }
+      ] }
+    ]
+  },
+  "SS-A57": {
+    "source": "https://www.samsung.com/vn/smartphones/galaxy-a/galaxy-a57-5g-awesome-navy-128gb-sm-a576bdbqxxv/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "CPU", "value": "8 nhân, 2.9GHz, 2.6GHz, 1.9GHz", "main": true },
+        { "label": "RAM", "value": "8GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "128GB hoặc 256GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "Android" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.7 inch hình chữ nhật hoàn chỉnh, 6.6 inch tính đến các góc bo tròn", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Super AMOLED Plus", "main": true },
+        { "label": "Độ phân giải", "value": "1080 x 2340 (FHD+)" },
+        { "label": "Tần số quét", "value": "120 Hz", "main": true },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "50MP + 12MP + 5MP", "main": true },
+        { "label": "Khẩu độ", "value": "F1.8, F2.2, F2.4" },
+        { "label": "Chống rung OIS", "value": "Có, trên camera 50MP" },
+        { "label": "Quay video", "value": "4K (3840 x 2160) 30fps" },
+        { "label": "Quay chậm", "value": "240fps HD" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "12MP", "main": true },
+        { "label": "Khẩu độ", "value": "F2.2" },
+        { "label": "Tự động lấy nét", "value": "Không" }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "5000 mAh (điển hình), 4905 mAh (định mức)", "main": true },
+        { "label": "Phát video", "value": "Lên tới 29 giờ" },
+        { "label": "Sạc nhanh", "value": "Super Fast Charging 2.0, đến 60% trong 30 phút" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Mạng", "value": "2G, 3G, 4G, 5G" },
+        { "label": "SIM", "value": "2 SIM: Nano SIM và eSIM", "main": true },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n/ac/ax, 2.4GHz, 5GHz, 6GHz" },
+        { "label": "Bluetooth", "value": "6.0" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, USB 2.0" },
+        { "label": "Định vị", "value": "GPS, Glonass, Beidou, Galileo, QZSS" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "161.5 x 76.8 x 6.9 mm" },
+        { "label": "Trọng lượng", "value": "179 g", "main": true },
+        { "label": "Mặt kính", "value": "Corning Gorilla Glass Victus+ mặt trước và mặt sau" },
+        { "label": "Kháng nước, bụi", "value": "IP68" },
+        { "label": "Cập nhật", "value": "6 lần nâng cấp hệ điều hành, 6 năm cập nhật bảo mật" },
+        { "label": "Cập nhật bảo mật", "value": "Đến 31/03/2032" }
+      ] }
+    ]
+  },
+  "OP-RENO15": {
+    "source": "https://www.oppo.com/vn/smartphones/series-reno/reno15/specs/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Qualcomm Snapdragon 7 Gen 4", "main": true },
+        { "label": "CPU", "value": "8 nhân" },
+        { "label": "GPU", "value": "Adreno 722, 1150MHz" },
+        { "label": "RAM", "value": "12GB LPDDR5X", "main": true },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Chuẩn bộ nhớ", "value": "UFS 3.1" },
+        { "label": "Thẻ nhớ", "value": "Không hỗ trợ" },
+        { "label": "Hệ điều hành", "value": "ColorOS 16.0" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "6.59 inch", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "AMOLED", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "1.5K, 1256 x 2760, 460 PPI" },
+        { "label": "Tần số quét", "value": "Tối đa 120Hz", "main": true },
+        { "label": "Tần số lấy mẫu cảm ứng", "value": "Tối đa 240Hz, mặc định 120Hz" },
+        { "label": "Độ sáng", "value": "600 nit (thường), 1200 nit (HBM), giá trị điển hình" },
+        { "label": "Dải màu", "value": "100% DCI-P3, 1.07 tỷ màu (10 bit)" },
+        { "label": "Kính bảo vệ", "value": "Corning Gorilla Glass 7i" }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "50MP + 50MP + 8MP", "main": true },
+        { "label": "Camera chính", "value": "50MP góc rộng, f/1.8, OIS" },
+        { "label": "Camera tele", "value": "50MP, f/2.8, OIS, zoom quang học 3.5x" },
+        { "label": "Camera góc siêu rộng", "value": "8MP, f/2.2, FOV 116°" },
+        { "label": "Quay video", "value": "4K 60fps, 30fps; 1080P 60fps, 30fps" },
+        { "label": "Quay chậm", "value": "1080P 120fps; 720P 240fps, 120fps" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "50MP", "main": true },
+        { "label": "Khẩu độ", "value": "f/2.0, FOV 100°" },
+        { "label": "Quay video", "value": "4K 60fps, 30fps" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "6500 mAh (điển hình), 6335 mAh (định mức)", "main": true },
+        { "label": "Sạc nhanh", "value": "SUPERVOOC 80W, 80W UFCS", "main": true },
+        { "label": "Tương thích sạc", "value": "SUPERVOOC 67W trở xuống, UFCS 44W, PPS 55W, PD 13.5W, QC 13.5W" },
+        { "label": "Phụ kiện trong hộp", "value": "Củ sạc SUPERVOOC 80W, cáp USB Type-C, vỏ bảo vệ, miếng dán màn hình dán sẵn" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "SIM", "value": "2 nano-SIM hoặc 1 nano-SIM + 1 eSIM" },
+        { "label": "Mạng", "value": "2G, 3G, 4G, 5G" },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6 (802.11ax), 802.11a/b/g/n/ac" },
+        { "label": "Bluetooth", "value": "5.4" },
+        { "label": "NFC", "value": "Có (tuỳ khu vực)" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, không có jack tai nghe analog" },
+        { "label": "Định vị", "value": "GPS, GLONASS, Beidou, Galileo, QZSS" },
+        { "label": "Bảo mật", "value": "Vân tay quang học trong màn hình, nhận diện khuôn mặt" },
+        { "label": "Hồng ngoại", "value": "Có" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "Khoảng 158.00 x 74.83 mm" },
+        { "label": "Độ dày", "value": "Khoảng 7.77 mm (Xanh Dương), 7.89 mm (Trắng)" },
+        { "label": "Trọng lượng", "value": "Khoảng 197 g" },
+        { "label": "Kháng nước, bụi", "value": "IP69, IP68, IP66", "main": true },
+        { "label": "Màu sắc", "value": "Xanh Dương, Trắng" }
+      ] }
+    ]
+  },
+  "APL-IPADAIR11": {
+    "source": "https://support.apple.com/vi-vn/122241",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple M3", "main": true },
+        { "label": "CPU", "value": "8 lõi: 4 lõi hiệu năng, 4 lõi tiết kiệm điện", "main": true },
+        { "label": "GPU", "value": "9 lõi" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "RAM", "value": "8GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "128GB hoặc 256GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iPadOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "11 inch (10.86 inch theo đường chéo hình chữ nhật), LED nền, IPS", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Liquid Retina, True Tone, dải màu rộng P3", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2360 x 1640, 264 ppi" },
+        { "label": "Độ sáng", "value": "500 nit" },
+        { "label": "Bút", "value": "Apple Pencil Pro, Apple Pencil (USB-C)" }
+      ] },
+      { "name": "Camera", "rows": [
+        { "label": "Camera sau", "value": "12MP Wide, ƒ/1.8, quay video 4K đến 60 fps", "main": true },
+        { "label": "Camera trước", "value": "12MP Center Stage trên cạnh ngang, ƒ/2.0, quay video 1080p đến 60 fps", "main": true }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "Li-Po 28.93 Wh", "main": true },
+        { "label": "Thời lượng", "value": "Lướt web bằng Wi-Fi hoặc xem video đến 10 giờ" },
+        { "label": "Trong hộp", "value": "Cáp sạc USB-C 1 m, bộ tiếp hợp nguồn USB-C 20W" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng kết nối", "value": "USB-C, USB 3 (đến 10Gb/s), DisplayPort; Smart Connector", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6E (802.11ax)" },
+        { "label": "Bluetooth", "value": "5.3" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "247.6 x 178.5 x 6.1 mm" },
+        { "label": "Trọng lượng", "value": "460 g", "main": true },
+        { "label": "Bảo mật", "value": "Touch ID trên nút nguồn" }
+      ] }
+    ]
+  },
+  "APL-IPADPRO13M5": {
+    "source": "https://support.apple.com/vi-vn/125407",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple M5", "main": true },
+        { "label": "CPU", "value": "9 lõi: 3 lõi siêu xử lý, 6 lõi tiết kiệm điện", "main": true },
+        { "label": "GPU", "value": "10 lõi, có Neural Accelerators" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "RAM", "value": "12GB", "main": true },
+        { "label": "Băng thông bộ nhớ", "value": "153GB/s" },
+        { "label": "Bộ nhớ trong", "value": "256GB hoặc 512GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iPadOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "13 inch", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Ultra Retina XDR, OLED hai lớp", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2752 x 2064, 264 ppi" },
+        { "label": "Tần số quét", "value": "ProMotion, 10Hz đến 120Hz", "main": true },
+        { "label": "Độ sáng", "value": "SDR tối đa 1000 nit; XDR 1000 nit toàn màn hình, đỉnh 1600 nit (chỉ nội dung HDR)" },
+        { "label": "Bút", "value": "Apple Pencil Pro, Apple Pencil (USB-C)" }
+      ] },
+      { "name": "Camera", "rows": [
+        { "label": "Camera sau", "value": "12MP Wide, ƒ/1.8, quay video 4K đến 60 fps, ProRes đến 4K 30 fps (1080p 30 fps với bản 256GB)", "main": true },
+        { "label": "Camera trước", "value": "12MP Center Stage trên cạnh ngang, ƒ/2.0, quay video 1080p đến 60 fps" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "Li-Po 38.99 Wh", "main": true },
+        { "label": "Thời lượng", "value": "Lướt web bằng Wi-Fi hoặc xem video đến 10 giờ" },
+        { "label": "Sạc nhanh", "value": "Đến 50% trong khoảng 30 phút với Bộ Tiếp Hợp Nguồn Động 40W (tối đa 60W) hoặc bộ tiếp hợp USB-C 60W trở lên (bán riêng)" },
+        { "label": "Trong hộp", "value": "Cáp sạc USB-C 1 m, bộ tiếp hợp nguồn USB-C 20W" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng kết nối", "value": "Thunderbolt / USB 4 (đến 40Gb/s), Smart Connector", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 7 (802.11be), chip Apple N1" },
+        { "label": "Bluetooth", "value": "6" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "281.6 x 215.5 x 5.1 mm" },
+        { "label": "Trọng lượng", "value": "579 g", "main": true },
+        { "label": "Loa", "value": "4 loa" },
+        { "label": "Bảo mật", "value": "Face ID" }
+      ] }
+    ]
+  },
+  "APL-IPAD11A16": {
+    "source": "https://support.apple.com/vi-vn/122240",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple A16", "main": true },
+        { "label": "CPU", "value": "5 lõi", "main": true },
+        { "label": "GPU", "value": "4 lõi" },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "Bộ nhớ trong", "value": "128GB hoặc 256GB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "iPadOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "11 inch (10.86 inch theo đường chéo hình chữ nhật), LED nền, IPS", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Liquid Retina, True Tone", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2360 x 1640, 264 ppi" },
+        { "label": "Độ sáng", "value": "500 nit" },
+        { "label": "Bút", "value": "Apple Pencil (USB-C), Apple Pencil (thế hệ thứ 1) qua bộ tiếp hợp USB-C" }
+      ] },
+      { "name": "Camera", "rows": [
+        { "label": "Camera sau", "value": "12MP Wide, ƒ/1.8, quay video 4K đến 60 fps", "main": true },
+        { "label": "Camera trước", "value": "12MP Center Stage trên cạnh ngang, ƒ/2.4, quay video 1080p đến 60 fps", "main": true }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "Li-Po 28.93 Wh", "main": true },
+        { "label": "Thời lượng", "value": "Lướt web bằng Wi-Fi hoặc xem video đến 10 giờ" },
+        { "label": "Trong hộp", "value": "Cáp sạc USB-C 1 m, bộ tiếp hợp nguồn USB-C 20W" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng kết nối", "value": "USB-C, USB 2.0 (đến 480Mb/s), DisplayPort; Smart Connector", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6 (802.11ax)" },
+        { "label": "Bluetooth", "value": "5.3" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "248.6 x 179.5 x 7 mm" },
+        { "label": "Trọng lượng", "value": "477 g", "main": true },
+        { "label": "Bảo mật", "value": "Touch ID trên nút nguồn" }
+      ] }
+    ]
+  },
+  "SS-TABS11": {
+    "source": "https://www.samsung.com/vn/tablets/galaxy-tab-s/galaxy-tab-s11-silver-256gb-sm-x730nzsexxv/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "CPU", "value": "8 nhân, 3.73GHz, 3.3GHz, 2.4GHz", "main": true },
+        { "label": "RAM", "value": "12GB", "main": true },
+        { "label": "Bộ nhớ trong", "value": "128GB hoặc 256GB (theo phiên bản)", "main": true },
+        { "label": "Thẻ nhớ ngoài", "value": "MicroSD, đến 2TB" },
+        { "label": "Hệ điều hành", "value": "Android" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "11 inch hình chữ nhật hoàn chỉnh, 10.9 inch tính đến các góc bo tròn", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Dynamic AMOLED 2X", "main": true },
+        { "label": "Độ phân giải", "value": "2560 x 1600 (WQXGA)" },
+        { "label": "Tần số quét", "value": "120 Hz", "main": true },
+        { "label": "Độ sáng tối đa", "value": "1600 nits, 1000 nits ở chế độ độ sáng cao" },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" },
+        { "label": "S Pen", "value": "Có, đi kèm trong hộp, đạt IP68", "main": true }
+      ] },
+      { "name": "Camera sau", "rows": [
+        { "label": "Độ phân giải", "short": "Camera sau", "value": "13MP", "main": true },
+        { "label": "Tự động lấy nét", "value": "Có" },
+        { "label": "Đèn flash", "value": "Có" },
+        { "label": "Quay video", "value": "4K (3840 x 2160) 30fps" }
+      ] },
+      { "name": "Camera trước", "rows": [
+        { "label": "Độ phân giải", "short": "Camera trước", "value": "12MP", "main": true }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "8400 mAh (điển hình), 8160 mAh (định mức)", "main": true },
+        { "label": "Phát video", "value": "Lên tới 18 giờ" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Phiên bản", "value": "Wi-Fi" },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n/ac/ax, 2.4GHz, 5GHz, 6GHz" },
+        { "label": "Bluetooth", "value": "5.4" },
+        { "label": "NFC", "value": "Không" },
+        { "label": "Cổng kết nối", "value": "USB Type-C, USB 3.2 Gen 1" },
+        { "label": "Định vị", "value": "GPS, Glonass, Beidou, Galileo, QZSS" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "165.3 x 253.8 x 5.5 mm" },
+        { "label": "Trọng lượng", "value": "469 g", "main": true },
+        { "label": "Khung", "value": "Armor Aluminum" },
+        { "label": "Kháng nước, bụi", "value": "IP68" },
+        { "label": "Trong hộp", "value": "Máy, S Pen, cáp USB-C, que chọc SIM, sách hướng dẫn. Không kèm củ sạc" },
+        { "label": "Cập nhật bảo mật", "value": "Đến 30/09/2032" }
+      ] }
+    ]
+  },
+  "APL-MBA13M4": {
+    "source": "https://support.apple.com/en-us/122209",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple M4", "main": true },
+        { "label": "CPU", "value": "10 nhân: 4 nhân hiệu năng, 6 nhân tiết kiệm điện", "main": true },
+        { "label": "GPU", "value": "8 nhân hoặc 10 nhân", "main": true },
+        { "label": "Neural Engine", "value": "16 nhân" },
+        { "label": "Băng thông bộ nhớ", "value": "120GB/s" },
+        { "label": "RAM", "value": "16GB hoặc 24GB (theo phiên bản)", "main": true },
+        { "label": "Ổ cứng", "value": "SSD 256GB hoặc 512GB (theo phiên bản)", "main": true }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "13.6 inch, LED nền, công nghệ IPS", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "2560 x 1664, 224 ppi", "main": true },
+        { "label": "Độ sáng", "value": "500 nit" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "53.8 Wh, lithium-polymer", "main": true },
+        { "label": "Thời lượng", "value": "Đến 18 giờ xem video, đến 15 giờ lướt web không dây" },
+        { "label": "Sạc", "value": "Sạc nhanh với củ sạc USB-C 70W" }
+      ] },
+      { "name": "Camera & âm thanh", "rows": [
+        { "label": "Camera", "value": "12MP Center Stage, quay video 1080p" },
+        { "label": "Loa", "value": "4 loa, Spatial Audio với AirPods được hỗ trợ" },
+        { "label": "Micro", "value": "3 micro định hướng" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng", "value": "2 Thunderbolt 4 (USB-C), MagSafe 3, jack 3.5 mm", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6E (802.11ax)" },
+        { "label": "Bluetooth", "value": "5.3" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "30.41 x 21.5 x 1.13 cm" },
+        { "label": "Trọng lượng", "value": "1.24 kg", "main": true }
+      ] }
+    ]
+  },
+  "APL-MBP14M5": {
+    "source": "https://support.apple.com/vi-vn/125405",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple M5", "main": true },
+        { "label": "CPU", "value": "10 lõi: 4 lõi siêu xử lý, 6 lõi tiết kiệm điện", "main": true },
+        { "label": "GPU", "value": "10 lõi, có Neural Accelerators", "main": true },
+        { "label": "Neural Engine", "value": "16 lõi" },
+        { "label": "Băng thông bộ nhớ", "value": "153GB/s" },
+        { "label": "RAM", "value": "16GB hoặc 24GB (theo phiên bản)", "main": true },
+        { "label": "Ổ cứng", "value": "SSD 512GB hoặc 1TB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "macOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "14.2 inch, Liquid Retina XDR", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "3024 x 1964, 254 ppi", "main": true },
+        { "label": "Tần số quét", "value": "ProMotion, đến 120Hz" },
+        { "label": "Độ sáng", "value": "XDR 1000 nit toàn màn hình, đỉnh 1600 nit (chỉ nội dung HDR); SDR đến 1000 nit (ngoài trời)" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "72.4 Wh, Li-Po", "main": true },
+        { "label": "Thời lượng", "value": "Video trực tuyến đến 24 giờ, duyệt web không dây đến 16 giờ" },
+        { "label": "Sạc", "value": "Bộ tiếp hợp nguồn USB-C 70W, cáp USB-C sang MagSafe 3 (2 m); sạc nhanh với nguồn USB PD 96W trở lên" }
+      ] },
+      { "name": "Camera & âm thanh", "rows": [
+        { "label": "Camera", "value": "12MP Center Stage, Desk View, quay video 1080p" },
+        { "label": "Loa", "value": "6 loa, loa trầm khử lực, Âm Thanh Không Gian" },
+        { "label": "Micro", "value": "Dãy 3 micrô" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng", "value": "3 Thunderbolt 4 (USB-C), HDMI, khe SDXC, MagSafe 3, jack 3.5 mm", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6E (802.11ax)" },
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "Màn hình ngoài", "value": "Tối đa 2 màn hình" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "31.26 x 22.12 x 1.55 cm" },
+        { "label": "Trọng lượng", "value": "1.55 kg", "main": true },
+        { "label": "Bàn phím", "value": "Magic Keyboard có đèn nền, Touch ID" }
+      ] }
+    ]
+  },
+  "AS-VIVO15OLED": {
+    "source": "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-oled-s5506/techspec/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Model", "value": "Vivobook S 15 OLED (S5506MA)" },
+        { "label": "Chip", "value": "Intel Core Ultra 5 125H", "main": true },
+        { "label": "CPU", "value": "14 nhân, 18 luồng, 1.2GHz, tối đa 4.5GHz, cache 18MB", "main": true },
+        { "label": "GPU", "value": "Intel Arc Graphics" },
+        { "label": "NPU", "value": "Intel AI Boost, tối đa 11 TOPS" },
+        { "label": "RAM", "value": "16GB LPDDR5X hàn trên bo mạch, tối đa 16GB", "main": true },
+        { "label": "Ổ cứng", "value": "SSD M.2 NVMe PCIe 4.0, 512GB hoặc 1TB (theo phiên bản)", "main": true },
+        { "label": "Khe mở rộng", "value": "1 khe M.2 2280 PCIe 4.0 x4" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "15.6 inch OLED, tỉ lệ 16:9, không cảm ứng", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "3K (2880 x 1620)", "main": true },
+        { "label": "Tần số quét", "value": "120Hz", "main": true },
+        { "label": "Độ sáng", "value": "400 nit, đỉnh HDR 500 nit" },
+        { "label": "Dải màu", "value": "100% DCI-P3, 1.07 tỷ màu" },
+        { "label": "Chứng nhận", "value": "VESA DisplayHDR True Black 500, TÜV Rheinland (giảm 70% ánh sáng xanh có hại)" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "75Wh, 4 cell Li-ion", "main": true },
+        { "label": "Sạc", "value": "Củ sạc Type-C 90W (20V, 4.5A), có kèm hay không tuỳ thị trường" }
+      ] },
+      { "name": "Camera & âm thanh", "rows": [
+        { "label": "Camera", "value": "FHD có IR, hỗ trợ Windows Hello, có màn che" },
+        { "label": "Âm thanh", "value": "Smart Amp, harman/kardon, micro mảng" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng", "value": "2 Thunderbolt 4, 2 USB 3.2 Gen 1 Type-A, 1 HDMI 2.1 TMDS, jack 3.5 mm, đầu đọc thẻ Micro SD", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 6E (802.11ax), 3 băng tần, 2x2" },
+        { "label": "Bluetooth", "value": "5.2" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "35.36 x 24.69 x 1.39 ~ 1.59 cm" },
+        { "label": "Trọng lượng", "value": "1.50 kg", "main": true },
+        { "label": "Bàn phím", "value": "Đèn nền RGB 1 vùng, có phím số, hành trình phím 1.5 mm, có phím Copilot" },
+        { "label": "Độ bền", "value": "Chuẩn quân đội US MIL-STD 810H" },
+        { "label": "Màu sắc", "value": "Neutral Black, Mist Blue" }
+      ] }
+    ]
+  },
+  "LN-IDEASLIM5": {
+    "source": "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_14AKP10",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Model", "value": "IdeaPad Slim 5 14AKP10: 83HX00BESB (16GB, 512GB), 83HX001JVN (32GB, 1TB)" },
+        { "label": "Chip", "value": "AMD Ryzen AI 7 350", "main": true },
+        { "label": "CPU", "value": "8 nhân, 16 luồng, 2.0GHz, tối đa 5.0GHz, 8MB L2, 16MB L3", "main": true },
+        { "label": "GPU", "value": "AMD Radeon 860M tích hợp" },
+        { "label": "NPU", "value": "AMD Ryzen AI, tối đa 50 TOPS" },
+        { "label": "Phân loại AI", "value": "Copilot+ PC" },
+        { "label": "RAM", "value": "16GB (2 x 8GB) hoặc 32GB (2 x 16GB) DDR5-5600 SODIMM (theo phiên bản)", "main": true },
+        { "label": "Ổ cứng", "value": "SSD M.2 2242 PCIe 4.0 x4 NVMe, 512GB hoặc 1TB (theo phiên bản)", "main": true },
+        { "label": "Hệ điều hành", "value": "Windows 11 Home" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "14 inch OLED, tỉ lệ 16:10, không cảm ứng", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "WUXGA (1920 x 1200)", "main": true },
+        { "label": "Tần số quét", "value": "60Hz" },
+        { "label": "Độ sáng", "value": "400 nit, mặt kính bóng" },
+        { "label": "Dải màu", "value": "100% DCI-P3" },
+        { "label": "Chứng nhận", "value": "DisplayHDR True Black 500, TÜV Rheinland Low Blue Light (phần cứng)" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Pin", "value": "60Wh, Li-ion", "main": true },
+        { "label": "Thời lượng", "value": "Bản OLED: MobileMark 30 ở 250 nit 10.5 giờ, phát video 1080p ở 150 nit 14.6 giờ" },
+        { "label": "Sạc", "value": "Củ sạc USB-C 65W dạng cắm tường, PD 3.0" },
+        { "label": "Sạc nhanh", "value": "Rapid Charge Boost: sạc 15 phút dùng được 2 giờ" }
+      ] },
+      { "name": "Camera & âm thanh", "rows": [
+        { "label": "Camera", "value": "FHD 1080p có IR, cảm biến ToF, có màn che" },
+        { "label": "Loa", "value": "Stereo 2W x 2, Dolby Audio" },
+        { "label": "Micro", "value": "2 micro dạng mảng" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Cổng", "value": "2 USB-C 10Gbps (PD, DisplayPort 1.4), 2 USB-A 5Gbps, 1 HDMI 2.1, jack 3.5 mm, đầu đọc thẻ microSD", "main": true },
+        { "label": "Wi-Fi", "value": "Wi-Fi 7 (802.11be), 2x2" },
+        { "label": "Bluetooth", "value": "5.4" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "313.4 x 222 x 16.9 mm" },
+        { "label": "Trọng lượng", "value": "Khoảng 1.39 kg (bản OLED, pin 60Wh)", "main": true },
+        { "label": "Chất liệu", "value": "Nhôm (mặt trên và mặt dưới)", "main": true },
+        { "label": "Bàn phím", "value": "Có đèn nền, hành trình phím 1.3 mm, có phím Copilot" },
+        { "label": "Độ bền", "value": "MIL-STD-810H, đạt 21 hạng mục" },
+        { "label": "Màu sắc", "value": "Luna Grey" }
+      ] }
+    ]
+  },
+  "APL-AW11": {
+    "source": "https://support.apple.com/vi-vn/125093",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple S10, bộ xử lý lõi kép 64 bit", "main": true },
+        { "label": "Neural Engine", "value": "4 lõi" },
+        { "label": "Dung lượng", "value": "64GB" },
+        { "label": "Hệ điều hành", "value": "watchOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Công nghệ", "short": "Màn hình", "value": "Retina Luôn Bật, OLED góc rộng, LTPO3", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "374 x 446, 326 ppi" },
+        { "label": "Diện tích", "value": "970 mm vuông" },
+        { "label": "Độ sáng", "value": "Đỉnh đến 2000 nit" },
+        { "label": "Mặt kính", "value": "Ion-X, chống trầy xước gấp 2 lần (vỏ nhôm)" }
+      ] },
+      { "name": "Sức khoẻ & an toàn", "rows": [
+        { "label": "Cảm biến", "value": "Điện tim, nhịp tim quang học thế hệ thứ 3, nồng độ ôxi trong máu, nhiệt độ", "main": true },
+        { "label": "Tính năng", "value": "ECG, Ôxi Trong Máu, thông báo tăng huyết áp, thông báo ngưng thở khi ngủ, điểm số giấc ngủ" },
+        { "label": "An toàn", "value": "Phát Hiện Ngã, Phát Hiện Va Chạm" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời lượng", "short": "Pin", "value": "Đến 24 giờ sử dụng bình thường, đến 38 giờ ở Chế Độ Nguồn Điện Thấp", "main": true },
+        { "label": "Sạc nhanh", "value": "Đến 80% trong khoảng 30 phút", "main": true }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Wi-Fi", "value": "Wi-Fi 4 (802.11n), 2.4GHz và 5GHz" },
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "Định vị", "value": "GPS L1, GLONASS, Galileo, QZSS, BeiDou" },
+        { "label": "Tương thích", "value": "iPhone 11 trở lên, iPhone SE (thế hệ thứ 2 trở lên), iOS 26 trở lên" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "42 x 36 x 9.7 mm", "main": true },
+        { "label": "Trọng lượng", "value": "30.3 g (nhôm, GPS)" },
+        { "label": "Cỡ cổ tay", "value": "130-200 mm" },
+        { "label": "Kháng nước, bụi", "value": "Chống nước ở độ sâu 50 m, chống bụi IP6X", "main": true }
+      ] }
+    ]
+  },
+  "APL-AWSE3": {
+    "source": "https://support.apple.com/vi-vn/125094",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "Chip", "value": "Apple S10, bộ xử lý lõi kép 64 bit", "main": true },
+        { "label": "Neural Engine", "value": "4 lõi" },
+        { "label": "Dung lượng", "value": "64GB" },
+        { "label": "Hệ điều hành", "value": "watchOS" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Công nghệ", "short": "Màn hình", "value": "Retina Luôn Bật, OLED, LTPO", "main": true },
+        { "label": "Độ phân giải", "short": "Độ phân giải màn hình", "value": "324 x 394, 326 ppi" },
+        { "label": "Diện tích", "value": "759 mm vuông" },
+        { "label": "Độ sáng", "value": "Đỉnh 1000 nit" },
+        { "label": "Mặt kính", "value": "Ion-X cường lực, chống nứt gấp 4 lần" }
+      ] },
+      { "name": "Sức khoẻ & an toàn", "rows": [
+        { "label": "Cảm biến", "value": "Nhịp tim quang học thế hệ thứ 2, nhiệt độ", "main": true },
+        { "label": "Tính năng", "value": "Thông báo nhịp tim cao và thấp, thông báo nhịp không đều, thông báo ngưng thở khi ngủ, điểm số giấc ngủ" },
+        { "label": "An toàn", "value": "SOS Khẩn Cấp, Phát Hiện Ngã, Phát Hiện Va Chạm" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời lượng", "short": "Pin", "value": "Đến 18 giờ sử dụng bình thường, đến 32 giờ ở Chế Độ Nguồn Điện Thấp", "main": true },
+        { "label": "Sạc nhanh", "value": "Đến 80% trong khoảng 45 phút", "main": true }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Wi-Fi", "value": "Wi-Fi 4 (802.11n), 2.4GHz" },
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "Định vị", "value": "GPS L1 (GLONASS, Galileo, QZSS, BeiDou)" },
+        { "label": "Tương thích", "value": "iPhone 11 trở lên, iPhone SE (thế hệ thứ 2 trở lên), iOS 27 trở lên" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "40 x 34 x 10.7 mm", "main": true },
+        { "label": "Trọng lượng", "value": "26.3 g (GPS)" },
+        { "label": "Cỡ cổ tay", "value": "130-200 mm" },
+        { "label": "Kháng nước", "value": "Chống nước ở độ sâu 50 m", "main": true },
+        { "label": "Điều khiển", "value": "Digital Crown, chạm một lần, chạm hai lần, lắc cổ tay" }
+      ] }
+    ]
+  },
+  "SS-GW8": {
+    "source": "https://www.samsung.com/vn/watches/galaxy-watch/galaxy-watch8-40mm-silver-bluetooth-sm-l320nzsaxxv/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Cấu hình & bộ nhớ", "rows": [
+        { "label": "CPU", "value": "Bộ xử lý 3 nm, 5 nhân, 1.6GHz, 1.5GHz", "main": true },
+        { "label": "RAM", "value": "2GB" },
+        { "label": "Bộ nhớ trong", "value": "32GB", "main": true },
+        { "label": "Hệ điều hành", "value": "Wear OS Powered by Samsung" }
+      ] },
+      { "name": "Màn hình", "rows": [
+        { "label": "Kích thước", "short": "Màn hình", "value": "1.3 inch (34 mm)", "main": true },
+        { "label": "Công nghệ", "short": "Công nghệ màn hình", "value": "Super AMOLED", "main": true },
+        { "label": "Độ phân giải", "value": "438 x 438" },
+        { "label": "Độ sáng tối đa", "value": "Lên đến 3000 nits" },
+        { "label": "Độ sâu màu", "value": "16 triệu màu" }
+      ] },
+      { "name": "Sức khoẻ & luyện tập", "rows": [
+        { "label": "Chỉ số", "value": "Chỉ số chống oxy hoá, thành phần cơ thể, Energy Score" },
+        { "label": "Giấc ngủ", "value": "Hướng dẫn trước khi đi ngủ" },
+        { "label": "Luyện tập", "value": "Huấn luyện viên chạy bộ" },
+        { "label": "Cảm biến", "value": "Nhịp tim quang học, điện tim, Bioelectrical Impedance Analysis, nhiệt độ hồng ngoại, gia tốc, áp suất kế, Gyro, Geomagnetic, ánh sáng" }
+      ] },
+      { "name": "Pin", "rows": [
+        { "label": "Dung lượng", "short": "Pin", "value": "325 mAh", "main": true },
+        { "label": "Thời gian sử dụng", "value": "Lên đến 40 giờ khi tắt AOD, lên đến 30 giờ khi bật AOD" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Phiên bản", "value": "Bluetooth (không LTE)", "main": true },
+        { "label": "Wi-Fi", "value": "802.11a/b/g/n, 2.4GHz, 5GHz" },
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "NFC", "value": "Có" },
+        { "label": "Định vị", "value": "GPS tần số kép L1+L5, Glonass, Beidou, Galileo" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kích thước", "value": "42.7 x 40.4 x 8.6 mm" },
+        { "label": "Trọng lượng", "value": "30 g (thân máy)", "main": true },
+        { "label": "Chất liệu", "value": "Armor Aluminium" },
+        { "label": "Độ bền", "value": "5ATM, IP68, MIL-STD-810H", "main": true }
+      ] }
+    ]
+  },
+  "JBL-T520BT": {
+    "source": "https://vn.jbl.com/en/over-ear-headphones/TUNE520BT.html",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Âm thanh", "rows": [
+        { "label": "Màng loa", "value": "33 mm", "short": "Màng loa", "main": true },
+        { "label": "Công nghệ âm thanh", "value": "JBL Pure Bass" },
+        { "label": "Dải tần", "value": "20 Hz - 20 kHz" },
+        { "label": "Trở kháng", "value": "30 ohm" },
+        { "label": "Độ nhạy", "value": "102 dB (1 kHz, 1 mW)" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời gian nghe", "value": "Đến 57 giờ", "short": "Pin", "main": true },
+        { "label": "Sạc đầy", "value": "2 giờ", "short": "Thời gian sạc đầy", "main": true },
+        { "label": "Sạc nhanh", "value": "Sạc 5 phút nghe thêm 3 giờ", "main": true },
+        { "label": "Cổng sạc", "value": "USB-C" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Bluetooth", "value": "5.3", "main": true },
+        { "label": "Đa điểm", "value": "Có (Multi-point)", "short": "Kết nối đa điểm", "main": true },
+        { "label": "Hồ sơ Bluetooth", "value": "HFP 1.7.2, AVRCP 1.6.2, A2DP 1.3.2" },
+        { "label": "Ứng dụng", "value": "JBL Headphones (chỉnh EQ)" },
+        { "label": "Micro", "value": "1 micro, đàm thoại rảnh tay, Voice Aware" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kiểu đeo", "value": "On-ear (ốp tai)", "main": true },
+        { "label": "Gập", "value": "Có" },
+        { "label": "Trọng lượng", "value": "157 g" },
+        { "label": "Phụ kiện kèm theo", "value": "Cáp sạc USB-C" }
+      ] }
+    ]
+  },
+  "APL-AIRPODSPRO3": {
+    "source": "https://support.apple.com/vi-vn/125135",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Âm thanh", "rows": [
+        { "label": "Chip", "value": "Apple H2", "main": true },
+        { "label": "Chống ồn", "value": "Chủ Động Khử Tiếng Ồn", "main": true },
+        { "label": "Chế độ nghe", "value": "Âm Thanh Thích Ứng, Xuyên Âm, Nhận Biết Cuộc Hội Thoại" },
+        { "label": "Âm thanh không gian", "value": "Cá nhân hoá, theo dõi chuyển động đầu" },
+        { "label": "Cảm biến", "value": "Nhịp tim khi tập luyện, cảm biến da, gia tốc kế", "main": true }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Tai nghe", "short": "Pin tai nghe", "value": "Đến 8 giờ nghe khi bật Chủ Động Khử Tiếng Ồn", "main": true },
+        { "label": "Kèm hộp sạc", "short": "Pin kèm hộp sạc", "value": "Đến 24 giờ nghe khi bật Chủ Động Khử Tiếng Ồn", "main": true },
+        { "label": "Sạc nhanh", "value": "Sạc 5 phút trong hộp thêm khoảng 1 giờ nghe" },
+        { "label": "Hộp sạc", "value": "MagSafe (USB-C), sạc được bằng bộ sạc MagSafe, bộ sạc Apple Watch, bộ sạc Qi; có loa dùng với ứng dụng Tìm" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Bluetooth", "value": "5.3" },
+        { "label": "Chip định vị", "value": "Apple Ultra Wideband thế hệ thứ hai trong hộp sạc" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kháng nước, bụi", "value": "IP57 (tai nghe và hộp sạc)", "main": true },
+        { "label": "Tai nghe", "value": "30.9 x 19.2 x 27.0 mm, 5.55 g mỗi bên" },
+        { "label": "Hộp sạc", "value": "47.2 x 62.2 x 21.8 mm, 43.99 g" },
+        { "label": "Trong hộp", "value": "Đầu tai nghe silicon 5 cỡ (XXS, XS, S, M, L), không kèm cáp sạc" }
+      ] }
+    ]
+  },
+  "SONY-WH1000XM6": {
+    "source": "https://store.sony.com.my/blogs/7965715005474_43812945133602/7965715005474__specifications/?locale=en",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Chống ồn", "rows": [
+        { "label": "Bộ xử lý", "value": "HD Noise Cancelling Processor QN3", "short": "Chip chống ồn", "main": true },
+        { "label": "Số micro chống ồn", "value": "12 micro", "main": true },
+        { "label": "Micro đàm thoại", "value": "6 micro, beamforming dùng AI" }
+      ] },
+      { "name": "Âm thanh", "rows": [
+        { "label": "Màng loa", "value": "30 mm, nam châm Neodymium", "short": "Màng loa", "main": true },
+        { "label": "Codec", "value": "SBC, AAC, LDAC, LC3", "main": true },
+        { "label": "Âm thanh độ phân giải cao", "value": "High-Resolution Audio và High-Resolution Audio Wireless (qua LDAC)" },
+        { "label": "Nâng chất nhạc nén", "value": "DSEE Extreme" },
+        { "label": "Dải tần", "value": "4 Hz - 40.000 Hz (JEITA)" },
+        { "label": "Dải tần qua Bluetooth", "value": "20 Hz - 20.000 Hz (44.1 kHz), 20 Hz - 40.000 Hz (LDAC 96 kHz, 990 kbps)" },
+        { "label": "Trở kháng", "value": "48 ohm khi bật máy, 16 ohm khi tắt máy (1 kHz, dùng cáp)" },
+        { "label": "Độ nhạy", "value": "103 dB/mW khi bật máy, 102 dB/mW khi tắt máy (dùng cáp)" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời gian nghe nhạc", "value": "Tối đa 30 giờ (bật chống ồn), 40 giờ (tắt chống ồn)", "short": "Pin", "main": true },
+        { "label": "Thời gian đàm thoại", "value": "Tối đa 24 giờ (bật chống ồn), 28 giờ (tắt chống ồn)" },
+        { "label": "Sạc đầy", "value": "Khoảng 3.5 giờ" },
+        { "label": "Sạc nhanh", "value": "Sạc 3 phút nghe 3 giờ khi dùng bộ sạc USB-PD (bán riêng)", "main": true },
+        { "label": "Nghe khi đang sạc", "value": "Có (Bluetooth và cáp âm thanh)" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Bluetooth", "value": "5.3", "main": true },
+        { "label": "Tầm kết nối", "value": "Khoảng 10 m" },
+        { "label": "Đa điểm", "value": "Có, 2 thiết bị cùng lúc", "short": "Kết nối đa điểm" },
+        { "label": "LE Audio", "value": "Có, gồm Auracast" },
+        { "label": "Có dây", "value": "Giắc stereo mini, cáp khoảng 1.2 m" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Kiểu đeo", "value": "Over-ear, dạng kín" },
+        { "label": "Gập", "value": "Có" },
+        { "label": "Hộp đựng", "value": "Có, khoá nam châm" },
+        { "label": "Trọng lượng", "value": "Khoảng 254 g" },
+        { "label": "Màu", "value": "Đen, Bạc (Platinum Silver)" },
+        { "label": "Phụ kiện kèm theo", "value": "Hộp đựng, cáp tai nghe, cáp sạc USB" }
+      ] }
+    ]
+  },
+  "JBL-FLIP7": {
+    "source": "https://vn.jbl.com/en/bluetooth-portables/FLIP-7.html",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Âm thanh", "rows": [
+        { "label": "Công suất", "value": "25 W RMS (loa trầm) + 10 W RMS (loa tweeter)", "short": "Công suất loa", "main": true },
+        { "label": "Loa", "value": "Loa trầm 45 x 80 mm, tweeter 16 mm" },
+        { "label": "Dải tần", "value": "60 Hz - 20 kHz" },
+        { "label": "Tỷ lệ tín hiệu trên nhiễu", "value": "> 80 dB" },
+        { "label": "AI Sound Boost", "value": "Phân tích nhạc theo thời gian thực để giảm méo tiếng" }
+      ] },
+      { "name": "Pin & sạc", "rows": [
+        { "label": "Thời gian nghe", "value": "14 giờ, thêm 2 giờ với Playtime Boost", "short": "Pin", "main": true },
+        { "label": "Sạc đầy", "value": "2.5 giờ" },
+        { "label": "Pin", "value": "Li-ion polymer 17.28 Wh", "short": "Loại pin" }
+      ] },
+      { "name": "Kết nối", "rows": [
+        { "label": "Bluetooth", "value": "5.4", "main": true },
+        { "label": "Auracast", "value": "Có, ghép cặp stereo 2 loa Flip 7 hoặc nối nhiều loa JBL hỗ trợ Auracast", "main": true },
+        { "label": "Hồ sơ Bluetooth", "value": "A2DP 1.4, AVRCP 1.6" },
+        { "label": "Âm thanh lossless", "value": "Qua cổng USB-C, cần nguồn nhạc lossless tương thích" },
+        { "label": "Ứng dụng", "value": "JBL Portable" }
+      ] },
+      { "name": "Thiết kế", "rows": [
+        { "label": "Chống nước, bụi", "value": "IP68 (thử nghiệm ngâm nước ngọt đến 1.5 m trong 30 phút)", "main": true },
+        { "label": "Chịu rơi", "value": "Từ độ cao 1 m xuống sàn bê tông", "main": true },
+        { "label": "Kích thước", "value": "18.3 x 7.0 x 7.2 cm" },
+        { "label": "Trọng lượng", "value": "0.56 kg" },
+        { "label": "Màu", "value": "Hồng, Xanh dương, Đen" },
+        { "label": "Phụ kiện kèm theo", "value": "Móc carabiner" }
+      ] }
+    ]
+  },
+  "ANK-SAC20W": {
+    "source": "https://www.anker.com/products/a2637-nano-20w-charger",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Công suất", "value": "20W", "main": true },
+        { "label": "Cổng ra", "value": "1 cổng USB-C", "main": true },
+        { "label": "Đầu ra", "value": "5V 3A, 9V 2.22A", "main": true },
+        { "label": "Đầu vào", "value": "100-240V, 0.6A, 50-60Hz", "main": true },
+        { "label": "Kích thước", "value": "29.5 x 29.5 x 30 mm", "main": true },
+        { "label": "Bảo vệ", "value": "ActiveShield: theo dõi nhiệt độ, điều chỉnh công suất" },
+        { "label": "Lưu ý", "value": "Không kèm cáp. Không hỗ trợ Super Fast Charging của Galaxy S20, S21, Note 10, Note 20" }
+      ] }
+    ]
+  },
+  "BS-GAN65W": {
+    "source": "https://eu.baseus.com/products/gan5-pro-3-ports-fast-charger-65w",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Mẫu", "value": "Baseus GaN5 Pro 65W" },
+        { "label": "Cổng ra", "value": "2 USB-C, 1 USB-A", "main": true },
+        { "label": "Công suất USB-C", "value": "Tối đa 65W", "main": true },
+        { "label": "Công suất USB-A", "value": "Tối đa 60W", "main": true },
+        { "label": "Đầu vào", "value": "AC 110-240V", "main": true },
+        { "label": "Kích thước", "value": "10.7 x 3.6 x 3.2 cm" },
+        { "label": "Trọng lượng", "value": "128 g", "main": true },
+        { "label": "Kèm theo", "value": "Cáp USB-C sang USB-C 100W" }
+      ] }
+    ]
+  },
+  "APL-CAP-USBC1M": {
+    "source": "https://www.apple.com/shop/product/mw493am/a/60w-usb-c-charge-cable-1-m",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Chiều dài", "value": "1 m", "main": true },
+        { "label": "Đầu nối", "value": "USB-C ở cả 2 đầu", "main": true },
+        { "label": "Công suất sạc", "value": "Đến 60W", "main": true },
+        { "label": "Truyền dữ liệu", "value": "Tốc độ USB 2", "main": true },
+        { "label": "Thiết kế", "value": "Dạng dệt", "main": true },
+        { "label": "Tương thích", "value": "iPhone 15 trở lên, các mẫu iPad và Mac có cổng USB-C" },
+        { "label": "Lưu ý", "value": "Không kèm củ sạc" }
+      ] }
+    ]
+  },
+  "ANK-PB10K": {
+    "source": "https://www.ankerjapan.com/products/a110d",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Mẫu", "value": "Anker Zolo Power Bank (10000mAh, 22.5W, Built-In USB-C), A110D" },
+        { "label": "Dung lượng", "value": "10.000 mAh", "main": true },
+        { "label": "Công suất tối đa", "value": "22.5W (chỉ với thiết bị Huawei). Thiết bị khác: USB-C tối đa 20W, USB-A tối đa 18W", "main": true },
+        { "label": "Nhiều cổng cùng lúc", "value": "Tổng tối đa 15W", "main": true },
+        { "label": "Cổng", "value": "3 cổng: cáp USB-C liền thân, 1 cổng USB-C, 1 cổng USB-A", "main": true },
+        { "label": "Đầu vào", "value": "USB-C (cáp hoặc cổng): 5V 3A, 9V 2.22A, tối đa 20W", "main": true },
+        { "label": "Đầu ra USB-C", "value": "5V 3A, 9V 2.22A, 10V 2.25A, 12V 1.67A" },
+        { "label": "Đầu ra USB-A", "value": "5V 3A, 9V 2A, 10V 2.25A, 12V 1.5A" },
+        { "label": "Sạc xuyên pin", "value": "Có" },
+        { "label": "Kích thước", "value": "Khoảng 140.7 x 71.7 x 15.4 mm", "main": true },
+        { "label": "Trọng lượng", "value": "Khoảng 229 g" },
+        { "label": "Lưu ý", "value": "Quy định mang lên máy bay tuỳ hãng bay và quốc gia. Sạc thiết bị Lightning cần mua cáp riêng" }
+      ] }
+    ]
+  },
+  "BS-PB20K": {
+    "source": "https://www.baseus.com/products/adaman-metal-digital-display-power-bank-65w-20000mah",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Mẫu", "value": "Baseus Adaman Metal Digital Display 65W 20000mAh" },
+        { "label": "Dung lượng", "value": "20.000 mAh", "main": true },
+        { "label": "Công suất tối đa", "value": "65W qua USB-C (20V 3.25A)", "main": true },
+        { "label": "Cổng ra", "value": "3 cổng: 1 USB-C, 2 USB-A", "main": true },
+        { "label": "Đầu vào", "value": "USB-C tối đa 60W (5V 3A, 9V 3A, 12V 3A, 15V 3A, 20V 3A). Micro USB: 5V 2A, 9V 2A", "main": true },
+        { "label": "Đầu ra USB-C", "value": "5V 3A, 9V 3A, 12V 3A, 15V 3A, 20V 3.25A" },
+        { "label": "Đầu ra USB-A 1", "value": "4.5V 5A (SCP), 5V 4.5A (SCP), 5V 3A, 9V 3A, 12V 2.5A" },
+        { "label": "Đầu ra USB-A 2", "value": "5V 3A, 9V 3A, 12V 2.5A" },
+        { "label": "Nhiều cổng cùng lúc", "value": "USB-C + USB-A: 45W + 18W. 2 cổng USB-A: 5V 3A", "main": true },
+        { "label": "Màn hình", "value": "LED hiển thị pin, điện áp, dòng điện", "main": true },
+        { "label": "Chất liệu", "value": "Hợp kim nhôm + ABS" },
+        { "label": "Kích thước", "value": "6.06 x 2.55 x 1.06 inch (khoảng 154 x 65 x 27 mm)" },
+        { "label": "Trọng lượng", "value": "1.02 pound (khoảng 463 g)" },
+        { "label": "Lưu ý", "value": "Không sạc được Surface Go. Máy OPPO chỉ sạc thường 5W hoặc 10W" }
+      ] }
+    ]
+  },
+  "APL-OP-17PM": {
+    "source": "https://www.apple.com/vn/shop/product/mgfr4fe/a/iphone-17-pro-max-silicone-case-with-magsafe-black",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Chất liệu", "value": "Silicon", "main": true },
+        { "label": "Tương thích", "value": "iPhone 17 Pro Max", "main": true },
+        { "label": "Lớp lót", "value": "Microfiber mềm", "main": true },
+        { "label": "Nam châm", "value": "Tích hợp, căn chỉnh với iPhone 17 Pro Max", "main": true },
+        { "label": "Sạc khi đeo ốp", "value": "Bộ sạc MagSafe, bộ sạc chuẩn Qi2 25W hoặc Qi", "main": true },
+        { "label": "Điều Khiển Camera", "value": "Mặt kính sapphire kết hợp lớp dẫn truyền" }
+      ] }
+    ]
+  },
+  "SS-OP-S26": {
+    "source": "https://www.samsung.com/vn/mobile-accessories/galaxy-s26-silicone-magnet-case-blue-violet-ef-es942cvegww/",
+    "checked_at": "2026-11-06",
+    "groups": [
+      { "name": "Thông số", "rows": [
+        { "label": "Tên chính hãng", "value": "Ốp lưng Silicone Nam châm Magnet Galaxy S26" },
+        { "label": "Tương thích", "value": "Galaxy S26", "main": true },
+        { "label": "Chất liệu", "value": "Silicone", "main": true },
+        { "label": "Nam châm", "value": "Tích hợp, gắn được phụ kiện từ tính tương thích", "main": true },
+        { "label": "Sạc không dây", "value": "Hỗ trợ sạc nhanh không dây", "main": true },
+        { "label": "Kích thước", "value": "75.2 x 153.1 x 12.2 mm", "main": true },
+        { "label": "Trọng lượng", "value": "32 g", "main": true }
+      ] }
+    ]
+  }
+}

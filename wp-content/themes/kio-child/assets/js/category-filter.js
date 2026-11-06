@@ -5,7 +5,7 @@
  * bằng pushState: link vẫn chia sẻ được, nút Back chạy đúng, số đếm ở sidebar luôn khớp vì đều do
  * Woo tính. Lỗi thì chuyển trang như thường.
  */
-( function ( $ ) {
+( function () {
 	'use strict';
 
 	var main = document.getElementById( 'main' );
@@ -44,12 +44,82 @@
 			return;
 		}
 
-		// Giữ nút đóng của ngăn kéo mobile, chỉ thay các widget. Woo có sẵn sự kiện dựng lại thanh trượt giá.
+		// Giữ nút đóng của ngăn kéo mobile, chỉ thay các widget.
 		sidebar.querySelectorAll( '.widget' ).forEach( function ( widget ) {
 			widget.remove();
 		} );
 		sidebar.append.apply( sidebar, Array.prototype.slice.call( next.querySelectorAll( ':scope > .widget' ) ) );
-		$( document.body ).trigger( 'init_price_filter' );
+		initPriceRange();
+	}
+
+	// Thanh kéo giá: 2 input range theo vị trí mốc. Kéo chỉ đổi hiển thị, thả tay mới lọc.
+	function initPriceRange() {
+		var box = document.querySelector( '.kio-price-range' );
+
+		if ( ! box ) {
+			return;
+		}
+
+		var stops = JSON.parse( box.dataset.stops );
+		var last = stops.length - 1;
+		var from = box.querySelector( '.kio-price-range__input--min' );
+		var to = box.querySelector( '.kio-price-range__input--max' );
+		var fill = box.querySelector( '.kio-price-range__fill' );
+		var value = box.querySelector( '.kio-price-range__value' );
+
+		function million( price ) {
+			return price / 1000000 + ' triệu';
+		}
+
+		function describe( low, high ) {
+			if ( 0 === low && last === high ) {
+				return 'Tất cả mức giá';
+			}
+			if ( 0 === stops[ high ] ) {
+				return 'Từ ' + million( stops[ low ] ) + ' trở lên';
+			}
+			return 0 === stops[ low ] ? 'Dưới ' + million( stops[ high ] ) : 'Từ ' + million( stops[ low ] ) + ' đến ' + million( stops[ high ] );
+		}
+
+		function paint() {
+			var low = Number( from.value );
+			var high = Number( to.value );
+			var text = describe( low, high );
+
+			fill.style.left = low / last * 100 + '%';
+			fill.style.right = 100 - high / last * 100 + '%';
+			value.textContent = text;
+			from.setAttribute( 'aria-valuetext', 0 === stops[ low ] ? '0' : million( stops[ low ] ) );
+			to.setAttribute( 'aria-valuetext', 0 === stops[ high ] ? 'Không giới hạn' : million( stops[ high ] ) );
+		}
+
+		// 2 đầu không vượt qua nhau: luôn cách ít nhất một nấc.
+		from.addEventListener( 'input', function () {
+			from.value = Math.min( Number( from.value ), Number( to.value ) - 1 );
+			paint();
+		} );
+		to.addEventListener( 'input', function () {
+			to.value = Math.max( Number( to.value ), Number( from.value ) + 1 );
+			paint();
+		} );
+
+		function apply() {
+			var low = Number( from.value );
+			var high = Number( to.value );
+			var url = new URL( box.dataset.url, window.location.href );
+
+			if ( 0 !== low || last !== high ) {
+				url.searchParams.set( 'min_price', stops[ low ] );
+				if ( 0 !== stops[ high ] ) {
+					url.searchParams.set( 'max_price', stops[ high ] );
+				}
+			}
+			load( url.href, true );
+		}
+
+		from.addEventListener( 'change', apply );
+		to.addEventListener( 'change', apply );
+		paint();
 	}
 
 	function animateCards( cards ) {
@@ -183,25 +253,11 @@
 		}
 	} );
 
-	// Form của thanh trượt giá gửi bằng GET: dựng URL như trình duyệt rồi đi cùng đường.
-	document.addEventListener( 'submit', function ( event ) {
-		var form = event.target;
-		var url;
-
-		if ( ! form.closest( '#secondary .widget_price_filter' ) ) {
-			return;
-		}
-
-		event.preventDefault();
-		url = new URL( form.action || window.location.href );
-		url.search = new URLSearchParams( new FormData( form ) ).toString();
-		load( url.href, true );
-	} );
-
+	initPriceRange();
 	window.history.replaceState( { kioArchive: true }, '', window.location.href );
 	window.addEventListener( 'popstate', function ( event ) {
 		if ( event.state && event.state.kioArchive ) {
 			load( window.location.href, false );
 		}
 	} );
-}( jQuery ) );
+}() );
