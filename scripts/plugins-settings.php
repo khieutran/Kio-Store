@@ -53,6 +53,9 @@ foreach ( $filter_widgets as $id_base => $instances ) {
 		$sidebar[] = "$id_base-$n";
 	}
 }
+// Storefront tự xoá hết widget một lần trên site mới (remove_default_widgets). Việc đó có thể xảy ra
+// sau bước này, tuỳ lúc có request vào wp-admin. Đánh dấu đã xoá để nó không đụng vào bộ lọc.
+update_option( 'storefront_cleared_widgets', true );
 $sidebars              = wp_get_sidebars_widgets();
 $sidebars['sidebar-1'] = $sidebar;
 wp_set_sidebars_widgets( $sidebars );

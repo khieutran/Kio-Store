@@ -121,6 +121,7 @@ async page => {
 	await page.locator( '#main a.compare.button' ).first().click( { force: true } );
 	await page.waitForTimeout( 2200 );
 	check( 'So sánh: thêm được', await page.locator( '#main a.compare.added' ).count() > 0 || await page.locator( '#yith-woocompare, .yith-woocompare-popup, #cboxContent' ).count() > 0 );
+	check( 'So sánh: popup thật sự hiện', await page.evaluate( () => { const popup = document.querySelector( '.yith-woocompare-popup-container' ); return !! popup && 'fixed' === getComputedStyle( popup ).position; } ) );
 	await page.keyboard.press( 'Escape' );
 	await page.evaluate( () => document.querySelector( '#cboxClose, .yith-woocompare-popup-close' )?.click() );
 	await page.waitForTimeout( 300 );

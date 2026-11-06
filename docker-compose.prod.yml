@@ -1,0 +1,35 @@
+# Cấu hình server thật, dùng chồng lên 2 file kia. Đặt trong .env của server để mọi lệnh và script tự nhận:
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.vm.yml:docker-compose.prod.yml
+services:
+  # HTTPS, HSTS, chặn Host lạ. Đây là service duy nhất mở cổng ra Internet.
+  caddy:
+    image: caddy:2.10.2-alpine
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      KIO_DOMAIN: ${KIO_DOMAIN}
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      # Giữ chứng chỉ qua các lần tạo lại container: Let's Encrypt giới hạn số lần cấp.
+      - caddy_data:/data
+    mem_limit: 64m
+
+  wordpress:
+    # Không mở cổng ra máy chủ, chỉ Caddy gọi được qua mạng Docker.
+    ports: !reset []
+    # !override: danh sách của file gốc có kio-loopback.conf, server có tên miền thật nên không cần.
+    volumes: !override
+      - wp_data:/var/www/html
+      - ./wp-content/themes/kio-child:/var/www/html/wp-content/themes/kio-child
+      - ./wp-content/plugins/kio-store:/var/www/html/wp-content/plugins/kio-store
+      - ./docker/apache/kio-performance.conf:/etc/apache2/conf-enabled/kio-performance.conf:ro
+      - ./docker/apache/kio-security.conf:/etc/apache2/conf-enabled/zz-kio-security.conf:ro
+      - ./docker/apache/kio-lowmem.conf:/etc/apache2/conf-enabled/zz-kio-lowmem.conf:ro
+      - ./docker/apache/remoteip-prod.conf:/etc/apache2/conf-available/remoteip.conf:ro
+
+volumes:
+  caddy_data:

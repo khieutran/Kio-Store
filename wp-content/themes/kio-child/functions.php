@@ -65,8 +65,8 @@ function kio_child_enqueue_assets() {
 	wp_dequeue_style( 'storefront-fonts' );
 	// CSS cho block của Storefront: các trang của site không dùng (41 KB chặn hiển thị).
 	wp_dequeue_style( 'storefront-gutenberg-blocks' );
-	// Bộ class Font Awesome đầy đủ (78 KB). Storefront chỉ dùng font qua CSS, không dùng class .fa nên
-	// giữ @font-face trong style.css là đủ. CSS Woo của Storefront khai báo phụ thuộc vào handle này
+	// Bộ class Font Awesome đầy đủ (78 KB). File này cũng chứa icon thanh đáy mobile, main.css đã vẽ lại
+	// bằng SVG. CSS Woo của Storefront khai báo phụ thuộc vào handle này
 	// nên dequeue không gỡ được: đăng ký lại thành handle rỗng.
 	wp_deregister_style( 'storefront-icons' );
 	wp_register_style( 'storefront-icons', false, array(), '1' );
