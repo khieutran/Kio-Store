@@ -1,5 +1,7 @@
 # Bí mật
 .env
+*.pem
+*.key
 
 # wp-content: chỉ theo dõi theme và plugin tự viết
 wp-content/*
@@ -32,3 +34,6 @@ __pycache__/
 
 # Công cụ chụp màn hình playwright-cli
 .playwright-cli/
+
+# Công cụ dựng mô hình 3D
+/tools/models/node_modules/

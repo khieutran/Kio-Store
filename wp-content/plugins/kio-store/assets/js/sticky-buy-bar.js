@@ -1,5 +1,5 @@
 /**
- * F7 — Thanh mua hàng dính dưới màn hình (mobile, trang sản phẩm).
+ * F7 — Thanh mua hàng dính dưới màn hình (trang sản phẩm).
  *
  * - IntersectionObserver theo dõi nút "Thêm vào giỏ" gốc: nút đã nằm PHÍA TRÊN màn hình (khách
  *   cuộn qua) thì hiện thanh. Không cần nghe sự kiện scroll liên tục.

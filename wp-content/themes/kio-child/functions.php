@@ -20,6 +20,7 @@ require_once KIO_CHILD_DIR . '/inc/class-kio-child-category-menu-walker.php';
 require_once KIO_CHILD_DIR . '/inc/product-card.php';
 require_once KIO_CHILD_DIR . '/inc/single-product.php';
 require_once KIO_CHILD_DIR . '/inc/product-archive.php';
+require_once KIO_CHILD_DIR . '/inc/class-kio-child-price-bands-widget.php';
 require_once KIO_CHILD_DIR . '/inc/checkout.php';
 
 /**
@@ -172,7 +173,7 @@ function kio_child_enqueue_assets() {
 		wp_enqueue_script(
 			'kio-child-category',
 			KIO_CHILD_URI . '/assets/js/category-filter.js',
-			array( 'jquery' ),
+			array(),
 			(string) filemtime( KIO_CHILD_DIR . '/assets/js/category-filter.js' ),
 			array(
 				'in_footer' => true,
@@ -486,7 +487,7 @@ function kio_child_footer() {
 		<div class="kio-container kio-footer__grid">
 			<div class="kio-footer__col kio-footer__about">
 				<?php kio_child_logo_svg(); ?>
-				<p><?php esc_html_e( 'Cửa hàng điện thoại, máy tính bảng và đồ điện tử (website demo phục vụ học tập — mọi thông tin là giả định).', 'kio-child' ); ?></p>
+				<p><?php esc_html_e( 'Đây là sản phẩm demo.', 'kio-child' ); ?></p>
 				<ul class="kio-social">
 					<?php
 					foreach ( array( 'facebook', 'youtube', 'tiktok' ) as $network ) {

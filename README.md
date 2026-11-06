@@ -94,15 +94,30 @@ Chưa có CD (tự deploy): sẽ làm ở Phase 7 khi có server. CD chỉ đưa
 
 ## Lộ trình
 
-| Phase | Nội dung | Ghi chú | Trạng thái |
-|---|---|---|---|
-| 0 | Dựng môi trường, làm quen WordPress | `docs/phase0/phase-0.md` (local) | ✅ Xong |
-| 1 | WooCommerce và dữ liệu sản phẩm | `docs/phase1/phase-1.md` (local) | ✅ Xong |
-| 1.5 | CI: lint + smoke test trên GitHub Actions | README, mục trên | 🟡 Chờ chạy lần đầu trên GitHub |
-| 2 | Giao diện: classic theme, child theme | `docs/phase2/phase-2.md` (local) | ✅ Xong |
-| 3 | Plugin chức năng | | ⬜ |
-| 4 | Tuỳ biến bằng code: hook, CPT, REST API | | ⬜ |
-| 5 | Hiệu năng | | ⬜ |
-| 6 | Bảo mật và vận hành | | ⬜ |
-| 7 | Deploy và Cloudflare (tuỳ chọn) | | ⬜ |
-| 8 | Tổng kết | | ⬜ |
+| Phase | Nội dung | Trạng thái |
+|---|---|---|
+| 0 | Dựng môi trường, làm quen WordPress | ✅ |
+| 1 | WooCommerce và dữ liệu sản phẩm | ✅ |
+| 1.5 | CI: lint, smoke test, kiểm tra bảo mật trên GitHub Actions | ✅ |
+| 2 | Giao diện: classic theme, child theme | ✅ |
+| 3 | Plugin chức năng | ✅ |
+| 4 | Tuỳ biến bằng code: hook, CPT, REST API | ✅ |
+| 4.5 | Làm đẹp giao diện | ✅ |
+| 5 | Hiệu năng: cache, ảnh, font, Redis | ✅ |
+| 6 | Bảo mật và vận hành: chặn tấn công, 2FA, phân quyền, backup, khôi phục | ✅ |
+| 6.5 | Hoàn thiện sản phẩm trước khi deploy | 🟡 Đang làm |
+| 7 | Deploy và Cloudflare (tuỳ chọn) | ⬜ |
+| 8 | Tổng kết | ⬜ |
+
+## Trước khi deploy
+
+Phải xong trước Phase 7:
+
+- [x] Flash sale tự gia hạn, không hết hạn sau vài ngày
+- [ ] Tinh chỉnh giao diện: nút bấm và các chỗ còn lại sau Phase 4.5
+- [x] Thông số kỹ thuật có nguồn cho 30/33 sản phẩm
+- [x] Mô hình 3D xoay được cho 8 sản phẩm tiêu biểu, các sản phẩm khác giữ ảnh hiện có
+- [ ] 3 sản phẩm Xiaomi chưa có thông số kiểm chứng
+- [x] Trang chi tiết: sắp lại vùng mua, cam kết, câu hỏi thường gặp, thanh mua dính trên desktop
+- [ ] Lọc theo nhu cầu ở danh mục
+- [x] Thanh kéo giá có mốc, bỏ tiêu đề đầu trang danh mục

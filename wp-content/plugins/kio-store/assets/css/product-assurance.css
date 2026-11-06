@@ -1,0 +1,67 @@
+/*
+ * Cam kết và câu hỏi thường gặp trên trang sản phẩm.
+ */
+
+.kio-assurance {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.4rem 1rem;
+	margin: 1rem 0;
+	padding: 0;
+	list-style: none;
+	font-size: var(--kio-text-sm);
+}
+
+.kio-assurance li {
+	position: relative;
+	margin: 0;
+	padding-left: 1.3rem;
+}
+
+.kio-assurance li::before {
+	position: absolute;
+	left: 0;
+	color: var(--kio-success);
+	font-weight: 700;
+	content: "\2713";
+}
+
+.kio-assurance a {
+	color: var(--kio-text);
+	text-decoration: none;
+}
+
+.kio-assurance a:hover {
+	color: var(--kio-brand);
+	text-decoration: underline;
+}
+
+.kio-faq {
+	clear: both;
+	max-width: 860px;
+	margin: 2rem 0 2.5rem;
+}
+
+.kio-faq details {
+	margin-bottom: 0.5rem;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius-sm);
+	background: var(--kio-card);
+}
+
+.kio-faq summary {
+	padding: 0.7rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.kio-faq details p {
+	margin: 0;
+	padding: 0 1rem 0.8rem;
+}
+
+.kio-faq__note {
+	margin: 0.5rem 0 0;
+	color: var(--kio-muted);
+	font-size: var(--kio-text-xs);
+}

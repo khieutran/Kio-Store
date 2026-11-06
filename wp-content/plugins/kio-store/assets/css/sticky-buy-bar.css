@@ -1,13 +1,14 @@
 /*
- * F7 — Thanh mua hàng dính dưới màn hình. Chỉ nạp trên trang sản phẩm.
+ * F7 — Thanh mua hàng dính dưới màn hình: mobile tràn ngang, desktop là khung nổi giữa màn hình.
+ * Chỉ nạp trên trang sản phẩm.
  * Màu lấy từ biến CSS của child theme (--kio-brand…) nếu có, kèm giá trị dự phòng.
  */
 
-.kio-buy-bar {
+.kio-buy-bar[hidden] {
 	display: none;
 }
 
-@media (max-width: 768px) {
+@media all {
 	.kio-buy-bar {
 		position: fixed;
 		left: 0;
@@ -18,8 +19,9 @@
 		align-items: center;
 		gap: 12px;
 		padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-		background: #fff;
-		box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+		/* Nền đậm: thanh này đè lên thẻ sản phẩm trắng, nền trắng thì không phân biệt được với nội dung. */
+		background: var(--kio-brand-dark, #08347a);
+		box-shadow: 0 -4px 20px rgba(8, 52, 122, 0.35);
 		transform: translateY(110%);
 		transition: transform 0.2s ease;
 	}
@@ -45,12 +47,17 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		font-size: 0.85rem;
-		color: var(--kio-text, #1f2937);
+		color: #fff;
 	}
 
 	.kio-buy-bar__price {
 		font-weight: 700;
-		color: var(--kio-price, #d70018);
+		color: #fff;
+	}
+
+	.kio-buy-bar__price .woocommerce-Price-amount,
+	.kio-buy-bar__price ins {
+		color: inherit;
 	}
 
 	.kio-buy-bar__price del {
@@ -65,6 +72,24 @@
 		background: var(--kio-price, #d70018);
 		color: #fff;
 		font-weight: 700;
+	}
+}
+
+@media (min-width: 769px) {
+	.kio-buy-bar {
+		right: auto;
+		bottom: 16px;
+		left: 50%;
+		width: min(720px, calc(100vw - 32px));
+		padding: 10px 12px 10px 20px;
+		border-radius: var(--kio-radius, 12px);
+		border: 1px solid rgba(255, 255, 255, 0.28); /* tách khỏi footer tối khi cuộn xuống cuối trang */
+		box-shadow: 0 8px 28px rgba(8, 52, 122, 0.45);
+		transform: translate(-50%, 160%);
+	}
+
+	.kio-buy-bar.is-visible {
+		transform: translateX(-50%);
 	}
 }
 

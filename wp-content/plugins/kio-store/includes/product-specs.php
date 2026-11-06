@@ -137,7 +137,7 @@ function kio_store_render_loop_specs(): void {
 /**
  * ACTION woocommerce_single_product_summary: thông số nổi bật trên trang sản phẩm.
  *
- * Priority 22: sau mô tả ngắn (20), trước khuyến mãi (25).
+ * Priority 22: sau mô tả ngắn (20), trước nút mua (30).
  *
  * @return void
  */
@@ -145,6 +145,11 @@ function kio_store_render_single_specs(): void {
 	global $product;
 
 	if ( ! $product instanceof WC_Product ) {
+		return;
+	}
+
+	// Đã có bảng thông số đầy đủ thì thôi: vùng mua chỉ giữ thứ cần để quyết định mua.
+	if ( kio_store_detailed_specs( $product ) ) {
 		return;
 	}
 

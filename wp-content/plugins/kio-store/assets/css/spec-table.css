@@ -1,0 +1,121 @@
+/*
+ * Bảng thông số kỹ thuật. Chỉ nạp ở trang sản phẩm có thông số.
+ */
+
+.kio-spec-table {
+	clear: both;
+	margin: 2rem 0 2.5rem;
+}
+
+.kio-spec-table__rows {
+	width: 100%;
+	margin: 0;
+	border: 1px solid var(--kio-border);
+	border-collapse: separate;
+	border-spacing: 0;
+	border-radius: var(--kio-radius);
+	overflow: hidden;
+	background: var(--kio-card);
+}
+
+.kio-spec-table__rows th,
+.kio-spec-table__rows td {
+	padding: 0.6rem 0.9rem;
+	border-bottom: 1px solid var(--kio-border);
+	background: transparent;
+	font-weight: 400;
+	text-align: left;
+	vertical-align: top;
+}
+
+.kio-spec-table__rows tr:last-child th,
+.kio-spec-table__rows tr:last-child td {
+	border-bottom: 0;
+}
+
+.kio-spec-table__rows th {
+	width: 36%;
+	color: var(--kio-muted);
+	background: var(--kio-bg);
+}
+
+.kio-spec-table__more {
+	display: block;
+	width: 100%;
+	margin-top: 0.75rem;
+	padding: 0.6rem 1rem;
+	border: 1px solid var(--kio-border);
+	border-radius: var(--kio-radius);
+	background: var(--kio-card);
+	color: var(--kio-text);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.kio-spec-table__more:hover {
+	border-color: var(--kio-brand);
+	color: var(--kio-brand);
+}
+
+/* Header dính che mất tiêu đề khi thu gọn và cuộn về đầu mục. */
+.kio-spec-table {
+	scroll-margin-top: 110px;
+}
+
+.kio-spec-table__group {
+	margin-bottom: 1.25rem;
+	break-inside: avoid;
+}
+
+.kio-spec-table__group h3 {
+	margin: 0 0 0.5rem;
+	font-size: 1rem;
+}
+
+.kio-spec-table__source {
+	margin: 0;
+	font-size: 0.85rem;
+}
+
+.kio-spec-table__source a {
+	color: var(--kio-muted);
+}
+
+@media (min-width: 1024px) {
+	/* Bảng rút gọn: 2 cột, lấp hết bề ngang và thấp đi một nửa. */
+	.kio-spec-table__summary tbody {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.kio-spec-table__summary tr {
+		display: grid;
+		grid-template-columns: 36% 1fr;
+	}
+
+	.kio-spec-table__summary th {
+		width: auto;
+	}
+
+	.kio-spec-table__summary tr:nth-child(odd) td {
+		border-right: 1px solid var(--kio-border);
+	}
+
+	/* Dòng cuối của cột trái: cột phải có thể còn dòng, nên vẫn giữ đường kẻ. */
+	.kio-spec-table__summary tr:last-child th,
+	.kio-spec-table__summary tr:last-child td {
+		border-bottom: 1px solid var(--kio-border);
+	}
+
+	/* Bảng đầy đủ: mỗi nhóm một khối, tự chia 2 cột theo chiều cao. */
+	.kio-spec-table__full:not([hidden]) {
+		columns: 2;
+		column-gap: 1.5rem;
+	}
+
+	.kio-spec-table__more {
+		width: auto;
+		margin-inline: auto;
+		padding-inline: 2rem;
+	}
+}

@@ -71,6 +71,15 @@ step "Nạp sản phẩm demo"
 wp eval-file /scripts/import-products.php | tail -n +2 | wc -l | xargs printf '    %s sản phẩm\n'
 
 # --- 8b. Khuyến mãi mẫu (Phase 4 · F4, data/promotions.json) --------------------
+step "Thông số đầy đủ"
+wp eval-file /scripts/import-specs.php
+
+step "Ảnh chụp từ mô hình 3D"
+wp eval-file /scripts/model-images.php
+
+step "Sale demo tự gia hạn"
+wp eval-file /scripts/demo-sales.php
+
 step "Nạp khuyến mãi mẫu"
 wp eval-file /scripts/import-promotions.php | tail -n +2 | wc -l | xargs printf '    %s khuyến mãi\n'
 
