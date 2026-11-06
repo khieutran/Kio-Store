@@ -85,3 +85,36 @@ jobs:
       - name: Dọn dẹp
         if: always()
         run: docker compose --profile tools down -v
+
+  # Chỉ chạy khi push vào main và 2 job trên đều đạt. Key trên VM bị khoá bằng command= trong
+  # authorized_keys: lấy code mới nhất của main rồi chạy scripts/deploy.sh, không mở được shell.
+  deploy:
+    name: Deploy
+    needs: smoke # smoke đã cần lint
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency: deploy
+    steps:
+      - name: Cấu hình SSH
+        env:
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          VM_KNOWN_HOSTS: ${{ secrets.VM_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$VM_SSH_KEY" > ~/.ssh/deploy
+          printf '%s\n' "$VM_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/deploy ~/.ssh/known_hosts
+
+      - name: Cập nhật server
+        env:
+          VM_HOST: ${{ secrets.VM_HOST }}
+        run: ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes "azureuser@$VM_HOST"
+
+      - name: Kiểm tra site sau deploy
+        run: |
+          for i in $(seq 1 12); do
+            curl -fsS -o /dev/null https://shop.kiotrandev.tech/cua-hang/ && exit 0
+            sleep 5
+          done
+          exit 1

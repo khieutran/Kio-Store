@@ -2233,4 +2233,10 @@ ul.products li.product a.compare.button.added {
 	.kio-action {
 		min-width: 44px;
 	}
+
+	/* Thanh chọn so sánh: đứng trên thanh đáy của Storefront, không bị nó che. */
+	#yith-woocompare-preview-bar {
+		bottom: 65px;
+		padding: 10px 16px;
+	}
 }
