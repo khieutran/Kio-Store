@@ -57,3 +57,4 @@ require_once KIO_STORE_DIR . 'includes/performance.php';
 require_once KIO_STORE_DIR . 'includes/page-cache.php';
 require_once KIO_STORE_DIR . 'includes/security.php';
 require_once KIO_STORE_DIR . 'includes/demo-sales.php';
+require_once KIO_STORE_DIR . 'includes/compare-labels.php';
