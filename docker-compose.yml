@@ -15,13 +15,19 @@ x-wp-env: &wp_env
   WORDPRESS_DB_USER: ${DB_USER}
   WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
   WORDPRESS_TABLE_PREFIX: wp_
-  WORDPRESS_DEBUG: 1
+  # Server đặt KIO_WP_DEBUG=0, KIO_WP_ENV=production trong .env. Máy dev không cần đặt gì.
+  WORDPRESS_DEBUG: ${KIO_WP_DEBUG:-1}
   # Đoạn PHP được chèn vào wp-config.php lúc chạy
   WORDPRESS_CONFIG_EXTRA: |
     define('WP_DEBUG_LOG', true);
     define('WP_DEBUG_DISPLAY', false);
-    define('WP_ENVIRONMENT_TYPE', 'local');
-    // Mất tài khoản admin cũng không sửa được PHP trong wp-admin. Chưa đặt DISALLOW_FILE_MODS: script cài plugin cần.
+    define('WP_ENVIRONMENT_TYPE', '${KIO_WP_ENV:-local}');
+    if ('production' === WP_ENVIRONMENT_TYPE) {
+      define('FORCE_SSL_ADMIN', true);
+      // Không cài, sửa plugin từ wp-admin. WP-CLI vẫn được: script cài đặt cần.
+      define('DISALLOW_FILE_MODS', ! defined('WP_CLI'));
+    }
+    // Mất tài khoản admin cũng không sửa được PHP trong wp-admin.
     define('DISALLOW_FILE_EDIT', true);
     // Không tự cập nhật core/plugin/bản dịch: mọi phiên bản đã cố định trong repo, nâng cấp bằng
     // cách đổi số phiên bản rồi chạy CI. (WP-Cron chạy được thì WordPress sẽ tự cập nhật nếu để mặc định.)
@@ -97,6 +103,7 @@ services:
   # ---------------------------------------------------------------
   redis:
     image: redis:7.4.5-alpine
+    restart: unless-stopped
     command: ["redis-server", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
