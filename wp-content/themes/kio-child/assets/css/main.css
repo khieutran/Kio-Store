@@ -1380,6 +1380,12 @@ html body,
 	overflow-x: clip;
 }
 
+/* Đặt ở html là đặt cho khung nhìn nên không ảnh hưởng sticky. iPhone vẫn kéo ngang đàn hồi được nếu thiếu. */
+html {
+	overflow-x: hidden;
+	overscroll-behavior-x: none;
+}
+
 /* ==========================================================================
    11. Thẻ sản phẩm (trang danh mục + shortcode [products])
    ========================================================================== */
@@ -2125,11 +2131,12 @@ ul.products li.product a.compare.button.added {
 		padding: 56px 20px 24px;
 		overflow-y: auto;
 		background: #fff;
-		box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
 		transform: translateX(100%);
 		transition: transform 0.25s ease;
 	}
 	.kio-filters-open #secondary {
+		/* Chỉ có bóng khi mở: lúc giấu, bóng vẫn đổ vào mép phải màn hình. */
+		box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
 		transform: none;
 	}
 
@@ -2214,5 +2221,16 @@ ul.products li.product a.compare.button.added {
 		min-width: 150px;
 		max-width: 150px;
 		padding: 8px;
+	}
+}
+
+/* Header mobile: logo và cụm icon cùng một dòng. Nút vẫn rộng 44px để dễ bấm. */
+@media (max-width: 767px) {
+	.kio-header__actions {
+		gap: 2px;
+	}
+
+	.kio-action {
+		min-width: 44px;
 	}
 }

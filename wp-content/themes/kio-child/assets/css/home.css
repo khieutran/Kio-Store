@@ -225,8 +225,13 @@ ul.products li.product.kio-reveal.is-in {
 	}
 
 	.kio-cats > li {
+		display: flex;
 		flex: 0 0 84px;
 		scroll-snap-align: start;
+	}
+
+	.kio-cats__item {
+		flex: 1;
 	}
 
 	.kio-brands > li {
