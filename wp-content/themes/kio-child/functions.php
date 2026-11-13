@@ -208,6 +208,27 @@ function kio_child_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'kio_child_enqueue_assets', 40 );
 
 /**
+ * Thống kê truy cập (repo site-stats): đếm số người vào shop mỗi ngày, báo qua Discord.
+ * Không gắn khi quản trị viên đang đăng nhập, để mình tự vào kiểm tra không làm lệch số.
+ */
+function kio_child_enqueue_site_stats() {
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	wp_enqueue_script(
+		'kio-site-stats',
+		'https://stats.kiotrandev.tech/s.js',
+		array(),
+		null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- script ngoài tự quản lý cache.
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'kio_child_enqueue_site_stats', 50 );
+
+/**
  * Báo trình duyệt tải font ngay, không đợi đọc xong CSS mới phát hiện cần font.
  * Tải muộn thì chữ đổi font khi trang đã hiện, xuống dòng khác đi và làm layout giật.
  */
